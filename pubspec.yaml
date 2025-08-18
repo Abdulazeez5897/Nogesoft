@@ -1,4 +1,4 @@
-name: scrubly
+name: _247remotejobs
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -41,7 +41,12 @@ dependencies:
   visibility_detector: ^0.3.3
   flutter_picker: ^2.1.0
   image_cropper: ^5.0.1
-  stacked_services: ^1.0.0
+  stacked: ^3.2.0
+  stacked_services: ^1.1.0
+  dio: ^4.0.6
+  sembast: ^3.5.0
+  intl: ^0.18.1
+  cloud_firestore: ^5.0.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
@@ -56,6 +61,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+  build_runner: ^2.4.6
+  stacked_generator: ^1.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

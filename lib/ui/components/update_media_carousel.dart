@@ -1,7 +1,6 @@
+import 'package:_247remotejobs/ui/components/shimmer_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:scrubly/ui/components/shimmer_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 

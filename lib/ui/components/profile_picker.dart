@@ -1,9 +1,10 @@
 import 'dart:io';
-import 'package:scrubly/ui/common/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../common/app_colors.dart';
 
 class ProfilePicturePicker extends StatefulWidget {
   final File? selectedFile;

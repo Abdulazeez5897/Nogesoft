@@ -6,7 +6,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:_247remotejobs/core/enums/auth_type.dart' as _i5;
-import 'package:_247remotejobs/ui/views/authView.dart' as _i3;
+import 'package:_247remotejobs/ui/views/Auth/authView.dart' as _i3;
 import 'package:_247remotejobs/ui/views/homeView.dart' as _i2;
 import 'package:flutter/foundation.dart' as _i6;
 import 'package:flutter/material.dart' as _i4;

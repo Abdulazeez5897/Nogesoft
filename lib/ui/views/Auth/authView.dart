@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/enums/auth_type.dart';
+import '../../../core/enums/auth_type.dart';
 
 class AuthView extends StatelessWidget {
   final AuthType authType;

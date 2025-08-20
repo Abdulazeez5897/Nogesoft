@@ -7,12 +7,12 @@ import '../core/network/api-service.dart';
 import '../core/utils/local_storage.dart';
 import '../ui/dialogs/info_alert_dialog.dart';
 
-import '../ui/views/authView.dart';
+import '../ui/views/Auth/authView.dart';
 import '../ui/views/homeView.dart';
 // @stacked-import
-/// @author George David
-/// email: georgequin19@gmail.com
-/// Feb, 2024
+/// @author Usman Abdulazeez
+/// email: abdulazeezusman732@gmail.com
+/// Aug, 2025
 ///
 
 @StackedApp(

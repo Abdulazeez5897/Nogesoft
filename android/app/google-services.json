@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1015881345259",
+    "project_id": "remotejobs247",
+    "storage_bucket": "remotejobs247.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015881345259:android:7c02ccae3acb3adc71f6ae",
+        "android_client_info": {
+          "package_name": "com.remotejobs247.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoO6PvL8RX411vUm3YV6HJAg-9GrbQuYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

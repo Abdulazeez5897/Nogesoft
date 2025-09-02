@@ -8,7 +8,7 @@ enum ApprovalStatus { APPROVED, PENDING, REJECTED }
 enum UserRoleName { ESTATE_RESIDENT, MASTER, GENERAL_MANAGER, FACILITY_MANAGER, SECURITY, REGULAR }
 enum CodeTypeConstant { CHANGE_PASSWORD, SIGNUP }
 
-class User {
+class AppUser {
   int? id;
   String? username;
   String? email;
@@ -36,7 +36,7 @@ class User {
   List<dynamic>? userDevicePojos;
   DateTime? createdAt;
 
-  User({
+  AppUser({
     this.id,
     this.username,
     this.email,
@@ -65,8 +65,8 @@ class User {
     this.createdAt,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory AppUser.fromJson(Map<String, dynamic> json) {
+    return AppUser(
       id: json['id'],
       username: json['username'],
       email: json['email'],

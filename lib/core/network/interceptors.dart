@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/app.dialogs.dart';
 import '../../app/app.locator.dart';
-import '../../app/app.router.dart';
 import '../../state.dart';
 import '../../ui/views/dashboardViewModel.dart';
 import '../data/repositories/repository.dart';

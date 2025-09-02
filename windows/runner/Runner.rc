@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "scrubly" "\0"
+            VALUE "FileDescription", "remotejobs247" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "scrubly" "\0"
+            VALUE "InternalName", "remotejobs247" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "scrubly.exe" "\0"
-            VALUE "ProductName", "scrubly" "\0"
+            VALUE "OriginalFilename", "remotejobs247.exe" "\0"
+            VALUE "ProductName", "remotejobs247" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

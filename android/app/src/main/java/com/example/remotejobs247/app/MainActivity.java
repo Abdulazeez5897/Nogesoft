@@ -1,4 +1,4 @@
-package com.example.scrubly;
+package com.remotejobs247.app;
 
 import io.flutter.embedding.android.FlutterActivity;
 

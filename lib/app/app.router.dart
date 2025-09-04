@@ -7,62 +7,63 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:_247remotejobs/ui/views/Auth/auth_View.dart' as _i3;
 import 'package:_247remotejobs/ui/views/Auth/login.dart' as _i4;
-import 'package:_247remotejobs/ui/views/Auth/register.dart' as _i5;
-import 'package:_247remotejobs/ui/views/Auth/signUp.dart' as _i6;
-import 'package:_247remotejobs/ui/views/homeView.dart' as _i2;
+import 'package:_247remotejobs/ui/views/Auth/signUp.dart' as _i2;
+import 'package:_247remotejobs/ui/views/homeView.dart' as _i6;
+import 'package:_247remotejobs/ui/views/Otp_Verification/otpVerification.dart'
+    as _i5;
 import 'package:flutter/material.dart' as _i7;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
 import 'package:stacked_services/stacked_services.dart' as _i8;
 
 class Routes {
-  static const homeView = '/home-view';
+  static const signUp = '/';
 
   static const authView = '/auth-view';
 
-  static const login = '/Login';
+  static const loginView = '/login-view';
 
-  static const register = '/Register';
+  static const otpVerificationView = '/otp-verification-view';
 
-  static const signUp = '/sign-up';
+  static const homeView = '/home-view';
 
   static const all = <String>{
-    homeView,
-    authView,
-    login,
-    register,
     signUp,
+    authView,
+    loginView,
+    otpVerificationView,
+    homeView,
   };
 }
 
 class StackedRouter extends _i1.RouterBase {
   final _routes = <_i1.RouteDef>[
     _i1.RouteDef(
-      Routes.homeView,
-      page: _i2.HomeView,
+      Routes.signUp,
+      page: _i2.SignUp,
     ),
     _i1.RouteDef(
       Routes.authView,
       page: _i3.AuthView,
     ),
     _i1.RouteDef(
-      Routes.login,
-      page: _i4.Login,
+      Routes.loginView,
+      page: _i4.LoginView,
     ),
     _i1.RouteDef(
-      Routes.register,
-      page: _i5.Register,
+      Routes.otpVerificationView,
+      page: _i5.OtpVerificationView,
     ),
     _i1.RouteDef(
-      Routes.signUp,
-      page: _i6.SignUp,
+      Routes.homeView,
+      page: _i6.HomeView,
     ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
-    _i2.HomeView: (data) {
+    _i2.SignUp: (data) {
       return _i7.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i2.HomeView(),
+        builder: (context) => const _i2.SignUp(),
         settings: data,
       );
     },
@@ -72,21 +73,23 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i4.Login: (data) {
+    _i4.LoginView: (data) {
       return _i7.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i4.Login(),
+        builder: (context) => const _i4.LoginView(),
         settings: data,
       );
     },
-    _i5.Register: (data) {
+    _i5.OtpVerificationView: (data) {
+      final args = data.getArgs<OtpVerificationViewArguments>(nullOk: false);
       return _i7.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i5.Register(),
+        builder: (context) =>
+            _i5.OtpVerificationView(key: args.key, email: args.email),
         settings: data,
       );
     },
-    _i6.SignUp: (data) {
+    _i6.HomeView: (data) {
       return _i7.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i6.SignUp(),
+        builder: (context) => const _i6.HomeView(),
         settings: data,
       );
     },
@@ -99,15 +102,42 @@ class StackedRouter extends _i1.RouterBase {
   Map<Type, _i1.StackedRouteFactory> get pagesMap => _pagesMap;
 }
 
+class OtpVerificationViewArguments {
+  const OtpVerificationViewArguments({
+    this.key,
+    required this.email,
+  });
+
+  final _i7.Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "email": "$email"}';
+  }
+
+  @override
+  bool operator ==(covariant OtpVerificationViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.email == email;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ email.hashCode;
+  }
+}
+
 extension NavigatorStateExtension on _i8.NavigationService {
-  Future<dynamic> navigateToHomeView([
+  Future<dynamic> navigateToSignUp([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return navigateTo<dynamic>(Routes.homeView,
+    return navigateTo<dynamic>(Routes.signUp,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -128,56 +158,59 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToLogin([
+  Future<dynamic> navigateToLoginView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return navigateTo<dynamic>(Routes.login,
+    return navigateTo<dynamic>(Routes.loginView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
         transition: transition);
   }
 
-  Future<dynamic> navigateToRegister([
+  Future<dynamic> navigateToOtpVerificationView({
+    _i7.Key? key,
+    required String email,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.register,
+  }) async {
+    return navigateTo<dynamic>(Routes.otpVerificationView,
+        arguments: OtpVerificationViewArguments(key: key, email: email),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
         transition: transition);
   }
 
-  Future<dynamic> navigateToSignUp([
+  Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return navigateTo<dynamic>(Routes.signUp,
+    return navigateTo<dynamic>(Routes.homeView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
         transition: transition);
   }
 
-  Future<dynamic> replaceWithHomeView([
+  Future<dynamic> replaceWithSignUp([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return replaceWith<dynamic>(Routes.homeView,
+    return replaceWith<dynamic>(Routes.signUp,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -198,42 +231,45 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithLogin([
+  Future<dynamic> replaceWithLoginView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return replaceWith<dynamic>(Routes.login,
+    return replaceWith<dynamic>(Routes.loginView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
         transition: transition);
   }
 
-  Future<dynamic> replaceWithRegister([
+  Future<dynamic> replaceWithOtpVerificationView({
+    _i7.Key? key,
+    required String email,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.register,
+  }) async {
+    return replaceWith<dynamic>(Routes.otpVerificationView,
+        arguments: OtpVerificationViewArguments(key: key, email: email),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
         transition: transition);
   }
 
-  Future<dynamic> replaceWithSignUp([
+  Future<dynamic> replaceWithHomeView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
   ]) async {
-    return replaceWith<dynamic>(Routes.signUp,
+    return replaceWith<dynamic>(Routes.homeView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

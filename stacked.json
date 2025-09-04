@@ -1,0 +1,10 @@
+{
+  "routes": [],
+  "services": [],
+  "apps": [
+    {
+      "app": "lib/app/app.dart",
+      "working_directory": "."
+    }
+  ]
+}

@@ -36,6 +36,19 @@ class AuthViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void navigateBack() {
+    _navigationService.back();
+  }
+
+  Future<void> goto() async {
+    await _navigationService.navigateTo(
+      Routes.otpVerificationView,
+      arguments: OtpVerificationViewArguments(
+        email: emailController.text,
+      ),
+    );
+  }
+
   Future<void> signUp() async {
     if (!_validateForm()) {
       return;
@@ -53,7 +66,12 @@ class AuthViewModel extends BaseViewModel {
       );
 
       // Navigate to home on success
-      _navigationService.replaceWith(Routes.homeView);
+      _navigationService.replaceWith(
+        Routes.otpVerificationView,
+        arguments: OtpVerificationViewArguments(
+          email: emailController.text,
+        ),
+      );
     } catch (e) {
       _snackbarService.showSnackbar(message: e.toString());
     } finally {
@@ -61,8 +79,42 @@ class AuthViewModel extends BaseViewModel {
     }
   }
 
+  Future<void> login() async {
+    if (emailController.text.isEmpty || !emailController.text.contains('@')) {
+      _snackbarService.showSnackbar(message: 'Please enter a valid email address');
+      return;
+    }
+
+    if (passwordController.text.isEmpty) {
+      _snackbarService.showSnackbar(message: 'Please enter your password');
+      return;
+    }
+
+    setBusy(true);
+
+    try {
+      // Simulate login API call
+      await Future.delayed(const Duration(seconds: 2));
+
+      // Navigate to home screen on success
+      _navigationService.replaceWith(Routes.homeView);
+    } catch (e) {
+      _snackbarService.showSnackbar(message: 'Login failed: ${e.toString()}');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  // void navigateToForgotPassword() {
+  //   _navigationService.navigateTo(Routes.forgotPasswordView);
+  // }
+
+  void navigateToSignUp() {
+    _navigationService.navigateTo(Routes.signUp);
+  }
+
   void navigateToLogin() {
-    _navigationService.back();
+    _navigationService.navigateTo(Routes.loginView);
   }
 
   void signUpWithGoogle() async {
@@ -88,6 +140,7 @@ class AuthViewModel extends BaseViewModel {
       setBusy(false);
     }
   }
+
 
   bool _validateForm() {
     if (firstNameController.text.isEmpty) {
@@ -128,4 +181,5 @@ class AuthViewModel extends BaseViewModel {
     confirmPasswordController.dispose();
     super.dispose();
   }
+
 }

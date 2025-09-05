@@ -1,4 +1,5 @@
 import 'package:_247remotejobs/ui/views/Auth/login.dart';
+import 'package:_247remotejobs/ui/views/Auth/register.dart';
 import 'package:_247remotejobs/ui/views/Auth/signUp.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -22,6 +23,7 @@ import '../ui/views/homeView.dart';
     MaterialRoute(page: LoginView),
     MaterialRoute(page: OtpVerificationView),
     MaterialRoute(page: HomeView),
+    MaterialRoute(page: RegistrationView),
     // Remove duplicate/conflicting routes
     // MaterialRoute(page: Register), // Remove if this is duplicate of SignUp
     // @stacked-route

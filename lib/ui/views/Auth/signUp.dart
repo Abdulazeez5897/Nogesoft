@@ -85,8 +85,13 @@ class SignUp extends StackedView<AuthViewModel> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(color: kcBlackColor, width: 2),
+                              ),
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                               prefixIcon: const Icon(Icons.person_outline, size: 20),
+                              floatingLabelStyle: const TextStyle(color: kcBlackColor),
                             ),
                           ),
                         ),
@@ -100,7 +105,12 @@ class SignUp extends StackedView<AuthViewModel> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: const BorderSide(color: kcBlackColor, width: 2)
+                              ),
                               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                              floatingLabelStyle: const TextStyle(color: kcBlackColor)
                             ),
                           ),
                         ),
@@ -118,8 +128,13 @@ class SignUp extends StackedView<AuthViewModel> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: kcBlackColor, width: 2)
+                        ),
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                         prefixIcon: const Icon(Icons.email_outlined, size: 20),
+                        floatingLabelStyle: const TextStyle(color: kcBlackColor)
                       ),
                     ),
                     verticalSpaceMedium,
@@ -134,8 +149,13 @@ class SignUp extends StackedView<AuthViewModel> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: kcBlackColor)
+                        ),
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                         prefixIcon: const Icon(Icons.phone_outlined, size: 20),
+                        floatingLabelStyle: const TextStyle(color: kcBlackColor)
                       ),
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
@@ -153,6 +173,10 @@ class SignUp extends StackedView<AuthViewModel> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: kcBlackColor, width: 2)
+                        ),
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                         prefixIcon: const Icon(Icons.lock_outline, size: 20),
                         suffixIcon: IconButton(
@@ -164,6 +188,7 @@ class SignUp extends StackedView<AuthViewModel> {
                           ),
                           onPressed: viewModel.togglePasswordVisibility,
                         ),
+                        floatingLabelStyle: const TextStyle(color: kcBlackColor)
                       ),
                     ),
                     verticalSpaceMedium,
@@ -178,6 +203,10 @@ class SignUp extends StackedView<AuthViewModel> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: kcBlackColor, width: 2)
+                        ),
                         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                         prefixIcon: const Icon(Icons.lock_outline, size: 20),
                         suffixIcon: IconButton(
@@ -189,6 +218,7 @@ class SignUp extends StackedView<AuthViewModel> {
                           ),
                           onPressed: viewModel.toggleConfirmPasswordVisibility,
                         ),
+                        floatingLabelStyle: const TextStyle(color: kcBlackColor)
                       ),
                     ),
                   ],

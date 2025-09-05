@@ -64,8 +64,13 @@ class LoginView extends StackedView<AuthViewModel> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: kcBlackColor)
+                  ),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   prefixIcon: const Icon(Icons.email_outlined, size: 20),
+                  floatingLabelStyle: const TextStyle(color: kcBlackColor)
                 ),
               ),
               verticalSpaceMedium,
@@ -80,6 +85,10 @@ class LoginView extends StackedView<AuthViewModel> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(color: kcBlackColor)
+                  ),
                   contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                   prefixIcon: const Icon(Icons.lock_outlined, size: 20),
                   suffixIcon: IconButton(
@@ -89,6 +98,7 @@ class LoginView extends StackedView<AuthViewModel> {
                     ),
                     onPressed: viewModel.togglePasswordVisibility,
                   ),
+                  floatingLabelStyle: const TextStyle(color: kcBlackColor)
                 ),
               ),
               // verticalSpaceSmall,
@@ -112,7 +122,7 @@ class LoginView extends StackedView<AuthViewModel> {
               //Login Button
               SubmitButton(
                 isLoading: viewModel.isBusy,
-                label: 'Sign In',
+                label: 'Login',
                 submit: viewModel.login,
                 color: kcBlackColor,
               ),

@@ -117,6 +117,10 @@ class OtpVerificationView extends StackedView<OtpVerificationViewModel> {
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: const BorderSide(color: kcBlackColor, width: 2)
+                                    )
                                   ),
                                   onChanged: (value) {
                                     if (value.length == 1 && index < 5) {

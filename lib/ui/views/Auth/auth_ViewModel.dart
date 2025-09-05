@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -18,10 +19,22 @@ class AuthViewModel extends BaseViewModel {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final professionalHeadlineController = TextEditingController();
+  final locationController = TextEditingController();
+  final skillsController = TextEditingController();
+  final portfolioController = TextEditingController();
 
   bool isLoading = false;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+
+  String experienceLevel = 'mid';
+  PlatformFile? resumeFile;
+  bool remoteOnly = true;
+  bool hybridPossible = false;
+  bool fullTime = true;
+  bool partTime = false;
+  bool contract = false;
 
   bool get obscurePassword => _obscurePassword;
   bool get obscureConfirmPassword => _obscureConfirmPassword;
@@ -40,11 +53,16 @@ class AuthViewModel extends BaseViewModel {
     _navigationService.back();
   }
 
+  void setExperienceLevel(String level) {
+    experienceLevel = level;
+    notifyListeners();
+  }
+
   Future<void> goto() async {
     await _navigationService.navigateTo(
-      Routes.otpVerificationView,
-      arguments: OtpVerificationViewArguments(
-        email: emailController.text,
+      Routes.registrationView,
+      arguments: RegistrationViewArguments(
+        firstName: '', lastName: '', email: emailController.text,
       ),
     );
   }
@@ -67,9 +85,9 @@ class AuthViewModel extends BaseViewModel {
 
       // Navigate to home on success
       _navigationService.replaceWith(
-        Routes.otpVerificationView,
-        arguments: OtpVerificationViewArguments(
-          email: emailController.text,
+        Routes.registrationView,
+        arguments: RegistrationViewArguments(
+          firstName: '', lastName: '', email: emailController.text,
         ),
       );
     } catch (e) {
@@ -77,6 +95,60 @@ class AuthViewModel extends BaseViewModel {
     } finally {
       setBusy(false);
     }
+  }
+
+  Future<void> completeRegistration({
+    required String email,
+    required String firstName,
+    required String lastName,
+  }) async {
+    // Validation
+    if (professionalHeadlineController.text.isEmpty ||
+        locationController.text.isEmpty ||
+        skillsController.text.isEmpty ||
+        resumeFile == null) {
+      _snackbarService.showSnackbar(message: 'Please fill all required fields');
+      return;
+    }
+
+    setBusy(true);
+
+    try {
+      // Upload resume and complete registration
+      await Future.delayed(const Duration(seconds: 3)); // Simulate API call
+
+      _snackbarService.showSnackbar(message: 'Registration completed successfully!');
+
+      // Navigate to login
+      _navigationService.clearStackAndShow(Routes.loginView);
+    } catch (e) {
+      _snackbarService.showSnackbar(message: 'Registration failed: ${e.toString()}');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+
+  Future<void> pickResume() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf', 'doc', 'docx'],
+        allowMultiple: false,
+      );
+
+      if (result != null) {
+        resumeFile = result.files.first;
+        notifyListeners();
+      }
+    } catch (e) {
+      _snackbarService.showSnackbar(message: 'Error picking file: ${e.toString()}');
+    }
+  }
+
+  void removeResume() {
+    resumeFile = null;
+    notifyListeners();
   }
 
   Future<void> login() async {
@@ -141,6 +213,21 @@ class AuthViewModel extends BaseViewModel {
     }
   }
 
+  void toggleRemoteOnly(bool value) {
+    remoteOnly = value;
+    if (value) hybridPossible = false;
+    notifyListeners();
+  }
+
+  void toggleHybridPossible(bool value) {
+    hybridPossible = value;
+    if (value) remoteOnly = false;
+    notifyListeners();
+  }
+
+  void toggleFullTime(bool value) => fullTime = value;
+  void togglePartTime(bool value) => partTime = value;
+  void toggleContract(bool value) => contract = value;
 
   bool _validateForm() {
     if (firstNameController.text.isEmpty) {

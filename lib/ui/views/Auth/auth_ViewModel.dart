@@ -30,11 +30,15 @@ class AuthViewModel extends BaseViewModel {
 
   String experienceLevel = 'mid';
   PlatformFile? resumeFile;
+  int _registrationSection = 1;
+
+  int get registrationSection => _registrationSection;
   bool remoteOnly = true;
   bool hybridPossible = false;
   bool fullTime = true;
   bool partTime = false;
   bool contract = false;
+  bool freelance = false;
 
   bool get obscurePassword => _obscurePassword;
   bool get obscureConfirmPassword => _obscureConfirmPassword;
@@ -58,11 +62,25 @@ class AuthViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void nextSection() {
+    if (_registrationSection < 3) {
+      _registrationSection++;
+      notifyListeners();
+    }
+  }
+
+  void previousSection() {
+    if (_registrationSection > 1) {
+      _registrationSection--;
+      notifyListeners();
+    }
+  }
+
   Future<void> goto() async {
     await _navigationService.navigateTo(
-      Routes.registrationView,
-      arguments: RegistrationViewArguments(
-        firstName: '', lastName: '', email: emailController.text,
+      Routes.otpVerificationView,
+      arguments: OtpVerificationViewArguments(
+        email: emailController.text,
       ),
     );
   }
@@ -85,9 +103,9 @@ class AuthViewModel extends BaseViewModel {
 
       // Navigate to home on success
       _navigationService.replaceWith(
-        Routes.registrationView,
-        arguments: RegistrationViewArguments(
-          firstName: '', lastName: '', email: emailController.text,
+        Routes.otpVerificationView,
+        arguments: OtpVerificationViewArguments(
+          email: emailController.text,
         ),
       );
     } catch (e) {
@@ -228,6 +246,7 @@ class AuthViewModel extends BaseViewModel {
   void toggleFullTime(bool value) => fullTime = value;
   void togglePartTime(bool value) => partTime = value;
   void toggleContract(bool value) => contract = value;
+  void toggleFreelance(bool value) => freelance = value;
 
   bool _validateForm() {
     if (firstNameController.text.isEmpty) {

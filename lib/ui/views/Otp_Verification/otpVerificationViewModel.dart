@@ -69,7 +69,9 @@ class OtpVerificationViewModel extends BaseViewModel {
     setBusy(false);
 
     // Navigate to home screen on success
-    _navigationService.replaceWith(Routes.homeView);
+    _navigationService.replaceWith(Routes.registrationView,
+    arguments: RegistrationViewArguments(
+        email: emailController.text, firstName: '', lastName: ''));
   }
 
   void resendOTP() {

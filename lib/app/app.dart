@@ -1,6 +1,7 @@
 import 'package:_247remotejobs/ui/views/Auth/login.dart';
 import 'package:_247remotejobs/ui/views/Auth/register.dart';
 import 'package:_247remotejobs/ui/views/Auth/signUp.dart';
+import 'package:_247remotejobs/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -18,7 +19,8 @@ import '../ui/views/homeView.dart';
 @StackedApp(
   logger: StackedLogger(),
   routes: [
-    MaterialRoute(page: SignUp, initial: true), // Set a clear initial route
+    MaterialRoute(page: StartupView, initial: true), // Set a clear initial route
+    MaterialRoute(page: SignUp), // Set a clear initial route
     MaterialRoute(page: AuthView),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: OtpVerificationView),

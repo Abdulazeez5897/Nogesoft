@@ -1,13 +1,24 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'app/app.dialogs.dart';
 import 'app/app.locator.dart';
 import 'app/app.router.dart';
+import 'firebase_options.dart';
 import 'state.dart'; // where your uiMode ValueNotifier is
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  setupLocator();
+  setupDialogUi();
+  // setupBottomSheetUi();
 
-  await setupLocator();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
 
   runApp(const MyApp());
 }
@@ -45,7 +56,7 @@ class _MyAppState extends State<MyApp> {
       title: '247remotejobs',
 
       // ✅ keep your initial route
-      initialRoute: Routes.signUp,
+      initialRoute: Routes.startupView,
       onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorKey: StackedService.navigatorKey,
       navigatorObservers: [StackedService.routeObserver],

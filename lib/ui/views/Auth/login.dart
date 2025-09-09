@@ -46,7 +46,7 @@ class LoginView extends StackedView<AuthViewModel> {
               verticalSpaceSmall,
 
               Text(
-                'Sign in to continue your job search journey',
+                'Login to continue your job search journey',
                 style: GoogleFonts.redHatDisplay(
                   fontSize: 16,
                   color: Colors.grey[600],

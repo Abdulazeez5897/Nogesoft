@@ -187,7 +187,7 @@ class AuthViewModel extends BaseViewModel {
       await Future.delayed(const Duration(seconds: 2));
 
       // Navigate to home screen on success
-      _navigationService.replaceWith(Routes.homeView);
+      _navigationService.replaceWith(Routes.profileView);
     } catch (e) {
       _snackbarService.showSnackbar(message: 'Login failed: ${e.toString()}');
     } finally {

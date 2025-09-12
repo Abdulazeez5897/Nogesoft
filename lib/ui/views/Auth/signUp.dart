@@ -115,7 +115,7 @@ class SignUp extends StackedView<AuthViewModel> {
                           ),
                         ),
                       ],
-                    ),
+                     ),
                     verticalSpaceMedium,
 
                     // Email Address

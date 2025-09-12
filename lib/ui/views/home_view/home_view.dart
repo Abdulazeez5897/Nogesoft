@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'homeViewModel.dart';
+import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<AuthViewModel> {
   const HomeView({super.key});

@@ -1,6 +1,11 @@
 import 'package:_247remotejobs/ui/views/Auth/login.dart';
 import 'package:_247remotejobs/ui/views/Auth/register.dart';
 import 'package:_247remotejobs/ui/views/Auth/signUp.dart';
+import 'package:_247remotejobs/ui/views/profile/application_view.dart';
+import 'package:_247remotejobs/ui/views/profile/edit_profile_view.dart';
+import 'package:_247remotejobs/ui/views/profile/profile_view.dart';
+import 'package:_247remotejobs/ui/views/profile/saved_job_view.dart';
+import 'package:_247remotejobs/ui/views/profile/settings_view.dart';
 import 'package:_247remotejobs/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -13,7 +18,7 @@ import '../ui/dialogs/info_alert_dialog.dart';
 import '../ui/views/Auth/auth_View.dart';
 import '../ui/views/Auth/authentication_service.dart';
 import '../ui/views/Otp_Verification/otpVerification.dart';
-import '../ui/views/homeView.dart';
+import '../ui/views/home_view/home_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -26,6 +31,11 @@ import '../ui/views/homeView.dart';
     MaterialRoute(page: OtpVerificationView),
     MaterialRoute(page: HomeView),
     MaterialRoute(page: RegistrationView),
+    MaterialRoute(page: ProfileView),
+    MaterialRoute(page: SettingsView),
+    MaterialRoute(page: ApplicationsView),
+    MaterialRoute(page: SavedJobsView),
+    MaterialRoute(page: EditProfileView),
     // Remove duplicate/conflicting routes
     // MaterialRoute(page: Register), // Remove if this is duplicate of SignUp
     // @stacked-route

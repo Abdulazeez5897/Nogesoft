@@ -104,7 +104,7 @@ class OtpVerificationView extends StackedView<OtpVerificationViewModel> {
                         if (viewModel.otpSent) ...[
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: List.generate(6, (index) {
+                            children: List.generate(5, (index) {
                               return SizedBox(
                                 width: 45,
                                 child: TextFormField(
@@ -123,7 +123,7 @@ class OtpVerificationView extends StackedView<OtpVerificationViewModel> {
                                     )
                                   ),
                                   onChanged: (value) {
-                                    if (value.length == 1 && index < 5) {
+                                    if (value.length == 1 && index < 4) {
                                       FocusScope.of(context).nextFocus();
                                     } else if (value.isEmpty && index > 0) {
                                       FocusScope.of(context).previousFocus();

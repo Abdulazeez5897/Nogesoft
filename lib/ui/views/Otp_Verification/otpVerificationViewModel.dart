@@ -16,7 +16,7 @@ class OtpVerificationViewModel extends BaseViewModel {
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  List<TextEditingController> otpControllers = List.generate(6, (_) => TextEditingController());
+  List<TextEditingController> otpControllers = List.generate(5, (_) => TextEditingController());
 
   // Form key
   final GlobalKey<FormState> otpFormKey = GlobalKey<FormState>();
@@ -56,8 +56,8 @@ class OtpVerificationViewModel extends BaseViewModel {
     // Get the complete OTP code
     String otpCode = otpControllers.map((controller) => controller.text).join();
 
-    if (otpCode.length != 6) {
-      _snackbarService.showSnackbar(message: 'Please enter a valid 6-digit code');
+    if (otpCode.length != 5) {
+      _snackbarService.showSnackbar(message: 'Please enter a valid 5-digit code');
       return;
     }
 

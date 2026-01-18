@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -21,6 +23,14 @@ class ProfileViewModel extends BaseViewModel {
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final locationController = TextEditingController();
+  final professionalHeadlineController = TextEditingController();
+  final portfolioController = TextEditingController();
+  File? profileImage;
+  List<String>? skills;
+  Function(String)? removeSkill;
+  VoidCallback? showAddSkillDialog;
 
   // Mock user data - replace with real data from your backend
   User get user => User(
@@ -72,6 +82,17 @@ class ProfileViewModel extends BaseViewModel {
 
   void navigateToSettings() {
     _navigationService.navigateTo(Routes.settingsView);
+  }
+
+  void navigateBack() {
+    _navigationService.back();
+  }
+
+  void showComingSoonSnackbar() {
+    _snackbarService.showSnackbar(
+      message: 'Add skill feature coming soon!',
+      duration: Duration(seconds: 2),
+    );
   }
 
   Future<void> uploadNewResume() async {
@@ -165,6 +186,10 @@ class ProfileViewModel extends BaseViewModel {
     ];
 
     setBusy(false);
+  }
+
+  Future<void> pickProfileImage() async {
+    // Implement image picking logic
   }
 
   void removeJob(int index) {

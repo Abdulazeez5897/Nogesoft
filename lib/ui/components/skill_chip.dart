@@ -22,10 +22,10 @@ class SkillChip extends StatelessWidget {
         skill,
         style: GoogleFonts.redHatDisplay(
           fontSize: 12,
-          color: kcPrimaryColor,
+          color: kcBlackColor,
         ),
       ),
-      backgroundColor: kcPrimaryColor.withOpacity(0.1),
+      backgroundColor: kcBlackColor.withOpacity(0.1),
       side: BorderSide.none,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),

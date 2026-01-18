@@ -34,11 +34,13 @@ class ProfileView extends StackedView<ProfileViewModel> {
                   icon: const Icon(Icons.edit_outlined),
                   onPressed: viewModel.navigateToEditProfile,
                   tooltip: 'Edit Profile',
+                  color: kcWhiteColor,
                 ),
                 IconButton(
                   icon: const Icon(Icons.settings_outlined),
                   onPressed: viewModel.navigateToSettings,
                   tooltip: 'Settings',
+                  color: kcWhiteColor,
                 ),
               ],
             ),
@@ -185,6 +187,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
                           icon: const Icon(Icons.download_outlined, size: 20),
                           onPressed: () => viewModel.downloadResume(),
                           tooltip: 'Download Resume',
+                          color: kcBlackColor,
                         ),
                       ),
                     ElevatedButton.icon(
@@ -192,8 +195,8 @@ class ProfileView extends StackedView<ProfileViewModel> {
                       icon: const Icon(Icons.upload_outlined, size: 18),
                       label: const Text('Upload New Resume'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: kcPrimaryColor.withOpacity(0.1),
-                        foregroundColor: kcPrimaryColor,
+                        backgroundColor: kcBlackColor.withOpacity(0.1),
+                        foregroundColor: kcBlackColor,
                       ),
                     ),
                   ],
@@ -208,9 +211,14 @@ class ProfileView extends StackedView<ProfileViewModel> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _buildStatItem('Applications', '12', Icons.send_outlined),
+                    InkWell(
+                      onTap: () => viewModel.viewApplicationHistory(),
+                      child: _buildStatItem('Applications', '12', Icons.send_outlined)),
                     _buildStatItem('Interviews', '3', Icons.video_call_outlined),
-                    _buildStatItem('Saved Jobs', '8', Icons.bookmark_outline),
+                    InkWell(
+                      onTap: () => viewModel.viewSavedJobs(),
+                      child: _buildStatItem('Saved Jobs', '8', Icons.bookmark_outline),
+                    ),
                   ],
                 ),
               ),
@@ -220,7 +228,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: viewModel.navigateToEditProfile,
-        backgroundColor: kcPrimaryColor,
+        backgroundColor: kcBlackColor,
         child: const Icon(Icons.edit_outlined, color: Colors.white),
       ),
     );
@@ -229,7 +237,7 @@ class ProfileView extends StackedView<ProfileViewModel> {
   Widget _buildStatItem(String title, String value, IconData icon) {
     return Column(
       children: [
-        Icon(icon, size: 24, color: kcPrimaryColor),
+        Icon(icon, size: 24, color: kcBlackColor),
         verticalSpaceTiny,
         Text(
           value,

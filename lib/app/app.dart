@@ -1,6 +1,8 @@
 import 'package:_247remotejobs/ui/views/Auth/login.dart';
 import 'package:_247remotejobs/ui/views/Auth/register.dart';
 import 'package:_247remotejobs/ui/views/Auth/signUp.dart';
+import 'package:_247remotejobs/ui/views/dashboard.dart';
+import 'package:_247remotejobs/ui/views/jobs/jobs_view.dart';
 import 'package:_247remotejobs/ui/views/profile/application_view.dart';
 import 'package:_247remotejobs/ui/views/profile/edit_profile_view.dart';
 import 'package:_247remotejobs/ui/views/profile/profile_view.dart';
@@ -36,6 +38,8 @@ import '../ui/views/home_view/home_view.dart';
     MaterialRoute(page: ApplicationsView),
     MaterialRoute(page: SavedJobsView),
     MaterialRoute(page: EditProfileView),
+    MaterialRoute(page: DashboardView),
+    MaterialRoute(page: JobsView),
     // Remove duplicate/conflicting routes
     // MaterialRoute(page: Register), // Remove if this is duplicate of SignUp
     // @stacked-route

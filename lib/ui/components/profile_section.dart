@@ -47,7 +47,7 @@ class ProfileSection extends StatelessWidget {
                   Icon(
                     icon,
                     size: 20,
-                    color: kcPrimaryColor,
+                    color: kcBlackColor,
                   ),
                   horizontalSpaceSmall,
                   Text(
@@ -62,12 +62,12 @@ class ProfileSection extends StatelessWidget {
               ),
               if (showEditButton && onEdit != null)
                 IconButton(
-                  icon: const Icon(Icons.edit_outlined, size: 18),
+                  icon: const Icon(Icons.edit_outlined, size: 35),
                   onPressed: onEdit,
                   color: kcMediumGrey,
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
-                  iconSize: 18,
+                  iconSize: 50,
                 ),
             ],
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const Color kcPrimaryColor = Color(0xFF336699);
+const Color kcPrimaryColor = Color(0xFF000000);
 const Color kcPrimaryColorDark = Color(0xFF2D395A);
 const Color kcFadeColor = Color.fromRGBO(14, 41, 84, 0.1);
 const Color kcSecondaryColor = Color(0xFFCC9933);

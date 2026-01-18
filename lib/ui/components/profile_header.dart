@@ -14,14 +14,15 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            kcPrimaryColor.withOpacity(0.8),
-            kcPrimaryColor.withOpacity(0.4),
-          ],
-        ),
+        color: kcBlackColor,
+        // gradient: LinearGradient(
+        //   begin: Alignment.topCenter,
+        //   end: Alignment.bottomCenter,
+        //   colors: [
+        //     kcBlackColor.withOpacity(0.8),
+        //     kcBlackColor.withOpacity(0.4),
+        //   ],
+        // ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(20.0),

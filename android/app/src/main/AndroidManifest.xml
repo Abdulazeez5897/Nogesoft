@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="com.remotejobs247.app"
+        android:label="Nogesoft"
         android:name="com.remotejobs247.app.MyApplication"
         android:icon="@mipmap/ic_launcher">
         <activity

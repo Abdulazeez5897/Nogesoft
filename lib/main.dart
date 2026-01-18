@@ -20,17 +20,17 @@ void main() async {
   );
 
 
-  runApp(const MyApp());
+  runApp(const NogesoftApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class NogesoftApp extends StatefulWidget {
+  const NogesoftApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<NogesoftApp> createState() => _NogesoftAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _NogesoftAppState extends State<NogesoftApp> {
   @override
   void initState() {
     super.initState();

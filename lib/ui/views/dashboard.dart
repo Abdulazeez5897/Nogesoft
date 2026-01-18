@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 
 import 'dashboardViewModel.dart';
@@ -12,13 +13,32 @@ class DashboardView extends StackedView<DashboardViewModel> {
       Widget? child,
       ) {
     return Scaffold(
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            _Header(viewModel),
-            _QuickActions(viewModel),
-            _RecommendedJobs(viewModel),
-          ],
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF0B1220),
+              Color(0xFF0F1B2D),
+            ],
+          ),
+        ),
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF0B1220),
+                Color(0xFF0F1B2D),
+              ],
+            ),
+          ),
         ),
       ),
 

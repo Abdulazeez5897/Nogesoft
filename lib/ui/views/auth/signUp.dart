@@ -1,10 +1,10 @@
-import 'package:_247remotejobs/ui/common/app_colors.dart';
-import 'package:_247remotejobs/ui/common/ui_helpers.dart';
-import 'package:_247remotejobs/ui/components/submit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
+import '../../common/app_colors.dart';
+import '../../common/ui_helpers.dart';
 import '../../components/custom_button_image.dart';
+import '../../components/submit_button.dart';
 import 'auth_viewmodel.dart';
 
 class SignUp extends StackedView<AuthViewModel> {

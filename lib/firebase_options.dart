@@ -53,16 +53,16 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyDoO6PvL8RX411vUm3YV6HJAg-9GrbQuYs',
     appId: '1:1015881345259:android:7c02ccae3acb3adc71f6ae',
     messagingSenderId: '1015881345259',
-    projectId: 'remotejobs247',
-    storageBucket: 'remotejobs247.firebasestorage.app',
+    projectId: 'nogesoft',
+    storageBucket: 'nogesoft.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC1npFbDwtbdorm75v8BT1tpidKJRmUXv4',
     appId: '1:1015881345259:ios:2eec78fbb5ac62d971f6ae',
     messagingSenderId: '1015881345259',
-    projectId: 'remotejobs247',
-    storageBucket: 'remotejobs247.firebasestorage.app',
-    iosBundleId: 'com.example.remotejobs247',
+    projectId: 'nogesoft',
+    storageBucket: 'nogesoft.firebasestorage.app',
+    iosBundleId: 'com.example.nogesoft',
   );
 }

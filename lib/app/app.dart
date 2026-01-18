@@ -1,14 +1,3 @@
-import 'package:_247remotejobs/ui/views/Auth/login.dart';
-import 'package:_247remotejobs/ui/views/Auth/register.dart';
-import 'package:_247remotejobs/ui/views/Auth/signUp.dart';
-import 'package:_247remotejobs/ui/views/dashboard.dart';
-import 'package:_247remotejobs/ui/views/jobs/jobs_view.dart';
-import 'package:_247remotejobs/ui/views/profile/application_view.dart';
-import 'package:_247remotejobs/ui/views/profile/edit_profile_view.dart';
-import 'package:_247remotejobs/ui/views/profile/profile_view.dart';
-import 'package:_247remotejobs/ui/views/profile/saved_job_view.dart';
-import 'package:_247remotejobs/ui/views/profile/settings_view.dart';
-import 'package:_247remotejobs/ui/views/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -19,8 +8,19 @@ import '../ui/dialogs/info_alert_dialog.dart';
 
 import '../ui/views/Auth/auth_View.dart';
 import '../ui/views/Auth/authentication_service.dart';
+import '../ui/views/Auth/login.dart';
+import '../ui/views/Auth/register.dart';
+import '../ui/views/Auth/signUp.dart';
 import '../ui/views/Otp_Verification/otpVerification.dart';
+import '../ui/views/dashboard.dart';
 import '../ui/views/home_view/home_view.dart';
+import '../ui/views/jobs/jobs_view.dart';
+import '../ui/views/profile/application_view.dart';
+import '../ui/views/profile/edit_profile_view.dart';
+import '../ui/views/profile/profile_view.dart';
+import '../ui/views/profile/saved_job_view.dart';
+import '../ui/views/profile/settings_view.dart';
+import '../ui/views/startup/startup_view.dart';
 // @stacked-import
 
 @StackedApp(

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
-import '../../common/app_colors.dart';
 import '../../common/ui_helpers.dart';
 import 'startup_viewmodel.dart';
 
@@ -16,52 +14,64 @@ class StartupView extends StackedView<StartupViewModel> {
       Widget? child,
       ) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // App Logo
-            // const FlutterLogo(size: 100),
-            // verticalSpaceLarge,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF0B1220),
+              Color(0xFF0F1B2D),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                /// App Name
+                Text(
+                  'Nogesoft',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
 
-            // App Name
-            Text(
-              '247 Remote Jobs',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: kcBlackColor,
-              ),
+                verticalSpaceSmall,
+
+                /// Tagline
+                Text(
+                  'Smartbiz.com',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Colors.white70,
+                  ),
+                ),
+
+                verticalSpaceLarge,
+
+                /// Optional loader (enable if needed)
+                // const CircularProgressIndicator(
+                //   valueColor: AlwaysStoppedAnimation(Colors.white),
+                // ),
+              ],
             ),
-            verticalSpaceSmall,
-
-            // Tagline
-            Text(
-              'Find your dream remote job',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: kcMediumGrey,
-              ),
-            ),
-            verticalSpaceLarge,
-
-            // Loading Indicator
-            // if (viewModel.isBusy)
-            //   const CircularProgressIndicator(
-            //     valueColor: AlwaysStoppedAnimation(kcBlackColor),
-            //   ),
-          ],
+          ),
         ),
       ),
     );
   }
 
   @override
-  StartupViewModel viewModelBuilder(BuildContext context) => StartupViewModel();
+  StartupViewModel viewModelBuilder(BuildContext context) =>
+      StartupViewModel();
 
   @override
   void onViewModelReady(StartupViewModel viewModel) {
-    // Initialize the viewModel when it's ready
-    viewModel.init(); // For ReactiveViewModel approach
-    // No need to call anything for FutureViewModel approach
+    viewModel.init();
     super.onViewModelReady(viewModel);
   }
 }

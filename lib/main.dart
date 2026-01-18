@@ -15,9 +15,13 @@ void main() async {
 
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // Check if Firebase is already initialized
+  try {
+    await Firebase.initializeApp();
+  } catch (e) {
+    // Ignore duplicate initialization errors
+    print('Firebase already initialized: $e');
+  }
 
 
   runApp(const NogesoftApp());

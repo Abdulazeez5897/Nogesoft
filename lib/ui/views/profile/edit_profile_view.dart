@@ -1,5 +1,5 @@
-import 'package:_247remotejobs/ui/views/profile/profile_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:nogesoft/ui/views/profile/profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:google_fonts/google_fonts.dart';
 

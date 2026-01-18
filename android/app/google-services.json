@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1015881345259",
-    "project_id": "remotejobs247",
-    "storage_bucket": "remotejobs247.firebasestorage.app"
+    "project_number": "673412531714",
+    "project_id": "nogesoft",
+    "storage_bucket": "nogesoft.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1015881345259:android:7c02ccae3acb3adc71f6ae",
+        "mobilesdk_app_id": "1:673412531714:android:794015a5fc7a9400ec891b",
         "android_client_info": {
-          "package_name": "com.remotejobs247.app"
+          "package_name": "com.nogesoft.app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDoO6PvL8RX411vUm3YV6HJAg-9GrbQuYs"
+          "current_key": "AIzaSyCBHYxk0w5XI_jwUzGBbLdweDNQ2FURS5Y"
         }
       ],
       "services": {

@@ -5,25 +5,25 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:_247remotejobs/ui/views/Auth/auth_View.dart' as _i4;
-import 'package:_247remotejobs/ui/views/Auth/login.dart' as _i5;
-import 'package:_247remotejobs/ui/views/Auth/register.dart' as _i8;
-import 'package:_247remotejobs/ui/views/Auth/signUp.dart' as _i3;
-import 'package:_247remotejobs/ui/views/dashboard.dart' as _i14;
-import 'package:_247remotejobs/ui/views/home_view/home_view.dart' as _i7;
-import 'package:_247remotejobs/ui/views/jobs/jobs_view.dart' as _i15;
-import 'package:_247remotejobs/ui/views/Otp_Verification/otpVerification.dart'
-    as _i6;
-import 'package:_247remotejobs/ui/views/profile/application_view.dart' as _i11;
-import 'package:_247remotejobs/ui/views/profile/edit_profile_view.dart' as _i13;
-import 'package:_247remotejobs/ui/views/profile/profile_view.dart' as _i9;
-import 'package:_247remotejobs/ui/views/profile/saved_job_view.dart' as _i12;
-import 'package:_247remotejobs/ui/views/profile/settings_view.dart' as _i10;
-import 'package:_247remotejobs/ui/views/startup/startup_view.dart' as _i2;
+import 'package:flutter/foundation.dart' as _i17;
 import 'package:flutter/material.dart' as _i16;
 import 'package:flutter/material.dart';
+import 'package:nogesoft/ui/views/Auth/auth_View.dart' as _i4;
+import 'package:nogesoft/ui/views/Auth/login.dart' as _i5;
+import 'package:nogesoft/ui/views/Auth/register.dart' as _i8;
+import 'package:nogesoft/ui/views/Auth/signUp.dart' as _i3;
+import 'package:nogesoft/ui/views/dashboard.dart' as _i14;
+import 'package:nogesoft/ui/views/home_view/home_view.dart' as _i7;
+import 'package:nogesoft/ui/views/jobs/jobs_view.dart' as _i15;
+import 'package:nogesoft/ui/views/Otp_Verification/otpVerification.dart' as _i6;
+import 'package:nogesoft/ui/views/profile/application_view.dart' as _i11;
+import 'package:nogesoft/ui/views/profile/edit_profile_view.dart' as _i13;
+import 'package:nogesoft/ui/views/profile/profile_view.dart' as _i9;
+import 'package:nogesoft/ui/views/profile/saved_job_view.dart' as _i12;
+import 'package:nogesoft/ui/views/profile/settings_view.dart' as _i10;
+import 'package:nogesoft/ui/views/startup/startup_view.dart' as _i2;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i17;
+import 'package:stacked_services/stacked_services.dart' as _i18;
 
 class Routes {
   static const startupView = '/';
@@ -239,7 +239,7 @@ class OtpVerificationViewArguments {
     required this.email,
   });
 
-  final _i16.Key? key;
+  final _i17.Key? key;
 
   final String email;
 
@@ -268,7 +268,7 @@ class RegistrationViewArguments {
     required this.lastName,
   });
 
-  final _i16.Key? key;
+  final _i17.Key? key;
 
   final String email;
 
@@ -299,7 +299,7 @@ class RegistrationViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i17.NavigationService {
+extension NavigatorStateExtension on _i18.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -357,7 +357,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> navigateToOtpVerificationView({
-    _i16.Key? key,
+    _i17.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -388,7 +388,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> navigateToRegistrationView({
-    _i16.Key? key,
+    _i17.Key? key,
     required String email,
     required String firstName,
     required String lastName,
@@ -562,7 +562,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> replaceWithOtpVerificationView({
-    _i16.Key? key,
+    _i17.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -593,7 +593,7 @@ extension NavigatorStateExtension on _i17.NavigationService {
   }
 
   Future<dynamic> replaceWithRegistrationView({
-    _i16.Key? key,
+    _i17.Key? key,
     required String email,
     required String firstName,
     required String lastName,

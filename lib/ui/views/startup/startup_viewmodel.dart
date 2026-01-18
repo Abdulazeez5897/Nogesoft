@@ -27,18 +27,18 @@ class StartupViewModel extends ReactiveViewModel {
       final user = _auth.currentUser;
 
       if (user == null) {
-        _navigationService.replaceWith(Routes.signUp);
+        _navigationService.replaceWith(Routes.loginView);
       } else {
         final isProfileComplete = await _checkIfProfileComplete(user.uid);
 
         if (isProfileComplete) {
-          _navigationService.replaceWith(Routes.homeView);
+          _navigationService.replaceWith(Routes.dashboardView);
         } else {
-          _navigationService.replaceWith(Routes.registrationView);
+          _navigationService.replaceWith(Routes.loginView);
         }
       }
     } catch (e) {
-      _navigationService.replaceWith(Routes.signUp);
+      _navigationService.replaceWith(Routes.loginView);
     } finally {
       setBusy(false);
     }

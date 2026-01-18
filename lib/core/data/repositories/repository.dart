@@ -1,4 +1,4 @@
-import 'package:_247remotejobs/core/data/repositories/repository-interface.dart';
+import 'package:nogesoft/core/data/repositories/repository-interface.dart';
 
 import '../../../app/app.locator.dart';
 import '../../network/api-responses.dart';

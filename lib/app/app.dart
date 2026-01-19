@@ -12,7 +12,7 @@ import '../ui/views/Auth/login.dart';
 import '../ui/views/Auth/register.dart';
 import '../ui/views/Auth/signUp.dart';
 import '../ui/views/Otp_Verification/otpVerification.dart';
-import '../ui/views/dashboard.dart';
+import '../ui/views/dashboard/dashboard.dart';
 import '../ui/views/home_view/home_view.dart';
 import '../ui/views/jobs/jobs_view.dart';
 import '../ui/views/profile/application_view.dart';

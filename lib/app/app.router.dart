@@ -12,7 +12,7 @@ import 'package:nogesoft/ui/views/Auth/auth_View.dart' as _i4;
 import 'package:nogesoft/ui/views/Auth/login.dart' as _i5;
 import 'package:nogesoft/ui/views/Auth/register.dart' as _i8;
 import 'package:nogesoft/ui/views/Auth/signUp.dart' as _i3;
-import 'package:nogesoft/ui/views/dashboard.dart' as _i14;
+import 'package:nogesoft/ui/views/dashboard/dashboard.dart' as _i14;
 import 'package:nogesoft/ui/views/home_view/home_view.dart' as _i7;
 import 'package:nogesoft/ui/views/jobs/jobs_view.dart' as _i15;
 import 'package:nogesoft/ui/views/Otp_Verification/otpVerification.dart' as _i6;

@@ -45,7 +45,7 @@ class StartupView extends StackedView<StartupViewModel> {
 
                 /// Tagline
                 Text(
-                  'Smartbiz.com',
+                  'Business Operating System',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.white70,
                   ),

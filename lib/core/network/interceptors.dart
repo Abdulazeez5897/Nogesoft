@@ -6,7 +6,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../app/app.dialogs.dart';
 import '../../app/app.locator.dart';
 import '../../state.dart';
-import '../../ui/views/dashboardViewModel.dart';
+import '../../ui/views/dashboard/dashboardViewModel.dart';
 import '../data/repositories/repository.dart';
 import '../utils/custom_pretty_dio_logger.dart';
 import '../utils/dialog_utils.dart';

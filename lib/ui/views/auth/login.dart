@@ -139,7 +139,7 @@ class LoginView extends StackedView<AuthViewModel> {
                           /// Footer stays at bottom
                           Center(
                             child: Text(
-                              '© 2026 SmartBiz',
+                              '© 2026 Nogesoft',
                               style: TextStyle(
                                 color: Colors.white38,
                                 fontSize: 13,

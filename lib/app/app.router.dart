@@ -5,28 +5,32 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/foundation.dart' as _i17;
-import 'package:flutter/material.dart' as _i16;
+import 'package:flutter/material.dart' as _i18;
 import 'package:flutter/material.dart';
-import 'package:nogesoft/ui/views/Auth/auth_View.dart' as _i4;
-import 'package:nogesoft/ui/views/Auth/login.dart' as _i5;
-import 'package:nogesoft/ui/views/Auth/register.dart' as _i8;
-import 'package:nogesoft/ui/views/Auth/signUp.dart' as _i3;
-import 'package:nogesoft/ui/views/dashboard/dashboard.dart' as _i14;
-import 'package:nogesoft/ui/views/home_view/home_view.dart' as _i7;
-import 'package:nogesoft/ui/views/jobs/jobs_view.dart' as _i15;
-import 'package:nogesoft/ui/views/Otp_Verification/otpVerification.dart' as _i6;
-import 'package:nogesoft/ui/views/profile/application_view.dart' as _i11;
-import 'package:nogesoft/ui/views/profile/edit_profile_view.dart' as _i13;
-import 'package:nogesoft/ui/views/profile/profile_view.dart' as _i9;
-import 'package:nogesoft/ui/views/profile/saved_job_view.dart' as _i12;
-import 'package:nogesoft/ui/views/profile/settings_view.dart' as _i10;
+import 'package:nogesoft/ui/views/app_shell/app_shell_view.dart' as _i3;
+import 'package:nogesoft/ui/views/auth/auth_view.dart' as _i5;
+import 'package:nogesoft/ui/views/auth/login.dart' as _i6;
+import 'package:nogesoft/ui/views/auth/register.dart' as _i8;
+import 'package:nogesoft/ui/views/auth/sign_up.dart' as _i4;
+import 'package:nogesoft/ui/views/dashboard/dashboard.dart' as _i10;
+import 'package:nogesoft/ui/views/home_view/home_view.dart' as _i9;
+import 'package:nogesoft/ui/views/jobs/jobs_view.dart' as _i16;
+import 'package:nogesoft/ui/views/otp_verification/otp_verification.dart'
+    as _i7;
+import 'package:nogesoft/ui/views/profile/application_view.dart' as _i13;
+import 'package:nogesoft/ui/views/profile/edit_profile_view.dart' as _i15;
+import 'package:nogesoft/ui/views/profile/profile_view.dart' as _i11;
+import 'package:nogesoft/ui/views/profile/saved_job_view.dart' as _i14;
+import 'package:nogesoft/ui/views/profile/settings_view.dart' as _i12;
 import 'package:nogesoft/ui/views/startup/startup_view.dart' as _i2;
+import 'package:nogesoft/ui/views/store/store_view.dart' as _i17;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i18;
+import 'package:stacked_services/stacked_services.dart' as _i19;
 
 class Routes {
   static const startupView = '/';
+
+  static const appShellView = '/app-shell-view';
 
   static const signUp = '/sign-up';
 
@@ -36,9 +40,11 @@ class Routes {
 
   static const otpVerificationView = '/otp-verification-view';
 
+  static const registrationView = '/registration-view';
+
   static const homeView = '/home-view';
 
-  static const registrationView = '/registration-view';
+  static const dashboardView = '/dashboard-view';
 
   static const profileView = '/profile-view';
 
@@ -50,25 +56,27 @@ class Routes {
 
   static const editProfileView = '/edit-profile-view';
 
-  static const dashboardView = '/dashboard-view';
-
   static const jobsView = '/jobs-view';
+
+  static const storeView = '/store-view';
 
   static const all = <String>{
     startupView,
+    appShellView,
     signUp,
     authView,
     loginView,
     otpVerificationView,
-    homeView,
     registrationView,
+    homeView,
+    dashboardView,
     profileView,
     settingsView,
     applicationsView,
     savedJobsView,
     editProfileView,
-    dashboardView,
     jobsView,
+    storeView,
   };
 }
 
@@ -79,101 +87,109 @@ class StackedRouter extends _i1.RouterBase {
       page: _i2.StartupView,
     ),
     _i1.RouteDef(
+      Routes.appShellView,
+      page: _i3.AppShellView,
+    ),
+    _i1.RouteDef(
       Routes.signUp,
-      page: _i3.SignUp,
+      page: _i4.SignUp,
     ),
     _i1.RouteDef(
       Routes.authView,
-      page: _i4.AuthView,
+      page: _i5.AuthView,
     ),
     _i1.RouteDef(
       Routes.loginView,
-      page: _i5.LoginView,
+      page: _i6.LoginView,
     ),
     _i1.RouteDef(
       Routes.otpVerificationView,
-      page: _i6.OtpVerificationView,
-    ),
-    _i1.RouteDef(
-      Routes.homeView,
-      page: _i7.HomeView,
+      page: _i7.OtpVerificationView,
     ),
     _i1.RouteDef(
       Routes.registrationView,
       page: _i8.RegistrationView,
     ),
     _i1.RouteDef(
-      Routes.profileView,
-      page: _i9.ProfileView,
-    ),
-    _i1.RouteDef(
-      Routes.settingsView,
-      page: _i10.SettingsView,
-    ),
-    _i1.RouteDef(
-      Routes.applicationsView,
-      page: _i11.ApplicationsView,
-    ),
-    _i1.RouteDef(
-      Routes.savedJobsView,
-      page: _i12.SavedJobsView,
-    ),
-    _i1.RouteDef(
-      Routes.editProfileView,
-      page: _i13.EditProfileView,
+      Routes.homeView,
+      page: _i9.HomeView,
     ),
     _i1.RouteDef(
       Routes.dashboardView,
-      page: _i14.DashboardView,
+      page: _i10.DashboardView,
+    ),
+    _i1.RouteDef(
+      Routes.profileView,
+      page: _i11.ProfileView,
+    ),
+    _i1.RouteDef(
+      Routes.settingsView,
+      page: _i12.SettingsView,
+    ),
+    _i1.RouteDef(
+      Routes.applicationsView,
+      page: _i13.ApplicationsView,
+    ),
+    _i1.RouteDef(
+      Routes.savedJobsView,
+      page: _i14.SavedJobsView,
+    ),
+    _i1.RouteDef(
+      Routes.editProfileView,
+      page: _i15.EditProfileView,
     ),
     _i1.RouteDef(
       Routes.jobsView,
-      page: _i15.JobsView,
+      page: _i16.JobsView,
+    ),
+    _i1.RouteDef(
+      Routes.storeView,
+      page: _i17.StoreView,
     ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.StartupView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.StartupView(),
         settings: data,
       );
     },
-    _i3.SignUp: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i3.SignUp(),
+    _i3.AppShellView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i3.AppShellView(),
         settings: data,
       );
     },
-    _i4.AuthView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i4.AuthView(),
+    _i4.SignUp: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i4.SignUp(),
         settings: data,
       );
     },
-    _i5.LoginView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i5.LoginView(),
+    _i5.AuthView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i5.AuthView(),
         settings: data,
       );
     },
-    _i6.OtpVerificationView: (data) {
+    _i6.LoginView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i6.LoginView(),
+        settings: data,
+      );
+    },
+    _i7.OtpVerificationView: (data) {
       final args = data.getArgs<OtpVerificationViewArguments>(nullOk: false);
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) =>
-            _i6.OtpVerificationView(key: args.key, email: args.email),
-        settings: data,
-      );
-    },
-    _i7.HomeView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i7.HomeView(),
+            _i7.OtpVerificationView(key: args.key, email: args.email),
         settings: data,
       );
     },
     _i8.RegistrationView: (data) {
       final args = data.getArgs<RegistrationViewArguments>(nullOk: false);
-      return _i16.MaterialPageRoute<dynamic>(
+      return _i18.MaterialPageRoute<dynamic>(
         builder: (context) => _i8.RegistrationView(
             key: args.key,
             email: args.email,
@@ -182,45 +198,57 @@ class StackedRouter extends _i1.RouterBase {
         settings: data,
       );
     },
-    _i9.ProfileView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i9.ProfileView(),
+    _i9.HomeView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i9.HomeView(),
         settings: data,
       );
     },
-    _i10.SettingsView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i10.SettingsView(),
+    _i10.DashboardView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i10.DashboardView(),
         settings: data,
       );
     },
-    _i11.ApplicationsView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i11.ApplicationsView(),
+    _i11.ProfileView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i11.ProfileView(),
         settings: data,
       );
     },
-    _i12.SavedJobsView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i12.SavedJobsView(),
+    _i12.SettingsView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i12.SettingsView(),
         settings: data,
       );
     },
-    _i13.EditProfileView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i13.EditProfileView(),
+    _i13.ApplicationsView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i13.ApplicationsView(),
         settings: data,
       );
     },
-    _i14.DashboardView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i14.DashboardView(),
+    _i14.SavedJobsView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i14.SavedJobsView(),
         settings: data,
       );
     },
-    _i15.JobsView: (data) {
-      return _i16.MaterialPageRoute<dynamic>(
-        builder: (context) => const _i15.JobsView(),
+    _i15.EditProfileView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i15.EditProfileView(),
+        settings: data,
+      );
+    },
+    _i16.JobsView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i16.JobsView(),
+        settings: data,
+      );
+    },
+    _i17.StoreView: (data) {
+      return _i18.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i17.StoreView(),
         settings: data,
       );
     },
@@ -239,7 +267,7 @@ class OtpVerificationViewArguments {
     required this.email,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
   final String email;
 
@@ -268,7 +296,7 @@ class RegistrationViewArguments {
     required this.lastName,
   });
 
-  final _i17.Key? key;
+  final _i18.Key? key;
 
   final String email;
 
@@ -299,7 +327,7 @@ class RegistrationViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i18.NavigationService {
+extension NavigatorStateExtension on _i19.NavigationService {
   Future<dynamic> navigateToStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -308,6 +336,20 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.startupView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToAppShellView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.appShellView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -357,7 +399,7 @@ extension NavigatorStateExtension on _i18.NavigationService {
   }
 
   Future<dynamic> navigateToOtpVerificationView({
-    _i17.Key? key,
+    _i18.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -367,6 +409,26 @@ extension NavigatorStateExtension on _i18.NavigationService {
   }) async {
     return navigateTo<dynamic>(Routes.otpVerificationView,
         arguments: OtpVerificationViewArguments(key: key, email: email),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToRegistrationView({
+    _i18.Key? key,
+    required String email,
+    required String firstName,
+    required String lastName,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo<dynamic>(Routes.registrationView,
+        arguments: RegistrationViewArguments(
+            key: key, email: email, firstName: firstName, lastName: lastName),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -387,20 +449,14 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToRegistrationView({
-    _i17.Key? key,
-    required String email,
-    required String firstName,
-    required String lastName,
+  Future<dynamic> navigateToDashboardView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  }) async {
-    return navigateTo<dynamic>(Routes.registrationView,
-        arguments: RegistrationViewArguments(
-            key: key, email: email, firstName: firstName, lastName: lastName),
+  ]) async {
+    return navigateTo<dynamic>(Routes.dashboardView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -477,20 +533,6 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> navigateToDashboardView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return navigateTo<dynamic>(Routes.dashboardView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> navigateToJobsView([
     int? routerId,
     bool preventDuplicates = true,
@@ -505,6 +547,20 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToStoreView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.storeView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithStartupView([
     int? routerId,
     bool preventDuplicates = true,
@@ -513,6 +569,20 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.startupView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithAppShellView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.appShellView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -562,7 +632,7 @@ extension NavigatorStateExtension on _i18.NavigationService {
   }
 
   Future<dynamic> replaceWithOtpVerificationView({
-    _i17.Key? key,
+    _i18.Key? key,
     required String email,
     int? routerId,
     bool preventDuplicates = true,
@@ -572,6 +642,26 @@ extension NavigatorStateExtension on _i18.NavigationService {
   }) async {
     return replaceWith<dynamic>(Routes.otpVerificationView,
         arguments: OtpVerificationViewArguments(key: key, email: email),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithRegistrationView({
+    _i18.Key? key,
+    required String email,
+    required String firstName,
+    required String lastName,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.registrationView,
+        arguments: RegistrationViewArguments(
+            key: key, email: email, firstName: firstName, lastName: lastName),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -592,20 +682,14 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithRegistrationView({
-    _i17.Key? key,
-    required String email,
-    required String firstName,
-    required String lastName,
+  Future<dynamic> replaceWithDashboardView([
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
     Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
         transition,
-  }) async {
-    return replaceWith<dynamic>(Routes.registrationView,
-        arguments: RegistrationViewArguments(
-            key: key, email: email, firstName: firstName, lastName: lastName),
+  ]) async {
+    return replaceWith<dynamic>(Routes.dashboardView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -682,20 +766,6 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition: transition);
   }
 
-  Future<dynamic> replaceWithDashboardView([
-    int? routerId,
-    bool preventDuplicates = true,
-    Map<String, String>? parameters,
-    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
-        transition,
-  ]) async {
-    return replaceWith<dynamic>(Routes.dashboardView,
-        id: routerId,
-        preventDuplicates: preventDuplicates,
-        parameters: parameters,
-        transition: transition);
-  }
-
   Future<dynamic> replaceWithJobsView([
     int? routerId,
     bool preventDuplicates = true,
@@ -704,6 +774,20 @@ extension NavigatorStateExtension on _i18.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.jobsView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithStoreView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.storeView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

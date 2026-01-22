@@ -20,7 +20,7 @@ class DashboardRecentTransactions extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            InkWell(
+            GestureDetector(
               onTap: onViewAll,
               child: Text(
                 'View all',

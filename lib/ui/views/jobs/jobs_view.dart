@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import 'jobs_viewModel.dart';
+import 'jobs_viewmodel.dart';
 
 class JobsView extends StackedView<JobsViewModel> {
   const JobsView({super.key});

@@ -1,18 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
+
 import 'app/app.dialogs.dart';
 import 'app/app.locator.dart';
 import 'app/app.router.dart';
 import 'firebase_options.dart';
-import 'state.dart'; // where your uiMode ValueNotifier is
+import 'state.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   setupLocator();
   setupDialogUi();
-  // setupBottomSheetUi();
-
 
   WidgetsFlutterBinding.ensureInitialized();
   // Check if Firebase is already initialized
@@ -22,7 +22,6 @@ void main() async {
     // Ignore duplicate initialization errors
     print('Firebase already initialized: $e');
   }
-
 
   runApp(const NogesoftApp());
 }
@@ -38,15 +37,10 @@ class _NogesoftAppState extends State<NogesoftApp> {
   @override
   void initState() {
     super.initState();
-
-    // Listen for theme changes
     uiMode.addListener(_onThemeChanged);
   }
 
-  void _onThemeChanged() {
-    // Rebuild only this State, MaterialApp widget identity stays the same
-    setState(() {});
-  }
+  void _onThemeChanged() => setState(() {});
 
   @override
   void dispose() {
@@ -57,22 +51,17 @@ class _NogesoftAppState extends State<NogesoftApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '247remotejobs',
+      title: 'Nogesoft',
+      debugShowCheckedModeBanner: false,
 
-      // ✅ keep your initial route
       initialRoute: Routes.startupView,
       onGenerateRoute: StackedRouter().onGenerateRoute,
       navigatorKey: StackedService.navigatorKey,
       navigatorObservers: [StackedService.routeObserver],
 
-      // ✅ set up themes
       theme: ThemeData.light(useMaterial3: true),
-      darkTheme: ThemeData.dark(),
-      themeMode: uiMode.value == AppUiModes.dark
-          ? ThemeMode.dark
-          : ThemeMode.light,
-
-      debugShowCheckedModeBanner: false,
+      darkTheme: ThemeData.dark(useMaterial3: true),
+      themeMode: uiMode.value == AppUiModes.dark ? ThemeMode.dark : ThemeMode.light,
     );
   }
 }

@@ -7,7 +7,7 @@ import '../../../app/app.router.dart';
 import '../../common/app_colors.dart';
 import '../../common/ui_helpers.dart';
 import '../../components/submit_button.dart';
-import 'otpVerificationViewModel.dart';
+import 'otp_verification_viewmodel.dart';
 
 
 class OtpVerificationView extends StackedView<OtpVerificationViewModel> {

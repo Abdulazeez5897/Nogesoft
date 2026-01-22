@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 
-import 'dashboardViewModel.dart';
+import 'dashboard_viewmodel.dart';
 
 // Your dashboard widgets
 import 'package:nogesoft/ui/views/dashboard/widget/dashboard_kpi_grid.dart';
@@ -15,80 +15,80 @@ class DashboardView extends StackedView<DashboardViewModel> {
 
   @override
   Widget builder(BuildContext context, DashboardViewModel viewModel, Widget? child) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      endDrawer: const _DashboardDrawer(),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF0B1220), Color(0xFF0F1B2D)],
-          ),
-        ),
-        child: SafeArea(
-          bottom: false,
-          child: Builder(
-            // ✅ Builder gives a context under this Scaffold so openEndDrawer works
-            builder: (scaffoldContext) {
-              return CustomScrollView(
-                slivers: [
-                  /// ✅ ONE pinned header (flat at top, rounded when scrolled)
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: _NogesoftHeaderDelegate(
-                      height: 70,
-                      onMoonPressed: viewModel.toggleThemeIcon,
-                      onMenuPressed: () => Scaffold.of(scaffoldContext).openEndDrawer(),
+    // This view is "content only" because your AppShell owns the global header/drawer.
+    // BUT: it still must provide Material + scrolling for Ink/Dropdown to work safely.
+
+    return Material(
+      color: Colors.transparent,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /// ------- TITLE ROW (Dashboard + Refresh button) -------
+            Row(
+              children: [
+                Text(
+                  'Dashboard',
+                  style: GoogleFonts.redHatDisplay(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                  ),
+                ),
+                const Spacer(),
+                SizedBox(
+                  height: 42,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF38B24A),
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                     ),
-                  ),
-
-                  /// ---------------- CONTENT ----------------
-                  const SliverToBoxAdapter(child: SizedBox(height: 16)),
-
-                  const SliverPadding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    sliver: SliverToBoxAdapter(child: DashboardKpiGrid()),
-                  ),
-
-                  const SliverToBoxAdapter(child: SizedBox(height: 16)),
-
-                  /// ❌ NOT const (needs viewModel values)
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    sliver: SliverToBoxAdapter(
-                      child: DashboardSalesAnalytics(
-                        selectedRange: viewModel.selectedPeriodLabel,
-                        ranges: viewModel.periodRanges,
-                        onRangeChanged: viewModel.setPeriodRange,
+                    onPressed: viewModel.refresh,
+                    child: Text(
+                      'Refresh',
+                      style: GoogleFonts.redHatDisplay(
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ),
+                ),
+              ],
+            ),
 
-                  const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            const SizedBox(height: 16),
 
-                  const SliverPadding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    sliver: SliverToBoxAdapter(child: DashboardTopSelling()),
-                  ),
+            /// ------- KPI GRID -------
+            DashboardKpiGrid(
+              onLowStockTap: viewModel.viewLowStockItems,
+            ),
 
-                  const SliverToBoxAdapter(child: SizedBox(height: 16)),
+            const SizedBox(height: 16),
 
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    sliver: SliverToBoxAdapter(
-                      child: DashboardRecentTransactions(
-                        onViewAll: viewModel.viewAllTransactions,
-                      ),
-                    ),
-                  ),
+            /// ------- SALES ANALYTICS -------
+            DashboardSalesAnalytics(
+              selectedRange: viewModel.selectedSalesRange,
+              ranges: viewModel.salesRanges,
+              onRangeChanged: viewModel.setSalesRange,
+            ),
 
+            const SizedBox(height: 16),
 
-                  const SliverToBoxAdapter(child: SizedBox(height: 24)),
-                ],
-              );
-            },
-          ),
+            /// ------- TOP SELLING -------
+            const DashboardTopSelling(),
+
+            const SizedBox(height: 16),
+
+            /// ------- RECENT TRANSACTIONS -------
+            DashboardRecentTransactions(
+              onViewAll: viewModel.viewAllTransactions,
+            ),
+          ],
         ),
       ),
     );
@@ -96,205 +96,4 @@ class DashboardView extends StackedView<DashboardViewModel> {
 
   @override
   DashboardViewModel viewModelBuilder(BuildContext context) => DashboardViewModel();
-}
-
-/// Drawer
-class _DashboardDrawer extends StatelessWidget {
-  const _DashboardDrawer();
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: const Color(0xFF0C1524),
-      child: SafeArea(
-        child: Column(
-          children: [
-            /// ---------------- MENU LIST ----------------
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.all(16),
-                children: [
-                  Text(
-                    'Menu',
-                    style: GoogleFonts.redHatDisplay(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-
-                  ListTile(
-                    title: const Text('Home', style: TextStyle(color: Colors.white)),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  ListTile(
-                    title: const Text('Store', style: TextStyle(color: Colors.white)),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  ListTile(
-                    title: const Text('Report', style: TextStyle(color: Colors.white)),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  ListTile(
-                    title: const Text('Customer', style: TextStyle(color: Colors.white)),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  ListTile(
-                    title: const Text('Purchase', style: TextStyle(color: Colors.white)),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  ListTile(
-                    title: const Text('Staff', style: TextStyle(color: Colors.white)),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  ListTile(
-                    title: const Text('My Profile', style: TextStyle(color: Colors.white)),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                  ListTile(
-                    title: const Text('My Business', style: TextStyle(color: Colors.white)),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-            ),
-
-            /// ---------------- LOGOUT BUTTON ----------------
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    // TODO: call logout logic here
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    side: const BorderSide(
-                      color: Color(0xFFFFD54A), // yellow border
-                      width: 1.4,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: Text(
-                    'Logout',
-                    style: GoogleFonts.redHatDisplay(
-                      color: const Color(0xFFFFD54A), // yellow text
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// ✅ Pinned header delegate: flat at top, rounded when scrolled
-class _NogesoftHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final double height;
-  final VoidCallback onMoonPressed;
-  final VoidCallback onMenuPressed;
-
-  _NogesoftHeaderDelegate({
-    required this.height,
-    required this.onMoonPressed,
-    required this.onMenuPressed,
-  });
-
-  @override
-  double get minExtent => height;
-
-  @override
-  double get maxExtent => height;
-
-  @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // ✅ With fixed height headers, overlapsContent is the reliable signal
-    final bool isScrolled = overlapsContent;
-
-    return SizedBox.expand(
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        curve: Curves.easeOut,
-        decoration: BoxDecoration(
-          color: const Color(0xFF0C1524),
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(isScrolled ? 22 : 0),
-          ),
-          boxShadow: isScrolled
-              ? [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.35),
-              blurRadius: 18,
-              offset: const Offset(0, 10),
-            )
-          ]
-              : const [],
-        ),
-        child: SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Text(
-                  'Nogesoft',
-                  style: GoogleFonts.redHatDisplay(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
-                const Spacer(),
-
-                Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF111C2E),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: IconButton(
-                    onPressed: onMoonPressed,
-                    icon: const Icon(
-                      Icons.nights_stay_rounded,
-                      color: Color(0xFFFFD54A),
-                    ),
-                  ),
-                ),
-
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF111C2E),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: IconButton(
-                    onPressed: onMenuPressed,
-                    icon: const Icon(Icons.menu, color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  bool shouldRebuild(covariant _NogesoftHeaderDelegate oldDelegate) {
-    // ✅ If callbacks change, rebuild
-    return oldDelegate.height != height ||
-        oldDelegate.onMoonPressed != onMoonPressed ||
-        oldDelegate.onMenuPressed != onMenuPressed;
-  }
 }

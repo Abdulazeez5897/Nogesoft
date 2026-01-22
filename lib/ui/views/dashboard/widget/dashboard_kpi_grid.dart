@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DashboardKpiGrid extends StatelessWidget {
-  const DashboardKpiGrid({super.key});
+  final VoidCallback onLowStockTap;
+  const DashboardKpiGrid({super.key, required this.onLowStockTap});
+
+  static const String naira = '\u20A6';
 
   @override
   Widget build(BuildContext context) {
-    // Matches your recording: 2 columns of cards + Low Stock card
     return Column(
       children: [
-        const Row(
-          children: [
+        Row(
+          children: const [
             Expanded(
               child: _KpiCard(
                 title: "Today's Sales",
-                value: "\$0",
+                value: "${DashboardKpiGrid.naira}0",
                 valueColor: Colors.white,
               ),
             ),
@@ -22,19 +24,19 @@ class DashboardKpiGrid extends StatelessWidget {
             Expanded(
               child: _KpiCard(
                 title: "Today's Profit",
-                value: "\$0",
-                valueColor: Color(0xFF38B24A), // green like the recording
+                value: "${DashboardKpiGrid.naira}0",
+                valueColor: Color(0xFF38B24A),
               ),
             ),
           ],
         ),
         const SizedBox(height: 12),
-        const Row(
-          children: [
+        Row(
+          children: const [
             Expanded(
               child: _KpiCard(
                 title: "This Month",
-                value: "\$224,239",
+                value: "${DashboardKpiGrid.naira}224,239",
                 valueColor: Colors.white,
               ),
             ),
@@ -49,8 +51,8 @@ class DashboardKpiGrid extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        const Row(
-          children: [
+        Row(
+          children: const [
             Expanded(
               child: _KpiCard(
                 title: "Transactions",
@@ -62,8 +64,8 @@ class DashboardKpiGrid extends StatelessWidget {
             Expanded(
               child: _KpiCard(
                 title: "Unpaid Balance",
-                value: "\$189,989",
-                valueColor: Color(0xFFFF7A18), // orange like the recording
+                value: "${DashboardKpiGrid.naira}189,989",
+                valueColor: Color(0xFFFF7A18),
               ),
             ),
           ],
@@ -73,10 +75,10 @@ class DashboardKpiGrid extends StatelessWidget {
           children: [
             Expanded(
               child: _LowStockCard(
-                onTap: () {},
+                onTap: onLowStockTap,
               ),
             ),
-            const Expanded(child: SizedBox()), // keeps 2-column balance like the page
+            const Expanded(child: SizedBox()),
           ],
         ),
       ],
@@ -117,6 +119,8 @@ class _KpiCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: GoogleFonts.redHatDisplay(
               color: valueColor,
               fontSize: 22,
@@ -168,11 +172,11 @@ class _LowStockCard extends StatelessWidget {
                 style: GoogleFonts.redHatDisplay(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,
-                  color: const Color(0xFFFF3B30), // red like recording
+                  color: const Color(0xFFFF3B30),
                 ),
               ),
               const Spacer(),
-              InkWell(
+              GestureDetector(
                 onTap: onTap,
                 child: Text(
                   'View Items',

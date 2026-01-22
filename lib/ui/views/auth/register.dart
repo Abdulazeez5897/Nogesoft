@@ -8,7 +8,7 @@ import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../common/app_colors.dart';
 import '../../common/ui_helpers.dart';
-import '../../components/outlinedSubmitButton.dart';
+import '../../components/outlined_submit_button.dart';
 import '../../components/submit_button.dart';
 import 'auth_viewmodel.dart';
 

@@ -1,12 +1,14 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:nogesoft/ui/views/staff/staff_view.dart';
 import 'package:nogesoft/ui/views/store/store_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
+import '../customer/customer_view.dart';
 import 'app_shell_viewmodel.dart';
 
 // Pages
@@ -230,7 +232,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                     _ShellPageHost(
                       controller: _pageControllers[3],
                       onScrollNotification: (n) => _onScrollNotification(n, 3),
-                      child: const _PlaceholderPage(title: 'Customer'),
+                      child: const CustomerView()
                     ),
                     _ShellPageHost(
                       controller: _pageControllers[4],
@@ -240,7 +242,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                     _ShellPageHost(
                       controller: _pageControllers[5],
                       onScrollNotification: (n) => _onScrollNotification(n, 5),
-                      child: const _PlaceholderPage(title: 'Staff'),
+                      child: const StaffView(),
                     ),
                     _ShellPageHost(
                       controller: _pageControllers[6],

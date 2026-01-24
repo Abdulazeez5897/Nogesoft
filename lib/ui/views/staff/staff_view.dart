@@ -1,0 +1,163 @@
+import 'package:flutter/material.dart';
+import 'package:nogesoft/ui/views/staff/widget/staff_card.dart';
+import 'package:nogesoft/ui/views/staff/widget/staff_form.dart';
+import 'package:stacked/stacked.dart';
+
+import 'model/staff_member.dart';
+import 'staff_viewmodel.dart';
+
+class StaffView extends StackedView<StaffViewModel> {
+  const StaffView({super.key});
+
+  @override
+  Widget builder(BuildContext context, StaffViewModel viewModel, Widget? child) {
+    // Important: AppShell provides PrimaryScrollController so this scroll drives the global header.
+    return CustomScrollView(
+      primary: true,
+      physics: const BouncingScrollPhysics(),
+      slivers: [
+        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          sliver: SliverToBoxAdapter(
+            child: _TopRow(
+              onAdd: () => _openAddDialog(context, viewModel),
+            ),
+          ),
+        ),
+
+        const SliverToBoxAdapter(child: SizedBox(height: 14)),
+
+        SliverPadding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
+          sliver: viewModel.staff.isEmpty
+              ? const SliverToBoxAdapter(child: _EmptyState())
+              : SliverList.separated(
+            itemCount: viewModel.staff.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 14),
+            itemBuilder: (_, i) {
+              final m = viewModel.staff[i];
+              return StaffCard(
+                member: m,
+                onEdit: () => _openEditDialog(context, viewModel, m),
+                onDelete: () => viewModel.deleteStaff(m.id),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _openAddDialog(BuildContext context, StaffViewModel vm) {
+    return StaffFormDialog.show(
+      context,
+      title: 'Add Staff',
+      isSaving: vm.isSaving,
+      onSubmit: (result) async {
+        await vm.addStaff(
+          name: result.name,
+          email: result.email,
+          password: result.password,
+          role: result.role,
+          status: result.status,
+          isAdmin: result.isAdmin,
+          pickedFileName: result.fileName,
+        );
+      },
+    );
+  }
+
+  Future<void> _openEditDialog(BuildContext context, StaffViewModel vm, StaffMember member) {
+    return StaffFormDialog.show(
+      context,
+      title: 'Add Staff', // video shows "Add Staff" even when editing-like flow
+      isSaving: vm.isSaving,
+      initialName: member.name,
+      initialEmail: member.email,
+      initialRole: member.role,
+      initialStatus: member.status,
+      initialIsAdmin: member.isAdmin,
+      onSubmit: (result) async {
+        // video doesn’t show a distinct “editing” UI; we reuse the same dialog
+        await vm.updateStaff(
+          member.copyWith(
+            name: result.name,
+            email: result.email,
+            role: result.role,
+            status: result.status,
+            isAdmin: result.isAdmin,
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  StaffViewModel viewModelBuilder(BuildContext context) => StaffViewModel();
+}
+
+class _TopRow extends StatelessWidget {
+  final VoidCallback onAdd;
+  const _TopRow({required this.onAdd});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Text(
+          'Staff & Users',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        const Spacer(),
+        SizedBox(
+          height: 42,
+          child: ElevatedButton(
+            onPressed: onAdd,
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              backgroundColor: const Color(0xFF38B24A),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+            ),
+            child: const Text(
+              '+ Add Staff',
+              style: TextStyle(fontWeight: FontWeight.w900),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EmptyState extends StatelessWidget {
+  const _EmptyState();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 14),
+      decoration: BoxDecoration(
+        color: const Color(0xFF101A2B),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: const Center(
+        child: Text(
+          'No staff found',
+          style: TextStyle(
+            color: Colors.white60,
+            fontSize: 16,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -1,6 +1,9 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:nogesoft/ui/views/my_business/my_business_view.dart';
+import 'package:nogesoft/ui/views/profile/profile_view.dart';
+import 'package:nogesoft/ui/views/purchase/purchase_view.dart';
 import 'package:nogesoft/ui/views/reports/widget/report_view.dart';
 import 'package:nogesoft/ui/views/staff/staff_view.dart';
 import 'package:nogesoft/ui/views/store/store_view.dart';
@@ -14,9 +17,7 @@ import 'app_shell_viewmodel.dart';
 
 // Pages
 import '../dashboard/dashboard.dart';
-import '../jobs/jobs_view.dart';
-import '../profile/profile_view.dart';
-import '../profile/settings_view.dart';
+
 
 // Global header widget
 import 'widget/global_header.dart';
@@ -54,8 +55,8 @@ class _CollapsingShellScaffold extends StatefulWidget {
 
 class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
   // Tune these to match the video feel
-  static const double _expandedHeaderHeight = 100;
-  static const double _collapsedHeaderHeight = 90;
+  static const double _expandedHeaderHeight = 92;
+  static const double _collapsedHeaderHeight = 80;
 
   // How much scroll (in px) drives collapse from 0 -> 1.
   // Usually: expanded - collapsed + a little buffer for smoother feel.
@@ -238,7 +239,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                     _ShellPageHost(
                       controller: _pageControllers[4],
                       onScrollNotification: (n) => _onScrollNotification(n, 4),
-                      child: const _PlaceholderPage(title: 'Purchase'),
+                      child: const PurchaseView()
                     ),
                     _ShellPageHost(
                       controller: _pageControllers[5],
@@ -248,12 +249,12 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                     _ShellPageHost(
                       controller: _pageControllers[6],
                       onScrollNotification: (n) => _onScrollNotification(n, 6),
-                      child: const _PlaceholderPage(title: 'My Profile'),
+                      child: const ProfileView(),
                     ),
                     _ShellPageHost(
                       controller: _pageControllers[7],
                       onScrollNotification: (n) => _onScrollNotification(n, 7),
-                      child: const _PlaceholderPage(title: 'My Business'),
+                      child: const MyBusinessView(),
                     ),
                   ],
                 ),

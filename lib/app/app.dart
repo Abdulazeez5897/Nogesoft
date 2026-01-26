@@ -19,11 +19,7 @@ import '../ui/views/auth/sign_up.dart';
 import '../ui/views/home_view/home_view.dart';
 import '../ui/views/jobs/jobs_view.dart';
 import '../ui/views/otp_verification/otp_verification.dart';
-import '../ui/views/profile/application_view.dart';
-import '../ui/views/profile/edit_profile_view.dart';
 import '../ui/views/profile/profile_view.dart';
-import '../ui/views/profile/saved_job_view.dart';
-import '../ui/views/profile/settings_view.dart';
 import '../ui/views/startup/startup_view.dart';
 // @stacked-import
 
@@ -46,10 +42,6 @@ import '../ui/views/startup/startup_view.dart';
     MaterialRoute(page: HomeView),
     MaterialRoute(page: DashboardView),
     MaterialRoute(page: ProfileView),
-    MaterialRoute(page: SettingsView),
-    MaterialRoute(page: ApplicationsView),
-    MaterialRoute(page: SavedJobsView),
-    MaterialRoute(page: EditProfileView),
     MaterialRoute(page: JobsView),
     MaterialRoute(page: StoreView),
     // @stacked-route

@@ -1,0 +1,208 @@
+import 'package:flutter/material.dart';
+
+import '../model/report_models.dart';
+
+
+class ProductBreakdownCard extends StatelessWidget {
+  final String query;
+  final ValueChanged<String> onQueryChanged;
+  final ProductBreakdownItem? item;
+
+  const ProductBreakdownCard({
+    super.key,
+    required this.query,
+    required this.onQueryChanged,
+    required this.item,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+
+    final cardColor = isDark ? const Color(0xFF101A2B) : const Color(0xFFEEF2F6);
+    final textPrimary = isDark ? Colors.white : const Color(0xFF0B1220);
+    final textMuted = isDark ? Colors.white60 : Colors.black54;
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      decoration: BoxDecoration(
+        color: cardColor,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isDark ? 0.25 : 0.10),
+            blurRadius: 14,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Product Breakdown',
+              style: TextStyle(color: textPrimary, fontSize: 20, fontWeight: FontWeight.w900)),
+          const SizedBox(height: 12),
+
+          _SearchField(
+            hint: 'Search product...',
+            value: query,
+            onChanged: onQueryChanged,
+            isDark: isDark,
+          ),
+
+          const SizedBox(height: 14),
+
+          if (item == null)
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 18),
+                child: Text(
+                  'No product found',
+                  style: TextStyle(color: textMuted, fontWeight: FontWeight.w800),
+                ),
+              ),
+            )
+          else ...[
+            _KVRow(label: 'Product', value: item!.name, labelColor: textMuted, valueColor: textPrimary),
+            _KVRow(label: 'Bought', value: '${item!.bought}', labelColor: textMuted, valueColor: textPrimary),
+            _KVRow(label: 'Sold', value: '${item!.sold}', labelColor: textMuted, valueColor: textPrimary),
+            _KVRow(label: 'Remaining', value: '${item!.remaining}', labelColor: textMuted, valueColor: textPrimary),
+            _KVRow(
+              label: 'Revenue',
+              value: _money(item!.revenue),
+              labelColor: textMuted,
+              valueColor: textPrimary,
+            ),
+            _KVRow(
+              label: 'COGS',
+              value: _money(item!.cogs),
+              labelColor: textMuted,
+              valueColor: textPrimary,
+            ),
+            _KVRow(
+              label: 'Profit',
+              value: _money(item!.profit),
+              labelColor: textMuted,
+              valueColor: const Color(0xFF52E08A),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                SizedBox(
+                  width: 92,
+                  child: Text('Progress', style: TextStyle(color: textMuted, fontWeight: FontWeight.w700)),
+                ),
+                Expanded(child: _ProgressBar(value: item!.progress)),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  String _money(int value) {
+    final s = value.abs().toString();
+    final b = StringBuffer();
+    for (int i = 0; i < s.length; i++) {
+      final idxFromEnd = s.length - i;
+      b.write(s[i]);
+      if (idxFromEnd > 1 && idxFromEnd % 3 == 1) b.write(',');
+    }
+    return '₦$b';
+  }
+}
+
+class _KVRow extends StatelessWidget {
+  final String label;
+  final String value;
+  final Color labelColor;
+  final Color valueColor;
+
+  const _KVRow({
+    required this.label,
+    required this.value,
+    required this.labelColor,
+    required this.valueColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 7),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 92,
+            child: Text(label, style: TextStyle(color: labelColor, fontWeight: FontWeight.w700)),
+          ),
+          const Spacer(),
+          Text(value, style: TextStyle(color: valueColor, fontWeight: FontWeight.w800)),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProgressBar extends StatelessWidget {
+  final double value; // 0..1
+  const _ProgressBar({required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    final v = value.clamp(0.0, 1.0);
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        height: 10,
+        color: Colors.white12,
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: FractionallySizedBox(
+            widthFactor: v,
+            child: Container(color: const Color(0xFF52E08A)),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SearchField extends StatelessWidget {
+  final String hint;
+  final String value;
+  final ValueChanged<String> onChanged;
+  final bool isDark;
+
+  const _SearchField({
+    required this.hint,
+    required this.value,
+    required this.onChanged,
+    required this.isDark,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 46,
+      padding: const EdgeInsets.symmetric(horizontal: 14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: isDark ? Colors.white24 : Colors.black12),
+        color: Colors.transparent,
+      ),
+      child: Center(
+        child: TextField(
+          onChanged: onChanged,
+          style: TextStyle(color: isDark ? Colors.white : const Color(0xFF0B1220), fontWeight: FontWeight.w700),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: hint,
+            hintStyle: const TextStyle(color: Colors.white38, fontWeight: FontWeight.w700),
+          ),
+        ),
+      ),
+    );
+  }
+}

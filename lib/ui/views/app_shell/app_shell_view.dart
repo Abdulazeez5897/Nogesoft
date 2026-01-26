@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:nogesoft/ui/views/reports/widget/report_view.dart';
 import 'package:nogesoft/ui/views/staff/staff_view.dart';
 import 'package:nogesoft/ui/views/store/store_view.dart';
 import 'package:stacked/stacked.dart';
@@ -227,7 +228,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                     _ShellPageHost(
                       controller: _pageControllers[2],
                       onScrollNotification: (n) => _onScrollNotification(n, 2),
-                      child: const _PlaceholderPage(title: 'Report'),
+                      child: const ReportsView()
                     ),
                     _ShellPageHost(
                       controller: _pageControllers[3],

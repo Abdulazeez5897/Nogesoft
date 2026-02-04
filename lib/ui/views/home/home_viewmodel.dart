@@ -6,6 +6,7 @@ import '../../../state.dart';
 import '../../../app/app.locator.dart';
 import '../../../core/utils/local_storage.dart';
 import '../../../core/utils/local_store_dir.dart';
+import '../../../core/services/app_shell_service.dart';
 
 
 enum AppShellPage {
@@ -43,18 +44,21 @@ extension AppShellPageX on AppShellPage {
 }
 
 class HomeViewModel extends BaseViewModel {
-  AppShellPage _page = AppShellPage.home;
+  final _shellService = locator<AppShellService>();
 
-  AppShellPage get page => _page;
+  AppShellPage get page => AppShellPage.values[_shellService.pageIndex];
 
-  int get pageIndex => AppShellPage.values.indexOf(_page);
+  int get pageIndex => _shellService.pageIndex;
 
   bool get isDarkMode => uiMode.value == AppUiModes.dark;
 
+  HomeViewModel() {
+    // React to service changes
+    _shellService.addListener(notifyListeners);
+  }
+
   void setPage(AppShellPage value) {
-    if (_page == value) return;
-    _page = value;
-    notifyListeners();
+    _shellService.setPage(AppShellPage.values.indexOf(value));
   }
 
   void toggleTheme() async {

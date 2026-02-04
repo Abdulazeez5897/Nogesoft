@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:nogesoft/core/data/models/purchase.dart';
+import 'package:nogesoft/core/utils/currency_formatter.dart';
 import 'package:intl/intl.dart';
 
 class DashboardRecentTransactions extends StatelessWidget {
@@ -16,43 +17,57 @@ class DashboardRecentTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              'Recent Transactions',
-              style: GoogleFonts.redHatDisplay(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-              ),
-            ),
-            const Spacer(),
-            GestureDetector(
-              onTap: onViewAll,
-              child: Text(
-                'View all',
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF111C2E),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 18,
+            offset: const Offset(0, 10),
+          )
+        ],
+      ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                'Recent Transactions',
                 style: GoogleFonts.redHatDisplay(
-                  fontSize: 14,
-                  color: Colors.white70,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        if (transactions.isEmpty)
-           Padding(
-             padding: const EdgeInsets.all(20),
-             child: Text(
-               "No recent transactions", 
-               style: GoogleFonts.redHatDisplay(color: Colors.white54),
-             ),
-           )
-        else
-          ...transactions.map((txn) => _TxnCard(purchase: txn)).toList(),
-      ],
+              const Spacer(),
+              GestureDetector(
+                onTap: onViewAll,
+                child: Text(
+                  'View all',
+                  style: GoogleFonts.redHatDisplay(
+                    fontSize: 14,
+                    color: Colors.white70,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          if (transactions.isEmpty)
+             Padding(
+               padding: const EdgeInsets.all(20),
+               child: Text(
+                 "No recent transactions", 
+                 style: GoogleFonts.redHatDisplay(color: Colors.white54),
+               ),
+             )
+          else
+            ...transactions.map((txn) => _TxnCard(purchase: txn)).toList(),
+        ],
+      ),
     );
   }
 }
@@ -61,11 +76,6 @@ class _TxnCard extends StatelessWidget {
   final Purchase purchase;
 
   const _TxnCard({required this.purchase});
-
-  String _fmtMoney(num amount) {
-    final formatter = NumberFormat('#,##0.00', 'en_US');
-    return '\u20A6${formatter.format(amount)}';
-  }
 
   String _fmtDate(DateTime? date) {
     if (date == null) return '';
@@ -130,7 +140,7 @@ class _TxnCard extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Text(
-            _fmtMoney(purchase.totalAmount),
+            CurrencyFormatter.formatNaira(purchase.totalAmount.toDouble()),
             style: GoogleFonts.redHatDisplay(
               color: Colors.white,
               fontSize: 16,

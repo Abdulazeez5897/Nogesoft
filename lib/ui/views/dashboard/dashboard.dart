@@ -78,12 +78,16 @@ class DashboardView extends StackedView<DashboardViewModel> {
               selectedRange: viewModel.selectedSalesRange,
               ranges: viewModel.salesRanges,
               onRangeChanged: viewModel.setSalesRange,
+              spots: viewModel.salesSpots,
+              bottomTitles: viewModel.salesBottomTitles,
             ),
 
             const SizedBox(height: 16),
 
             /// ------- TOP SELLING -------
-            const DashboardTopSelling(),
+            DashboardTopSelling(
+              products: viewModel.topSellingProducts,
+            ),
 
             const SizedBox(height: 16),
 

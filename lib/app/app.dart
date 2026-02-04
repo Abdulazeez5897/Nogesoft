@@ -5,6 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../core/data/repositories/repository.dart';
 import '../core/network/api-service.dart';
+import '../core/services/app_shell_service.dart';
 import '../core/utils/local_storage.dart';
 import '../ui/dialogs/info_alert_dialog.dart';
 import '../core/data/repositories/i_repository.dart';
@@ -63,6 +64,7 @@ import '../ui/views/purchase/purchase_view.dart';
 
     /// Data Layer (InMemory for now)
     LazySingleton(classType: InMemoryRepository, asType: IRepository),
+    LazySingleton(classType: AppShellService),
     // @stacked-service
   ],
   dialogs: [

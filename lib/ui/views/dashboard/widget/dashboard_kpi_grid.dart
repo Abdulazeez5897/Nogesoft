@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:nogesoft/core/data/models/dashboard_stats.dart';
-import 'package:intl/intl.dart';
+import 'package:nogesoft/core/utils/currency_formatter.dart';
 
 class DashboardKpiGrid extends StatelessWidget {
   final VoidCallback onLowStockTap;
@@ -16,15 +16,9 @@ class DashboardKpiGrid extends StatelessWidget {
 
   static const String naira = '\u20A6';
 
-  String _fmt(num value) {
-    final formatter = NumberFormat('#,##0', 'en_US');
-    return formatter.format(value);
-  }
-
   @override
   Widget build(BuildContext context) {
     // Show zeroes if stats is null (loading/error)
-    // In real app, might want shimmer here.
     final s = stats ?? const DashboardStats();
 
     return Column(
@@ -34,7 +28,7 @@ class DashboardKpiGrid extends StatelessWidget {
             Expanded(
               child: _KpiCard(
                 title: "Total Revenue", // Renamed from Today for now
-                value: "$naira${_fmt(s.totalRevenue)}",
+                value: CurrencyFormatter.formatNaira(s.totalRevenue),
                 valueColor: Colors.white,
               ),
             ),
@@ -42,7 +36,7 @@ class DashboardKpiGrid extends StatelessWidget {
             Expanded(
               child: _KpiCard(
                 title: "Profit", // Placeholder
-                value: "${naira}0",
+                value: CurrencyFormatter.formatNaira(0),
                 valueColor: const Color(0xFF38B24A),
               ),
             ),
@@ -54,7 +48,7 @@ class DashboardKpiGrid extends StatelessWidget {
             Expanded(
               child: _KpiCard(
                 title: "This Month",
-                value: "$naira${_fmt(s.totalRevenue)}", // Mapping total for now
+                value: CurrencyFormatter.formatNaira(s.totalRevenue), // Mapping total for now
                 valueColor: Colors.white,
               ),
             ),
@@ -82,7 +76,7 @@ class DashboardKpiGrid extends StatelessWidget {
             Expanded(
               child: _KpiCard(
                 title: "Unpaid Balance",
-                value: "${naira}0",
+                value: CurrencyFormatter.formatNaira(0),
                 valueColor: const Color(0xFFFF7A18),
               ),
             ),

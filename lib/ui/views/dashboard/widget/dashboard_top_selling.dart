@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nogesoft/core/data/models/product.dart';
+import 'package:nogesoft/core/utils/currency_formatter.dart';
 
 class DashboardTopSelling extends StatelessWidget {
-  const DashboardTopSelling({super.key});
+  final List<Product> products;
+
+  const DashboardTopSelling({
+    super.key,
+    this.products = const [],
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +39,25 @@ class DashboardTopSelling extends StatelessWidget {
           ),
           const SizedBox(height: 14),
 
-          const _TopSellRow(
-            rank: '1',
-            name: 'Vital Foam',
-            sold: '12 sold',
-            amount: '₦217,499',
-          ),
-          const SizedBox(height: 12),
-          const _TopSellRow(
-            rank: '2',
-            name: 'Amarya Foam',
-            sold: '6 sold',
-            amount: '₦6,750',
-          ),
+          if (products.isEmpty)
+            Text(
+              "No sales data yet",
+              style: GoogleFonts.redHatDisplay(color: Colors.white54),
+            )
+          else
+            ...products.asMap().entries.map((e) {
+              final index = e.key;
+              final product = e.value;
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: _TopSellRow(
+                  rank: '${index + 1}',
+                  name: product.name,
+                  sold: '${product.stockQuantity} sold', // Using stock as simplified 'sold' for now or need a better metric
+                  amount: CurrencyFormatter.formatNaira(product.price),
+                ),
+              );
+            }),
         ],
       ),
     );

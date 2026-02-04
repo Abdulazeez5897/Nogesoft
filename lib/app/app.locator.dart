@@ -16,6 +16,7 @@ import '../core/data/repositories/i_repository.dart';
 import '../core/data/repositories/in_memory_repository.dart';
 import '../core/data/repositories/repository.dart';
 import '../core/network/api-service.dart';
+import '../core/services/app_shell_service.dart';
 import '../core/utils/local_storage.dart';
 import '../ui/views/auth/authentication_service.dart';
 
@@ -39,4 +40,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => Repository());
   locator.registerLazySingleton(() => AuthenticationService());
   locator.registerLazySingleton<IRepository>(() => InMemoryRepository());
+  locator.registerLazySingleton(() => AppShellService());
 }

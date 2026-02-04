@@ -6,12 +6,16 @@ class DashboardSalesAnalytics extends StatelessWidget {
   final String selectedRange;
   final List<String> ranges;
   final ValueChanged<String> onRangeChanged;
+  final List<FlSpot> spots;
+  final List<String> bottomTitles;
 
   const DashboardSalesAnalytics({
     super.key,
     required this.selectedRange,
     required this.ranges,
     required this.onRangeChanged,
+    this.spots = const [FlSpot(0, 0)],
+    this.bottomTitles = const [],
   });
 
   @override
@@ -127,35 +131,26 @@ class DashboardSalesAnalytics extends StatelessWidget {
                       sideTitles: SideTitles(
                         showTitles: true,
                         reservedSize: 28,
+                        interval: 1, // Ensure we step 1 by 1
                         getTitlesWidget: (value, meta) {
-                          switch (value.toInt()) {
-                            case 0:
-                              return const Text('Wed 14',
-                                  style: TextStyle(color: Colors.white54, fontSize: 11));
-                            case 1:
-                              return const Text('Thu 15',
-                                  style: TextStyle(color: Colors.white54, fontSize: 11));
-                            case 2:
-                              return const Text('Fri 16',
-                                  style: TextStyle(color: Colors.white54, fontSize: 11));
-                            case 3:
-                              return const Text('Sat 17',
-                                  style: TextStyle(color: Colors.white54, fontSize: 11));
-                            default:
-                              return const SizedBox.shrink();
+                          final index = value.toInt();
+                          if (index >= 0 && index < bottomTitles.length) {
+                             return Padding(
+                               padding: const EdgeInsets.only(top: 8.0),
+                               child: Text(
+                                 bottomTitles[index],
+                                 style: const TextStyle(color: Colors.white54, fontSize: 11),
+                               ),
+                             );
                           }
+                          return const SizedBox.shrink();
                         },
                       ),
                     ),
                   ),
                   lineBarsData: [
                     LineChartBarData(
-                      spots: const [
-                        FlSpot(0, 12000),
-                        FlSpot(1, 0),
-                        FlSpot(2, 65000),
-                        FlSpot(3, 210000),
-                      ],
+                      spots: spots,
                       isCurved: true,
                       barWidth: 3,
                       color: const Color(0xFF3B82F6),

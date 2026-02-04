@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/data/models/dashboard_stats.dart';
+import 'package:nogesoft/core/data/models/dashboard_stats.dart';
 import 'package:intl/intl.dart';
 
 class DashboardKpiGrid extends StatelessWidget {

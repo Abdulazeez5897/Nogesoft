@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/purchase_model.dart';
+import 'package:nogesoft/core/data/models/purchase.dart';
 
 class PurchaseCard extends StatelessWidget {
   final Purchase purchase;
@@ -96,7 +96,7 @@ class PurchaseCard extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              'Paid: ${money(purchase.amountPaid)} | Bal: ${money(purchase.balance)}',
+              'Paid: ${money(purchase.amountPaid)} | Bal: ${money(purchase.totalAmount - purchase.amountPaid)}',
               style: TextStyle(
                 color: muted,
                 fontWeight: FontWeight.w700,

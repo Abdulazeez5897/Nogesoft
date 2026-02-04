@@ -32,7 +32,7 @@ class StartupViewModel extends ReactiveViewModel {
         final isProfileComplete = await _checkIfProfileComplete(user.uid);
 
         if (isProfileComplete) {
-          _navigationService.replaceWith(Routes.appShellView);
+          _navigationService.replaceWith(Routes.homeView);
         } else {
           _navigationService.replaceWith(Routes.loginView);
         }

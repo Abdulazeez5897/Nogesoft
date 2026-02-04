@@ -3,14 +3,19 @@ import '../../../app/app.locator.dart';
 import '../../../core/data/repositories/i_repository.dart';
 
 
-import 'model/customer.dart';
+import 'package:nogesoft/core/data/models/customer.dart';
+
+enum CustomerTab { all, debtors }
 
 class CustomerViewModel extends BaseViewModel {
+  final _repository = locator<IRepository>();
+
   CustomerTab _tab = CustomerTab.all;
   String _query = '';
-  CustomerTab get tab => _tab;
+  
+  List<Customer> _customers = [];
 
-  String _query = '';
+  CustomerTab get tab => _tab;
 
   int get allCount => _customers.length;
   int get debtorCount => _customers.where((c) => c.debt > 0).length;
@@ -47,7 +52,6 @@ class CustomerViewModel extends BaseViewModel {
           address: 'No 4, Kofar Ruwa',
           phone: '08012345678',
           debt: 0,
-          lastPurchaseDate: null,
         ),
         const Customer(
           id: '2',
@@ -55,7 +59,6 @@ class CustomerViewModel extends BaseViewModel {
           address: 'Sabon Gari, Kano',
           phone: '09087654321',
           debt: 15000,
-          lastPurchaseDate: null,
         ),
       ];
     }
@@ -87,7 +90,7 @@ class CustomerViewModel extends BaseViewModel {
       phone: phone,
       debt: initialDebt, 
     );
-    _customers.insert(0, item);
+    _customers.insert(0, newCustomer);
     notifyListeners();
   }
 }

@@ -3,7 +3,7 @@ class Customer {
   final String name;
   final String phone;
   final String email;
-  final double balance; // Positive means they owe us (debtor)
+  final double debt; // Positive means they owe us (debtor)
   final String address;
 
   const Customer({
@@ -11,7 +11,7 @@ class Customer {
     required this.name,
     this.phone = '',
     this.email = '',
-    this.balance = 0.0,
+    this.debt = 0.0,
     this.address = '',
   });
 
@@ -21,7 +21,7 @@ class Customer {
       name: json['name'] as String? ?? '',
       phone: json['phone'] as String? ?? '',
       email: json['email'] as String? ?? '',
-      balance: (json['balance'] as num?)?.toDouble() ?? 0.0,
+      debt: (json['debt'] as num?)?.toDouble() ?? 0.0,
       address: json['address'] as String? ?? '',
     );
   }
@@ -32,7 +32,7 @@ class Customer {
       'name': name,
       'phone': phone,
       'email': email,
-      'balance': balance,
+      'debt': debt,
       'address': address,
     };
   }
@@ -42,7 +42,7 @@ class Customer {
     String? name,
     String? phone,
     String? email,
-    double? balance,
+    double? debt,
     String? address,
   }) {
     return Customer(
@@ -50,7 +50,7 @@ class Customer {
       name: name ?? this.name,
       phone: phone ?? this.phone,
       email: email ?? this.email,
-      balance: balance ?? this.balance,
+      debt: debt ?? this.debt,
       address: address ?? this.address,
     );
   }

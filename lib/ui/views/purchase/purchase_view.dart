@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nogesoft/ui/views/purchase/widget/new_purchase_sheet.dart';
 import 'package:nogesoft/ui/views/purchase/widget/purchase_card.dart';
+import 'package:nogesoft/core/data/models/purchase.dart';
+import 'package:nogesoft/ui/views/purchase/purchase_viewmodel.dart';
 import 'package:stacked/stacked.dart';
-
-import 'purchase_viewmodel.dart';
 
 class PurchaseView extends StackedView<PurchaseViewModel> {
   const PurchaseView({super.key});

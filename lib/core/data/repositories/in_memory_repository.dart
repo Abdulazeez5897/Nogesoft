@@ -74,14 +74,14 @@ class InMemoryRepository implements IRepository {
       name: 'John Doe',
       phone: '08012345678',
       email: 'john@example.com',
-      balance: 5000.0, // Owes money
+      debt: 5000.0, // Owes money
     ),
     const Customer(
       id: 'c2',
       name: 'Jane Smith',
       phone: '08087654321',
       email: 'jane@example.com',
-      balance: 0.0,
+      debt: 0.0,
     ),
   ];
 

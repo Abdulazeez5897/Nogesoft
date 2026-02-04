@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/customer.dart';
+import 'package:nogesoft/core/data/models/customer.dart';
 
 class CustomerDetailsSheet extends StatelessWidget {
   final Customer customer;

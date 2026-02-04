@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../core/data/models/purchase.dart';
+import 'package:nogesoft/core/data/models/purchase.dart';
 import 'package:intl/intl.dart';
 
 class DashboardRecentTransactions extends StatelessWidget {
@@ -62,20 +62,21 @@ class _TxnCard extends StatelessWidget {
 
   const _TxnCard({required this.purchase});
 
-  String _fmtMoney(double amount) {
+  String _fmtMoney(num amount) {
     final formatter = NumberFormat('#,##0.00', 'en_US');
     return '\u20A6${formatter.format(amount)}';
   }
 
-  String _fmtDate(DateTime date) {
+  String _fmtDate(DateTime? date) {
+    if (date == null) return '';
     return DateFormat('M/d/yy, h:mm a').format(date);
   }
 
   @override
   Widget build(BuildContext context) {
-    final name = purchase.supplierName.isNotEmpty 
-        ? purchase.supplierName 
-        : (purchase.productName.isNotEmpty ? purchase.productName : "Unknown");
+    final name = purchase.supplier.name.isNotEmpty 
+        ? purchase.supplier.name 
+        : (purchase.items.isNotEmpty ? purchase.items.first.product.name : "Unknown");
         
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -116,7 +117,7 @@ class _TxnCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    purchase.status, // or Tag
+                    purchase.status, 
                     style: GoogleFonts.redHatDisplay(
                       color: const Color(0xFF38B24A),
                       fontSize: 13,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/data/models/product.dart';
-import '../../../core/data/models/purchase.dart';
+import 'package:nogesoft/core/data/models/product.dart';
+import 'package:nogesoft/core/data/models/purchase.dart';
 
 class NewPurchaseResult {
   final Supplier supplier;

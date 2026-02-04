@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../model/customer.dart';
+import 'package:nogesoft/core/data/models/customer.dart';
 
 class CustomerTable extends StatelessWidget {
   final List<Customer> customers;

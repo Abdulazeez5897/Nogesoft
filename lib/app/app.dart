@@ -23,6 +23,7 @@ import '../ui/views/jobs/jobs_view.dart';
 import '../ui/views/otp_verification/otp_verification.dart';
 import '../ui/views/profile/profile_view.dart';
 import '../ui/views/startup/startup_view.dart';
+import '../ui/views/purchase/purchase_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -40,8 +41,9 @@ import '../ui/views/startup/startup_view.dart';
     MaterialRoute(page: OtpVerificationView),
     MaterialRoute(page: RegistrationView),
 
+
     /// Other standalone pages (if you still need direct navigation)
-    MaterialRoute(page: HomeView),
+    MaterialRoute(page: PurchaseView),
     MaterialRoute(page: DashboardView),
     MaterialRoute(page: ProfileView),
     MaterialRoute(page: JobsView),

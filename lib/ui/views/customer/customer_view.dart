@@ -5,7 +5,7 @@ import 'package:nogesoft/ui/views/customer/widget/new_customer_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 import 'customer_viewmodel.dart';
-import 'model/customer.dart';
+import 'package:nogesoft/core/data/models/customer.dart';
 
 class CustomerView extends StackedView<CustomerViewModel> {
   const CustomerView({super.key});

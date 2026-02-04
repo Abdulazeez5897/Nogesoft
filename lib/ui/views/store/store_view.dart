@@ -3,7 +3,7 @@ import 'package:nogesoft/ui/views/store/widget/store_product_card.dart';
 import 'package:nogesoft/ui/views/store/widget/store_product_dialog.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../core/data/models/product.dart';
+import 'package:nogesoft/core/data/models/product.dart';
 import 'store_viewmodel.dart';
 
 class StoreView extends StackedView<StoreViewModel> {

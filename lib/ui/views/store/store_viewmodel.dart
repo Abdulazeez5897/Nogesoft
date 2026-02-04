@@ -1,6 +1,8 @@
 import 'package:stacked/stacked.dart';
 
-import 'model/store_product.dart';
+import '../../../app/app.locator.dart';
+import '../../../core/data/models/product.dart';
+import '../../../core/data/repositories/i_repository.dart';
 
 
 class StoreViewModel extends BaseViewModel {

@@ -87,16 +87,17 @@ class DashboardSalesAnalytics extends StatelessWidget {
 
             SizedBox(
               height: 190,
-              child: LineChart(
-                LineChartData(
-                  minY: 0,
-                  maxY: 220000,
-                  gridData: FlGridData(show: false),
-                  borderData: FlBorderData(
-                    show: true,
-                    border: const Border(
-                      left: BorderSide(color: Colors.white24),
-                      bottom: BorderSide(color: Colors.white24),
+                child: LineChart(
+                  LineChartData(
+                    clipData: const FlClipData.all(),
+                    minY: 0,
+                    // maxY: 220000, // Removed hardcoded limit for dynamic scaling
+                    gridData: FlGridData(show: false),
+                    borderData: FlBorderData(
+                      show: true,
+                      border: const Border(
+                        left: BorderSide(color: Colors.white24),
+                        bottom: BorderSide(color: Colors.white24),
                       right: BorderSide(color: Colors.transparent),
                       top: BorderSide(color: Colors.transparent),
                     ),

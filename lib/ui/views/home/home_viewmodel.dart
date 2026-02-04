@@ -3,6 +3,10 @@ import 'package:stacked/stacked.dart';
 // This should exist because main.dart uses it:
 // import 'state.dart';  // (your main.dart imports it from lib root)
 import '../../../state.dart';
+import '../../../app/app.locator.dart';
+import '../../../core/utils/local_storage.dart';
+import '../../../core/utils/local_store_dir.dart';
+
 
 enum AppShellPage {
   home,
@@ -38,7 +42,7 @@ extension AppShellPageX on AppShellPage {
   }
 }
 
-class AppShellViewModel extends BaseViewModel {
+class HomeViewModel extends BaseViewModel {
   AppShellPage _page = AppShellPage.home;
 
   AppShellPage get page => _page;
@@ -53,8 +57,13 @@ class AppShellViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void toggleTheme() {
+  void toggleTheme() async {
     uiMode.value = isDarkMode ? AppUiModes.light : AppUiModes.dark;
+    
+    // Persist
+    final storage = locator<LocalStorage>();
+    await storage.save(LocalStorageDir.uiMode, isDarkMode ? "dark" : "light");
+
     notifyListeners(); // updates the icon immediately
   }
 }

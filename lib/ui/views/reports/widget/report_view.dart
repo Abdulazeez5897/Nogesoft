@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nogesoft/ui/views/reports/widget/product_breakdown_card.dart';
 import 'package:nogesoft/ui/views/reports/widget/report_metric_card.dart';
+import 'package:nogesoft/ui/views/reports/widget/sales_chart.dart';
 import 'package:stacked/stacked.dart';
 
 import '../reports_viewmodel.dart';
-
-
-
 
 class ReportsView extends StackedView<ReportsViewModel> {
   const ReportsView({super.key});
@@ -46,14 +44,15 @@ class ReportsView extends StackedView<ReportsViewModel> {
 
         const SliverToBoxAdapter(child: SizedBox(height: 18)),
 
-        SliverToBoxAdapter(
-          child: Center(
-            child: Text(
-              viewModel.statusMessage,
-              style: const TextStyle(color: Colors.white60, fontSize: 18, fontWeight: FontWeight.w700),
+        if (viewModel.statusMessage.isNotEmpty)
+          SliverToBoxAdapter(
+            child: Center(
+              child: Text(
+                viewModel.statusMessage,
+                style: const TextStyle(color: Colors.white60, fontSize: 18, fontWeight: FontWeight.w700),
+              ),
             ),
           ),
-        ),
 
         const SliverToBoxAdapter(child: SizedBox(height: 18)),
 
@@ -75,6 +74,16 @@ class ReportsView extends StackedView<ReportsViewModel> {
 
         const SliverToBoxAdapter(child: SizedBox(height: 18)),
 
+        if (viewModel.weeklySales.isNotEmpty) ...[
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+             child: SalesChart(weeklySales: viewModel.weeklySales),
+            ),
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 18)),
+        ],
+
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
           sliver: SliverToBoxAdapter(
@@ -88,6 +97,9 @@ class ReportsView extends StackedView<ReportsViewModel> {
       ],
     );
   }
+
+  @override
+  void onViewModelReady(ReportsViewModel viewModel) => viewModel.init();
 
   @override
   ReportsViewModel viewModelBuilder(BuildContext context) => ReportsViewModel();

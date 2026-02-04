@@ -3,7 +3,7 @@ import 'package:nogesoft/ui/views/store/widget/store_product_card.dart';
 import 'package:nogesoft/ui/views/store/widget/store_product_dialog.dart';
 import 'package:stacked/stacked.dart';
 
-import 'model/store_product.dart';
+import '../../../core/data/models/product.dart';
 import 'store_viewmodel.dart';
 
 class StoreView extends StackedView<StoreViewModel> {
@@ -31,21 +31,26 @@ class StoreView extends StackedView<StoreViewModel> {
 
         const SliverToBoxAdapter(child: SizedBox(height: 14)),
 
-        SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 18),
-          sliver: SliverList.separated(
-            itemCount: viewModel.products.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
-            itemBuilder: (ctx, i) {
-              final p = viewModel.products[i];
-              return StoreProductCard(
-                product: p,
-                onEdit: () => _openEditDialog(context, viewModel, p),
-                onDelete: () => viewModel.deleteProduct(p.id),
-              );
-            },
+        if (viewModel.isBusy)
+           const SliverFillRemaining(
+             child: Center(child: CircularProgressIndicator(color: Color(0xFF38B24A))),
+           )
+        else
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 18),
+            sliver: SliverList.separated(
+              itemCount: viewModel.products.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 14),
+              itemBuilder: (ctx, i) {
+                final p = viewModel.products[i];
+                return StoreProductCard(
+                  product: p,
+                  onEdit: () => _openEditDialog(context, viewModel, p),
+                  onDelete: () => viewModel.deleteProduct(p.id),
+                );
+              },
+            ),
           ),
-        ),
       ],
     );
   }
@@ -57,7 +62,7 @@ class StoreView extends StackedView<StoreViewModel> {
     final res = await StoreProductDialog.show(
       context,
       title: 'Create Product',
-      initialDimension: 'pcs',
+      initialUnit: 'pcs',
     );
 
     if (res == null) return;
@@ -67,23 +72,27 @@ class StoreView extends StackedView<StoreViewModel> {
       category: res.category,
       price: res.price,
       stock: res.stock,
-      dimension: res.dimension,
+      unit: res.unit,
+      dimensions: res.dimensions,
+      date: res.date,
     );
   }
 
   Future<void> _openEditDialog(
       BuildContext context,
       StoreViewModel viewModel,
-      StoreProduct product,
+      Product product,
       ) async {
     final res = await StoreProductDialog.show(
       context,
-      title: 'Create Product', // video only shows "Create Product"
+      title: 'Edit Product',
       initialName: product.name,
       initialCategory: product.category,
-      initialPrice: product.price,
-      initialStock: product.stock,
-      initialDimension: product.dimension,
+      initialPrice: product.price.toInt(),
+      initialStock: product.stockQuantity,
+      initialUnit: product.unit,
+      initialDimensions: product.dimensions,
+      initialDate: product.expiryDate,
     );
 
     if (res == null) return;
@@ -92,12 +101,17 @@ class StoreView extends StackedView<StoreViewModel> {
       product.copyWith(
         name: res.name,
         category: res.category,
-        price: res.price,
-        stock: res.stock,
-        dimension: res.dimension,
+        price: res.price.toDouble(),
+        stockQuantity: res.stock,
+        unit: res.unit,
+        dimensions: res.dimensions,
+        expiryDate: res.date,
       ),
     );
   }
+
+  @override
+  void onViewModelReady(StoreViewModel viewModel) => viewModel.init();
 
   @override
   StoreViewModel viewModelBuilder(BuildContext context) => StoreViewModel();

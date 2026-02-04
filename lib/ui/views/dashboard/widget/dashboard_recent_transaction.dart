@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../core/data/models/purchase.dart';
+import 'package:intl/intl.dart';
+
 class DashboardRecentTransactions extends StatelessWidget {
   final VoidCallback onViewAll;
-  const DashboardRecentTransactions({super.key, required this.onViewAll});
+  final List<Purchase> transactions;
+
+  const DashboardRecentTransactions({
+    super.key, 
+    required this.onViewAll,
+    this.transactions = const [],
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,45 +42,41 @@ class DashboardRecentTransactions extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-
-        const _TxnCard(
-          name: 'Abdulazeez Usman',
-          amount: '₦209,989',
-          date: '1/18/26, 12:23 AM',
-          tag: 'income',
-        ),
-        const _TxnCard(
-          name: 'Umar',
-          amount: '₦3,000',
-          date: '1/17/26, 12:40 PM',
-          tag: 'income',
-        ),
-        const _TxnCard(
-          name: 'Mr Adam',
-          amount: '₦750',
-          date: '1/17/26, 12:18 PM',
-          tag: 'income',
-        ),
+        if (transactions.isEmpty)
+           Padding(
+             padding: const EdgeInsets.all(20),
+             child: Text(
+               "No recent transactions", 
+               style: GoogleFonts.redHatDisplay(color: Colors.white54),
+             ),
+           )
+        else
+          ...transactions.map((txn) => _TxnCard(purchase: txn)).toList(),
       ],
     );
   }
 }
 
 class _TxnCard extends StatelessWidget {
-  final String name;
-  final String amount;
-  final String date;
-  final String tag;
+  final Purchase purchase;
 
-  const _TxnCard({
-    required this.name,
-    required this.amount,
-    required this.date,
-    required this.tag,
-  });
+  const _TxnCard({required this.purchase});
+
+  String _fmtMoney(double amount) {
+    final formatter = NumberFormat('#,##0.00', 'en_US');
+    return '\u20A6${formatter.format(amount)}';
+  }
+
+  String _fmtDate(DateTime date) {
+    return DateFormat('M/d/yy, h:mm a').format(date);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final name = purchase.supplierName.isNotEmpty 
+        ? purchase.supplierName 
+        : (purchase.productName.isNotEmpty ? purchase.productName : "Unknown");
+        
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
@@ -97,7 +102,7 @@ class _TxnCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  date,
+                  _fmtDate(purchase.date),
                   style: GoogleFonts.redHatDisplay(
                     color: Colors.white60,
                     fontSize: 13,
@@ -111,7 +116,7 @@ class _TxnCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    tag,
+                    purchase.status, // or Tag
                     style: GoogleFonts.redHatDisplay(
                       color: const Color(0xFF38B24A),
                       fontSize: 13,
@@ -124,7 +129,7 @@ class _TxnCard extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Text(
-            amount,
+            _fmtMoney(purchase.totalAmount),
             style: GoogleFonts.redHatDisplay(
               color: Colors.white,
               fontSize: 16,

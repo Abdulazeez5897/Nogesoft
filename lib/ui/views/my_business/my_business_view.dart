@@ -122,11 +122,72 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
     super.dispose();
   }
 
+  Future<void> _confirmRemove(String branchId) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF0E1626),
+        title: const Text('Remove Branch', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        content: const Text(
+          'Are you sure you want to remove this branch?',
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel', style: TextStyle(color: Colors.white60)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Remove', style: TextStyle(color: Color(0xFFE04B5A), fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      widget.viewModel.removeBranch(branchId);
+    }
+  }
+
+  Future<void> _handlePickLogo() async {
+    // Mocking file pick + size validation
+    // In real app: final XFile? file = await _picker.pickImage(...)
+    // if (await file.length() > 2 * 1024 * 1024) _showError('File is too large (Max 2MB)');
+    
+    // Simulating success for now, but error modal logic is ready:
+    /*
+    _showError('File is too large. Maximum size is 2MB.');
+    return;
+    */
+    
+    widget.viewModel.pickLogoMock();
+  }
+
+  void _showError(String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF0E1626),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text('Error', style: TextStyle(color: Color(0xFFE04B5A), fontWeight: FontWeight.bold)),
+        content: Text(message, style: const TextStyle(color: Colors.white70)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('OK', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final vm = widget.viewModel;
     final b = widget.business;
-
+    
+    // ...
     return CustomScrollView(
       primary: true,
       physics: const BouncingScrollPhysics(),
@@ -159,7 +220,7 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
               branchNameCtrls: _branchNameCtrls,
               branchAddressCtrls: _branchAddressCtrls,
               onAddBranch: vm.addBranch,
-              onRemoveBranch: vm.removeBranch,
+              onRemoveBranch: _confirmRemove,
               isSaving: vm.isSaving,
               onSave: () => vm.saveChanges(
                 companyHeader: _companyHeader.text,
@@ -174,7 +235,7 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
                   return br.copyWith(name: name, address: addr);
                 }).toList(growable: false),
               ),
-              onPickLogo: vm.pickLogoMock,
+              onPickLogo: _handlePickLogo,
             ),
           ),
         ),

@@ -1,68 +1,55 @@
 import 'package:stacked/stacked.dart';
 
-import 'model/purchase_model.dart';
+import '../../../app/app.locator.dart';
+import '../../../core/data/models/product.dart';
+import '../../../core/data/models/purchase.dart';
+import '../../../core/data/repositories/i_repository.dart';
 
 
 class PurchaseViewModel extends BaseViewModel {
+  final _repository = locator<IRepository>();
   String _query = '';
 
-  final List<Supplier> _suppliers = const [
-    Supplier(id: 'sup1', name: 'Amraya foam'),
-    Supplier(id: 'sup2', name: 'Vital foam'),
-    Supplier(id: 'sup3', name: 'ASB Foods LTD'),
-  ];
-
-  final List<CatalogProduct> _catalog = const [
-    CatalogProduct(id: 'p1', name: 'Corn Flakes'),
-    CatalogProduct(id: 'p2', name: 'Sugar'),
-    CatalogProduct(id: 'p3', name: 'Milk'),
-  ];
-
-  final List<Purchase> _purchases = [
-    Purchase(
-      id: 'pu1',
-      invoiceNumber: '46784',
-      supplier: const Supplier(id: 'sup2', name: 'Vital foam'),
-      date: DateTime(2026, 1, 25),
-      totalAmount: 20000,
-      amountPaid: 50000,
-      items: const [
-        PurchaseItem(
-          product: CatalogProduct(id: 'p2', name: 'Sugar'),
-          qty: 1,
-          cost: 20000,
-          sell: 30000,
-        ),
-      ],
-    ),
-    Purchase(
-      id: 'pu2',
-      invoiceNumber: '123456',
-      supplier: const Supplier(id: 'sup3', name: 'ASB Foods LTD'),
-      date: DateTime(2026, 1, 25),
-      totalAmount: 35000,
-      amountPaid: 35000,
-      items: const [
-        PurchaseItem(
-          product: CatalogProduct(id: 'p1', name: 'Corn Flakes'),
-          qty: 1,
-          cost: 35000,
-          sell: 0,
-        ),
-      ],
-    ),
-  ];
+  List<Purchase> _purchases = [];
+  List<Supplier> _suppliers = [];
+  List<Product> _catalog = [];
 
   String get query => _query;
-  List<Supplier> get suppliers => List.unmodifiable(_suppliers);
-  List<CatalogProduct> get catalog => List.unmodifiable(_catalog);
+  List<Purchase> get purchases => _purchases;
+  List<Supplier> get suppliers => _suppliers;
+  List<Product> get catalog => _catalog;
 
   List<Purchase> get visiblePurchases {
     final q = _query.trim().toLowerCase();
-    if (q.isEmpty) return List.unmodifiable(_purchases);
+    if (q.isEmpty) return _purchases;
     return _purchases
-        .where((p) => p.invoiceNumber.toLowerCase().contains(q))
-        .toList(growable: false);
+        .where((p) => p.invoiceNumber.toLowerCase().contains(q) || p.supplier.name.toLowerCase().contains(q))
+        .toList();
+  }
+
+  Future<void> init() async {
+    setBusy(true);
+    // Concurrent fetch
+    await Future.wait([
+      _fetchPurchases(),
+      _fetchSuppliers(),
+      _fetchCatalog(),
+    ]);
+    setBusy(false);
+  }
+  
+  Future<void> _fetchPurchases() async {
+    _purchases = await _repository.getPurchases();
+    // sort desc date
+    _purchases.sort((a,b) => b.date.compareTo(a.date));
+  }
+
+  Future<void> _fetchSuppliers() async {
+    _suppliers = await _repository.getSuppliers();
+  }
+
+  Future<void> _fetchCatalog() async {
+    _catalog = await _repository.getProducts();
   }
 
   void setQuery(String value) {
@@ -70,24 +57,28 @@ class PurchaseViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void addPurchase({
+  Future<void> addPurchase({
     required Supplier supplier,
     required String invoiceNumber,
     required int amountPaid,
     required List<PurchaseItem> items,
-  }) {
+  }) async {
+    setBusy(true);
     final total = items.fold<int>(0, (sum, it) => sum + (it.cost * it.qty));
     final purchase = Purchase(
       id: DateTime.now().microsecondsSinceEpoch.toString(),
       invoiceNumber: invoiceNumber.trim(),
       supplier: supplier,
-      date: DateTime(2026, 1, 25), // video date
-      totalAmount: total == 0 ? 28000 : total, // keeps video vibe even with mock
+      date: DateTime.now(),
+      totalAmount: total,
       amountPaid: amountPaid,
       items: items,
     );
 
     _purchases.insert(0, purchase);
+    await _repository.addPurchase(purchase);
+
+    setBusy(false);
     notifyListeners();
   }
 
@@ -103,7 +94,6 @@ class PurchaseViewModel extends BaseViewModel {
   }
 
   String formatDate(DateTime d) {
-    // Matches “Jan 25, 2026”
     const months = [
       'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'
     ];

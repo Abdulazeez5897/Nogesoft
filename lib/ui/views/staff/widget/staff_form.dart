@@ -231,6 +231,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
                   value: _isAdmin,
                   onChanged: (v) => setState(() => _isAdmin = v ?? false),
                   side: const BorderSide(color: Colors.white54),
+                  activeColor: const Color(0xFF38B24A),
                 ),
                 const Text(
                   'Is Admin',

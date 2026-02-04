@@ -141,7 +141,7 @@ class _ProfileCard extends StatelessWidget {
   final VoidCallback onChooseFile;
 
   final bool isSaving;
-  final Future<void> Function() onSave;
+  final Future<bool> Function() onSave;
 
   const _ProfileCard({
     required this.nameController,
@@ -155,6 +155,39 @@ class _ProfileCard extends StatelessWidget {
     required this.isSaving,
     required this.onSave,
   });
+
+  Future<void> _handleSave(BuildContext context) async {
+    final success = await onSave();
+    if (!success) return;
+
+    if (!context.mounted) return;
+    
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        backgroundColor: const Color(0xFF0E1626),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: const [
+            Icon(Icons.check_circle, color: Color(0xFF38B24A), size: 52),
+            SizedBox(height: 16),
+            Text(
+              'Profile Updated!',
+              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Your changes have been saved successfully.',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white70),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -305,7 +338,7 @@ class _ProfileCard extends StatelessWidget {
             height: 48,
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: isSaving ? null : () => onSave(),
+              onPressed: isSaving ? null : () => _handleSave(context),
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 backgroundColor: const Color(0xFF38B24A),

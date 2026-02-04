@@ -6,11 +6,13 @@ class NewCustomerResult {
   final String name;
   final String address;
   final String phone;
+  final double initialDebt; // if Total > AmountPaid
 
   const NewCustomerResult({
     required this.name,
     required this.address,
     required this.phone,
+    this.initialDebt = 0.0,
   });
 }
 
@@ -43,6 +45,24 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
   final _amountPaid = TextEditingController();
   final _description = TextEditingController();
 
+  double get _subtotal {
+    // Mock prices based on selection
+    if (_selectedProduct.contains('Amarya')) return 3000;
+    if (_selectedProduct.contains('Vital')) return 105000;
+    return 0;
+  }
+
+  double get _finalTotal {
+     final d = double.tryParse(_discount.text.trim()) ?? 0;
+     return (_subtotal - d).clamp(0, double.infinity);
+  }
+
+  @override
+  void initState() {
+     super.initState();
+     _discount.addListener(() => setState(() {}));
+  }
+
   @override
   void dispose() {
     _name.dispose();
@@ -52,6 +72,119 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
     _amountPaid.dispose();
     _description.dispose();
     super.dispose();
+  }
+// ... (lines 57-202 omitted, staying same)
+  Widget _buildPaymentStep() {
+    final discountVal = double.tryParse(_discount.text.trim()) ?? 0;
+    final total = _finalTotal;
+
+    return _FormCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Spacer(),
+              GestureDetector(
+                onTap: _save,
+                child: const Text(
+                  'Skip Payment',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+
+          const _Label('Select Products'),
+          _DropdownField(
+            value: _selectedProduct,
+            items: const ['Choose product', 'Amarya Foam (₦3,000)', 'Vital Foam (₦105,000)'],
+            onChanged: (v) => setState(() => _selectedProduct = v),
+          ),
+          const SizedBox(height: 14),
+
+          const _Label('Discount'),
+          TextField(
+            controller: _discount,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.white),
+            decoration: _fieldDecoration('0'),
+          ),
+          const SizedBox(height: 14),
+
+          const _Label('Amount Paid'),
+          TextField(
+            controller: _amountPaid,
+            keyboardType: TextInputType.number,
+            style: const TextStyle(color: Colors.white),
+            decoration: _fieldDecoration(''),
+          ),
+          const SizedBox(height: 14),
+
+          const _Label('Payment Type'),
+          _DropdownField(
+            value: _paymentType,
+            items: const ['Select type', 'Cash', 'Transfer', 'POS'],
+            onChanged: (v) => setState(() => _paymentType = v),
+          ),
+          const SizedBox(height: 14),
+
+          const _Label('Description'),
+          TextField(
+            controller: _description,
+            maxLines: 3,
+            style: const TextStyle(color: Colors.white),
+            decoration: _fieldDecoration(''),
+          ),
+
+          const SizedBox(height: 16),
+
+          _SummaryLine(label: 'Subtotal:', value: _formatMoney(_subtotal.toInt())),
+          _SummaryLine(
+            label: 'Discount:',
+            value: '-${_formatMoney(discountVal.toInt())}',
+            valueColor: const Color(0xFFE04B5A),
+          ),
+          _SummaryLine(label: 'Final Total:', value: _formatMoney(total.toInt())),
+
+          const SizedBox(height: 16),
+
+          Row(
+            children: [
+              _OutlineButton(
+                label: '← Back',
+                onTap: _back,
+              ),
+              const Spacer(),
+              SizedBox(
+                height: 46,
+                child: ElevatedButton(
+                  onPressed: _save,
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    backgroundColor: const Color(0xFF38B24A),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                  ),
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   InputDecoration _fieldDecoration(String hint) {
@@ -82,12 +215,16 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
   void _back() => setState(() => _step = 1);
 
   void _save() {
-    // Video returns to list; we emit only the Customer info.
+    final paid = double.tryParse(_amountPaid.text.trim()) ?? 0;
+    final total = _finalTotal;
+    final debt = (total - paid).clamp(0.0, double.infinity);
+  
     Navigator.of(context).pop(
       NewCustomerResult(
         name: _name.text.trim(),
         address: _address.text.trim(),
         phone: _phone.text.trim(),
+        initialDebt: debt,
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../model/purchase_model.dart';
+import '../../../core/data/models/product.dart';
+import '../../../core/data/models/purchase.dart';
 
 class NewPurchaseResult {
   final Supplier supplier;
@@ -18,7 +19,7 @@ class NewPurchaseResult {
 
 class NewPurchaseSheet extends StatefulWidget {
   final List<Supplier> suppliers;
-  final List<CatalogProduct> catalog;
+  final List<Product> catalog; 
 
   const NewPurchaseSheet({
     super.key,
@@ -29,7 +30,7 @@ class NewPurchaseSheet extends StatefulWidget {
   static Future<NewPurchaseResult?> show(
       BuildContext context, {
         required List<Supplier> suppliers,
-        required List<CatalogProduct> catalog,
+        required List<Product> catalog,
       }) {
     return showModalBottomSheet<NewPurchaseResult>(
       context: context,
@@ -103,9 +104,15 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
   }
 
   void _onSave() {
-    if (_supplier == null) return;
+    if (_supplier == null) {
+      _showError('Please select a supplier');
+      return;
+    }
     final invoice = _invoice.text.trim();
-    if (invoice.isEmpty) return;
+    if (invoice.isEmpty) {
+      _showError('Please enter an invoice number');
+      return;
+    }
 
     final paid = int.tryParse(_amountPaid.text.trim()) ?? 0;
 
@@ -122,12 +129,26 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
       items.add(PurchaseItem(product: p, qty: qty, cost: cost, sell: sell));
     }
 
+    if (items.isEmpty) {
+      _showError('Please add at least one valid product');
+      return;
+    }
+
     Navigator.of(context).pop(
       NewPurchaseResult(
         supplier: _supplier!,
         invoiceNumber: invoice,
         amountPaid: paid,
         items: items,
+      ),
+    );
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message, style: const TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xFFE04B5A),
       ),
     );
   }
@@ -333,7 +354,7 @@ class _Dropdown<T> extends StatelessWidget {
 }
 
 class _LineControllers {
-  CatalogProduct? product;
+  Product? product;
   final TextEditingController qty = TextEditingController();
   final TextEditingController cost = TextEditingController();
   final TextEditingController sell = TextEditingController();
@@ -348,7 +369,7 @@ class _LineControllers {
 }
 
 class _ProductLine extends StatelessWidget {
-  final List<CatalogProduct> catalog;
+  final List<Product> catalog;
   final _LineControllers ctrl;
   final VoidCallback onRemove;
   final InputDecoration Function(String) dec;
@@ -375,7 +396,7 @@ class _ProductLine extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: DropdownButtonHideUnderline(
-                  child: DropdownButton<CatalogProduct>(
+                  child: DropdownButton<Product>(
                     value: ctrl.product,
                     isExpanded: true,
                     dropdownColor: const Color(0xFF0E1626),

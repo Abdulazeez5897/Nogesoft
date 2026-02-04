@@ -7,8 +7,10 @@ import '../core/data/repositories/repository.dart';
 import '../core/network/api-service.dart';
 import '../core/utils/local_storage.dart';
 import '../ui/dialogs/info_alert_dialog.dart';
+import '../core/data/repositories/i_repository.dart';
+import '../core/data/repositories/in_memory_repository.dart';
 
-import '../ui/views/app_shell/app_shell_view.dart';
+import '../ui/views/home/home_view.dart';
 
 import '../ui/views/auth/auth_view.dart';
 import '../ui/views/auth/authentication_service.dart';
@@ -29,7 +31,7 @@ import '../ui/views/startup/startup_view.dart';
     MaterialRoute(page: StartupView, initial: true),
 
     /// ✅ Main authenticated shell (wrapper)
-    MaterialRoute(page: AppShellView),
+    MaterialRoute(page: HomeView),
 
     /// Auth / onboarding
     MaterialRoute(page: SignUp),
@@ -56,6 +58,9 @@ import '../ui/views/startup/startup_view.dart';
     LazySingleton(classType: LocalStorage),
     LazySingleton(classType: Repository),
     LazySingleton(classType: AuthenticationService),
+
+    /// Data Layer (InMemory for now)
+    LazySingleton(classType: InMemoryRepository, asType: IRepository),
     // @stacked-service
   ],
   dialogs: [

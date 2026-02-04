@@ -41,7 +41,7 @@ class StaffView extends StackedView<StaffViewModel> {
               return StaffCard(
                 member: m,
                 onEdit: () => _openEditDialog(context, viewModel, m),
-                onDelete: () => viewModel.deleteStaff(m.id),
+                onDelete: () => _delete(context, viewModel, m.id),
               );
             },
           ),
@@ -72,7 +72,7 @@ class StaffView extends StackedView<StaffViewModel> {
   Future<void> _openEditDialog(BuildContext context, StaffViewModel vm, StaffMember member) {
     return StaffFormDialog.show(
       context,
-      title: 'Add Staff', // video shows "Add Staff" even when editing-like flow
+      title: 'Edit Staff',
       isSaving: vm.isSaving,
       initialName: member.name,
       initialEmail: member.email,
@@ -80,7 +80,6 @@ class StaffView extends StackedView<StaffViewModel> {
       initialStatus: member.status,
       initialIsAdmin: member.isAdmin,
       onSubmit: (result) async {
-        // video doesn’t show a distinct “editing” UI; we reuse the same dialog
         await vm.updateStaff(
           member.copyWith(
             name: result.name,
@@ -93,6 +92,37 @@ class StaffView extends StackedView<StaffViewModel> {
       },
     );
   }
+
+  Future<void> _delete(BuildContext context, StaffViewModel vm, String id) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF0E1626),
+        title: const Text('Delete Staff', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        content: const Text(
+          'Are you sure you want to delete this staff member?',
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel', style: TextStyle(color: Colors.white60)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Delete', style: TextStyle(color: Color(0xFFE04B5A), fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      vm.deleteStaff(id);
+    }
+  }
+
+  @override
+  void onViewModelReady(StaffViewModel viewModel) => viewModel.init();
 
   @override
   StaffViewModel viewModelBuilder(BuildContext context) => StaffViewModel();

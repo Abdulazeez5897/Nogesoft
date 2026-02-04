@@ -1,50 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../core/data/models/dashboard_stats.dart';
+import 'package:intl/intl.dart';
+
 class DashboardKpiGrid extends StatelessWidget {
   final VoidCallback onLowStockTap;
-  const DashboardKpiGrid({super.key, required this.onLowStockTap});
+  final DashboardStats? stats;
+
+  const DashboardKpiGrid({
+    super.key, 
+    required this.onLowStockTap,
+    this.stats,
+  });
 
   static const String naira = '\u20A6';
 
+  String _fmt(num value) {
+    final formatter = NumberFormat('#,##0', 'en_US');
+    return formatter.format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Show zeroes if stats is null (loading/error)
+    // In real app, might want shimmer here.
+    final s = stats ?? const DashboardStats();
+
     return Column(
       children: [
         Row(
-          children: const [
+          children: [
             Expanded(
               child: _KpiCard(
-                title: "Today's Sales",
-                value: "${DashboardKpiGrid.naira}0",
+                title: "Total Revenue", // Renamed from Today for now
+                value: "$naira${_fmt(s.totalRevenue)}",
                 valueColor: Colors.white,
               ),
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             Expanded(
               child: _KpiCard(
-                title: "Today's Profit",
-                value: "${DashboardKpiGrid.naira}0",
-                valueColor: Color(0xFF38B24A),
+                title: "Profit", // Placeholder
+                value: "${naira}0",
+                valueColor: const Color(0xFF38B24A),
               ),
             ),
           ],
         ),
         const SizedBox(height: 12),
         Row(
-          children: const [
+          children: [
             Expanded(
               child: _KpiCard(
                 title: "This Month",
-                value: "${DashboardKpiGrid.naira}224,239",
+                value: "$naira${_fmt(s.totalRevenue)}", // Mapping total for now
                 valueColor: Colors.white,
               ),
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             Expanded(
               child: _KpiCard(
                 title: "Customers",
-                value: "44",
+                value: "${s.totalCustomers}",
                 valueColor: Colors.white,
               ),
             ),
@@ -52,20 +70,20 @@ class DashboardKpiGrid extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Row(
-          children: const [
+          children: [
             Expanded(
               child: _KpiCard(
                 title: "Transactions",
-                value: "16",
+                value: "${s.totalSales}",
                 valueColor: Colors.white,
               ),
             ),
-            SizedBox(width: 12),
+            const SizedBox(width: 12),
             Expanded(
               child: _KpiCard(
                 title: "Unpaid Balance",
-                value: "${DashboardKpiGrid.naira}189,989",
-                valueColor: Color(0xFFFF7A18),
+                value: "${naira}0",
+                valueColor: const Color(0xFFFF7A18),
               ),
             ),
           ],
@@ -76,6 +94,7 @@ class DashboardKpiGrid extends StatelessWidget {
             Expanded(
               child: _LowStockCard(
                 onTap: onLowStockTap,
+                count: s.lowStockItems,
               ),
             ),
             const Expanded(child: SizedBox()),
@@ -135,7 +154,8 @@ class _KpiCard extends StatelessWidget {
 
 class _LowStockCard extends StatelessWidget {
   final VoidCallback onTap;
-  const _LowStockCard({required this.onTap});
+  final int count;
+  const _LowStockCard({required this.onTap, required this.count});
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +188,7 @@ class _LowStockCard extends StatelessWidget {
           Row(
             children: [
               Text(
-                '0',
+                '$count',
                 style: GoogleFonts.redHatDisplay(
                   fontSize: 22,
                   fontWeight: FontWeight.w700,

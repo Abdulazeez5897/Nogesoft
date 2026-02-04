@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../model/store_product.dart';
-
+import '../../../../core/data/models/product.dart';
+import 'package:intl/intl.dart';
 
 class StoreProductCard extends StatelessWidget {
-  final StoreProduct product;
+  final Product product;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
@@ -15,15 +14,9 @@ class StoreProductCard extends StatelessWidget {
     required this.onDelete,
   });
 
-  String _formatNaira(int value) {
-    final s = value.toString();
-    final buffer = StringBuffer();
-    for (int i = 0; i < s.length; i++) {
-      final idxFromEnd = s.length - i;
-      buffer.write(s[i]);
-      if (idxFromEnd > 1 && idxFromEnd % 3 == 1) buffer.write(',');
-    }
-    return '₦$buffer';
+  String _formatNaira(double value) {
+    final formatter = NumberFormat('#,##0.00', 'en_US');
+    return '₦${formatter.format(value)}';
   }
 
   @override

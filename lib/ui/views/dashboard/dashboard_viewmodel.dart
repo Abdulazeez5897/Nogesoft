@@ -1,8 +1,21 @@
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
+import '../../../core/data/models/dashboard_stats.dart';
+import '../../../core/data/models/purchase.dart';
+import '../../../core/data/repositories/i_repository.dart';
+
 
 class DashboardViewModel extends BaseViewModel {
   bool isDark = true;
   bool isCreateVisitLoading = false;
+
+  final _repository = locator<IRepository>();
+  final _navigationService = locator<NavigationService>();
+
+  DashboardStats? stats;
+  List<Purchase> recentTransactions = [];
 
   // ---- Sales Analytics dropdown state ----
   final List<String> salesRanges = const [
@@ -19,27 +32,28 @@ class DashboardViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // ---- UI actions ----
-  void toggleThemeIcon() {
-    isDark = !isDark;
-    notifyListeners();
+  Future<void> init() async {
+    await refresh();
   }
 
-  void setCreateVisitLoading(bool value) {
-    isCreateVisitLoading = value;
-    notifyListeners();
-  }
-
-  void refresh() {
-    // later: call APIs, re-fetch dashboard data
-    notifyListeners();
+  Future<void> refresh() async {
+    setBusy(true);
+    try {
+      stats = await _repository.getDashboardStats();
+      recentTransactions = await _repository.getRecentTransactions();
+      // Fetch top selling if needed
+    } catch (e) {
+      // Handle error
+    } finally {
+      setBusy(false);
+    }
   }
 
   void viewAllTransactions() {
-    // TODO: navigate
+    _navigationService.navigateTo(Routes.purchaseView);
   }
 
   void viewLowStockItems() {
-    // TODO: navigate
+     _navigationService.navigateTo(Routes.storeView);
   }
 }

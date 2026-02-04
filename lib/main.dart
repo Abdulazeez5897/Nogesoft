@@ -7,12 +7,24 @@ import 'app/app.locator.dart';
 import 'app/app.router.dart';
 import 'firebase_options.dart';
 import 'state.dart';
+import 'core/utils/local_storage.dart';
+import 'core/utils/local_store_dir.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   setupLocator();
   setupDialogUi();
+
+  // Load persistence (Theme)
+  final localStorage = locator<LocalStorage>();
+  final savedMode = await localStorage.fetch(LocalStorageDir.uiMode);
+  if (savedMode == "dark") {
+    uiMode.value = AppUiModes.dark;
+  } else {
+    uiMode.value = AppUiModes.light;
+  }
 
   WidgetsFlutterBinding.ensureInitialized();
   // Check if Firebase is already initialized

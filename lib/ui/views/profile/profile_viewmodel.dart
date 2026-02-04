@@ -40,12 +40,12 @@ class ProfileViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> saveChanges({
+  Future<bool> saveChanges({
     required String name,
     required String email,
     required String newPassword,
   }) async {
-    if (_profile == null) return;
+    if (_profile == null) return false;
 
     setBusyForObject(saveBusyKey, true);
 
@@ -55,10 +55,10 @@ class ProfileViewModel extends BaseViewModel {
     _profile = _profile!.copyWith(
       name: name.trim(),
       email: email.trim(),
-      // password not stored (optional field in UI)
     );
 
     setBusyForObject(saveBusyKey, false);
     notifyListeners();
+    return true;
   }
 }

@@ -13,7 +13,8 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../customer/customer_view.dart';
-import 'app_shell_viewmodel.dart';
+import 'home_viewmodel.dart';
+import 'package:nogesoft/ui/views/home/home_viewmodel.dart';
 
 // Pages
 import '../dashboard/dashboard.dart';
@@ -22,21 +23,21 @@ import '../dashboard/dashboard.dart';
 // Global header widget
 import 'widget/global_header.dart';
 
-class AppShellView extends StackedView<AppShellViewModel> {
-  const AppShellView({super.key});
+class HomeView extends StackedView<HomeViewModel> {
+  const HomeView({super.key});
 
   @override
   Widget builder(
       BuildContext context,
-      AppShellViewModel viewModel,
+      HomeViewModel viewModel,
       Widget? child,
       ) {
     return _CollapsingShellScaffold(viewModel: viewModel);
   }
 
   @override
-  AppShellViewModel viewModelBuilder(BuildContext context) =>
-      AppShellViewModel();
+  HomeViewModel viewModelBuilder(BuildContext context) =>
+      HomeViewModel();
 }
 
 /// A stateful shell that keeps:
@@ -44,7 +45,7 @@ class AppShellView extends StackedView<AppShellViewModel> {
 /// - IndexedStack pages
 /// - scroll-driven collapse (t: 0.0 -> 1.0)
 class _CollapsingShellScaffold extends StatefulWidget {
-  final AppShellViewModel viewModel;
+  final HomeViewModel viewModel;
 
   const _CollapsingShellScaffold({required this.viewModel});
 
@@ -318,7 +319,7 @@ class _PlaceholderPage extends StatelessWidget {
 class _AppDrawer extends StatelessWidget {
   _AppDrawer({super.key, required this.viewModel});
 
-  final AppShellViewModel viewModel;
+  final HomeViewModel viewModel;
   final NavigationService _nav = locator<NavigationService>();
 
   @override

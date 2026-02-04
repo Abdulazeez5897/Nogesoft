@@ -7,10 +7,14 @@ import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import 'authentication_service.dart';
 
+import '../../../core/utils/local_storage.dart';
+import '../../../core/utils/local_store_dir.dart';
+
 class AuthViewModel extends BaseViewModel {
   final _authenticationService = locator<AuthenticationService>();
   final _navigationService = locator<NavigationService>();
   final _snackbarService = locator<SnackbarService>();
+  final _localStorage = locator<LocalStorage>();
 
   // Text editing controllers
   final firstNameController = TextEditingController();
@@ -27,6 +31,24 @@ class AuthViewModel extends BaseViewModel {
   bool isLoading = false;
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
+  bool rememberMe = false;
+
+  void init() async {
+    final remember = await _localStorage.fetch(LocalStorageDir.remember);
+    if (remember == true) {
+      rememberMe = true;
+      final savedEmail = await _localStorage.fetch(LocalStorageDir.lastEmail);
+      if (savedEmail != null) {
+        emailController.text = savedEmail;
+      }
+    }
+    notifyListeners();
+  }
+
+  void toggleRememberMe(bool? value) {
+    rememberMe = value ?? false;
+    notifyListeners();
+  }
 
   String experienceLevel = 'mid';
   PlatformFile? resumeFile;
@@ -186,8 +208,19 @@ class AuthViewModel extends BaseViewModel {
       // Simulate login API call
       await Future.delayed(const Duration(seconds: 2));
 
+      // Persist Remember Me choice and Email
+      await _localStorage.save(LocalStorageDir.remember, rememberMe);
+      if (rememberMe) {
+        await _localStorage.save(LocalStorageDir.lastEmail, emailController.text);
+      } else {
+        await _localStorage.delete(LocalStorageDir.lastEmail);
+      }
+
+      // Simulate Token save (for session persistence)
+      await _localStorage.save(LocalStorageDir.authToken, "simulated_token_123");
+
       // Navigate to home screen on success
-      _navigationService.replaceWith(Routes.appShellView);
+      _navigationService.replaceWith(Routes.homeView);
     } catch (e) {
       _snackbarService.showSnackbar(message: 'Login failed: ${e.toString()}');
     } finally {

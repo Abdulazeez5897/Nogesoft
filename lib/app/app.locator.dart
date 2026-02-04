@@ -12,6 +12,8 @@ import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_services/src/snackbar/snackbar_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
+import '../core/data/repositories/i_repository.dart';
+import '../core/data/repositories/in_memory_repository.dart';
 import '../core/data/repositories/repository.dart';
 import '../core/network/api-service.dart';
 import '../core/utils/local_storage.dart';
@@ -36,4 +38,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => LocalStorage());
   locator.registerLazySingleton(() => Repository());
   locator.registerLazySingleton(() => AuthenticationService());
+  locator.registerLazySingleton<IRepository>(() => InMemoryRepository());
 }

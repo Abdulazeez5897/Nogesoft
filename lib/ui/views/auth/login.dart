@@ -122,42 +122,74 @@ class LoginView extends StackedView<AuthViewModel> {
                                   ),
                                 ),
 
-                                verticalSpaceLarge,
+                                  verticalSpaceLarge,
 
-                                SubmitButton(
-                                  isLoading: viewModel.isBusy,
-                                  label: 'Sign in',
-                                  submit: viewModel.login,
-                                  color: Colors.green,
-                                ),
-                              ],
-                            ),
-                          ),
+                                  /// Remember Me
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: Checkbox(
+                                          value: viewModel.rememberMe,
+                                          onChanged: viewModel.toggleRememberMe,
+                                          activeColor: Colors.green,
+                                          side: const BorderSide(color: Colors.white54),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(4),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      const Text(
+                                        'Remember me',
+                                        style: TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
 
-                          const Spacer(),
+                                  verticalSpaceLarge,
 
-                          /// Footer stays at bottom
-                          Center(
-                            child: Text(
-                              '© 2026 Nogesoft',
-                              style: TextStyle(
-                                color: Colors.white38,
-                                fontSize: 13,
+                                  SubmitButton(
+                                    isLoading: viewModel.isBusy,
+                                    label: 'Sign in',
+                                    submit: viewModel.login,
+                                    color: Colors.green,
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                        ],
+
+                            const Spacer(),
+
+                            /// Footer stays at bottom
+                            Center(
+                              child: Text(
+                                '© 2026 Nogesoft',
+                                style: TextStyle(
+                                  color: Colors.white38,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
+
+  @override
+  void onViewModelReady(AuthViewModel viewModel) => viewModel.init();
 
   @override
   AuthViewModel viewModelBuilder(BuildContext context) =>

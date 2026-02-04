@@ -5,14 +5,18 @@ class StoreProductDialogResult {
   final String category;
   final int price;
   final int stock;
-  final String dimension;
+  final String unit;
+  final String dimensions;
+  final DateTime? date;
 
   const StoreProductDialogResult({
     required this.name,
     required this.category,
     required this.price,
     required this.stock,
-    required this.dimension,
+    required this.unit,
+    required this.dimensions,
+    required this.date,
   });
 }
 
@@ -22,7 +26,9 @@ class StoreProductDialog extends StatefulWidget {
   final String? initialCategory;
   final int? initialPrice;
   final int? initialStock;
-  final String initialDimension;
+  final String initialUnit;
+  final String? initialDimensions;
+  final DateTime? initialDate;
 
   const StoreProductDialog({
     super.key,
@@ -31,7 +37,9 @@ class StoreProductDialog extends StatefulWidget {
     this.initialCategory,
     this.initialPrice,
     this.initialStock,
-    this.initialDimension = 'pcs',
+    this.initialUnit = 'pcs',
+    this.initialDimensions,
+    this.initialDate,
   });
 
   static Future<StoreProductDialogResult?> show(
@@ -41,7 +49,9 @@ class StoreProductDialog extends StatefulWidget {
         String? initialCategory,
         int? initialPrice,
         int? initialStock,
-        String initialDimension = 'pcs',
+        String initialUnit = 'pcs',
+        String? initialDimensions,
+        DateTime? initialDate,
       }) {
     return showDialog<StoreProductDialogResult>(
       context: context,
@@ -52,7 +62,9 @@ class StoreProductDialog extends StatefulWidget {
         initialCategory: initialCategory,
         initialPrice: initialPrice,
         initialStock: initialStock,
-        initialDimension: initialDimension,
+        initialUnit: initialUnit,
+        initialDimensions: initialDimensions,
+        initialDate: initialDate,
       ),
     );
   }
@@ -66,8 +78,10 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
   late final TextEditingController _category;
   late final TextEditingController _price;
   late final TextEditingController _stock;
+  late final TextEditingController _dimensions;
 
-  late String _dimension;
+  late String _unit;
+  late DateTime _selectedDate;
 
   @override
   void initState() {
@@ -80,7 +94,10 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
     _stock = TextEditingController(
       text: widget.initialStock == null ? '' : widget.initialStock.toString(),
     );
-    _dimension = widget.initialDimension;
+    _dimensions = TextEditingController(text: widget.initialDimensions ?? '');
+    
+    _unit = widget.initialUnit;
+    _selectedDate = widget.initialDate ?? DateTime.now();
   }
 
   @override
@@ -89,6 +106,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
     _category.dispose();
     _price.dispose();
     _stock.dispose();
+    _dimensions.dispose();
     super.dispose();
   }
 
@@ -101,11 +119,11 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Colors.transparent),
+        borderSide: const BorderSide(color: Colors.white12),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Color(0xFF2F6BFF), width: 2),
+        borderSide: const BorderSide(color: Color(0xFF38B24A), width: 1.5),
       ),
     );
   }
@@ -115,9 +133,9 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
     final category = _category.text.trim();
     final price = int.tryParse(_price.text.trim()) ?? 0;
     final stock = int.tryParse(_stock.text.trim()) ?? 0;
+    final dims = _dimensions.text.trim();
 
     if (name.isEmpty || category.isEmpty) {
-      // Keep it simple, no extra UI not shown in the video.
       return;
     }
 
@@ -127,9 +145,34 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
         category: category,
         price: price,
         stock: stock,
-        dimension: _dimension,
+        unit: _unit,
+        dimensions: dims,
+        date: _selectedDate,
       ),
     );
+  }
+
+  Future<void> _pickDate() async {
+    final now = DateTime.now();
+    final d = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.dark().copyWith(
+             colorScheme: const ColorScheme.dark(
+               primary: Color(0xFF38B24A),
+             ),
+          ),
+          child: child!,
+        );
+      }
+    );
+    if (d != null) {
+      setState(() => _selectedDate = d);
+    }
   }
 
   @override
@@ -140,112 +183,141 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(18, 18, 18, 14),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.w800,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
-            ),
-            const SizedBox(height: 18),
+              const SizedBox(height: 18),
 
-            TextField(
-              controller: _name,
-              style: const TextStyle(color: Colors.white),
-              decoration: _fieldDecoration('Name'),
-              textInputAction: TextInputAction.next,
-            ),
-            const SizedBox(height: 12),
-
-            TextField(
-              controller: _category,
-              style: const TextStyle(color: Colors.white),
-              decoration: _fieldDecoration('Category'),
-              textInputAction: TextInputAction.next,
-            ),
-            const SizedBox(height: 12),
-
-            TextField(
-              controller: _price,
-              style: const TextStyle(color: Colors.white),
-              decoration: _fieldDecoration('Price'),
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.next,
-            ),
-            const SizedBox(height: 12),
-
-            TextField(
-              controller: _stock,
-              style: const TextStyle(color: Colors.white),
-              decoration: _fieldDecoration('Stock'),
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.done,
-            ),
-            const SizedBox(height: 14),
-
-            const Text(
-              'Dimention',
-              style: TextStyle(color: Colors.white54, fontSize: 14),
-            ),
-            const SizedBox(height: 8),
-
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.transparent,
+              TextField(
+                controller: _name,
+                style: const TextStyle(color: Colors.white),
+                decoration: _fieldDecoration('Name'),
+                textInputAction: TextInputAction.next,
               ),
-              child: Row(
-                children: [
-                  Text(
-                    _dimension,
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
+              const SizedBox(height: 12),
+
+              TextField(
+                controller: _category,
+                style: const TextStyle(color: Colors.white),
+                decoration: _fieldDecoration('Category'),
+                textInputAction: TextInputAction.next,
+              ),
+              const SizedBox(height: 12),
+
+              Row(children: [
+                Expanded(
+                  child: TextField(
+                    controller: _price,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: _fieldDecoration('Price'),
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
                   ),
-                  const Spacer(),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: _dimension,
-                      dropdownColor: const Color(0xFF0E1626),
-                      icon: const Icon(Icons.unfold_more, color: Colors.white54),
-                      items: const [
-                        DropdownMenuItem(value: 'pcs', child: Text('pcs')),
-                        DropdownMenuItem(value: 'kg', child: Text('kg')),
-                        DropdownMenuItem(value: 'ltr', child: Text('ltr')),
-                      ],
-                      onChanged: (v) {
-                        if (v == null) return;
-                        setState(() => _dimension = v);
-                      },
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: TextField(
+                    controller: _stock,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: _fieldDecoration('Stock'),
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+              ]),
+              const SizedBox(height: 12),
+
+              // Dimensions Input
+              TextField(
+                controller: _dimensions,
+                style: const TextStyle(color: Colors.white),
+                decoration: _fieldDecoration('Dimensions (e.g. 10x12)'),
+                textInputAction: TextInputAction.done,
+              ),
+              const SizedBox(height: 14),
+
+              // Unit Dropdown + Date Picker Row
+              Row(
+                children: [
+                  // Unit Dropdown
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.white12),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: _unit,
+                          dropdownColor: const Color(0xFF0E1626),
+                          icon: const Icon(Icons.unfold_more, color: Colors.white54),
+                          items: const [
+                            DropdownMenuItem(value: 'pcs', child: Text('pcs', style: TextStyle(color: Colors.white))),
+                            DropdownMenuItem(value: 'kg', child: Text('kg', style: TextStyle(color: Colors.white))),
+                            DropdownMenuItem(value: 'ltr', child: Text('ltr', style: TextStyle(color: Colors.white))),
+                          ],
+                          onChanged: (v) {
+                            if (v == null) return;
+                            setState(() => _unit = v);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  // Date Picker Button
+                  Expanded(
+                    child: InkWell(
+                      onTap: _pickDate,
+                      borderRadius: BorderRadius.circular(10),
+                      child: Container(
+                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                         decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(10),
+                           border: Border.all(color: Colors.white12),
+                         ),
+                         child: Text(
+                           "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
+                           textAlign: TextAlign.center,
+                           style: const TextStyle(color: Colors.white),
+                         ),
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
 
-            const SizedBox(height: 16),
+              const SizedBox(height: 24),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                _DialogButton(
-                  label: 'Cancel',
-                  isPrimary: false,
-                  onTap: () => Navigator.of(context).pop(),
-                ),
-                const SizedBox(width: 12),
-                _DialogButton(
-                  label: 'Save',
-                  isPrimary: true,
-                  onTap: _onSave,
-                ),
-              ],
-            ),
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  _DialogButton(
+                    label: 'Cancel',
+                    isPrimary: false,
+                    onTap: () => Navigator.of(context).pop(),
+                  ),
+                  const SizedBox(width: 12),
+                  _DialogButton(
+                    label: 'Save',
+                    isPrimary: true,
+                    onTap: _onSave,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

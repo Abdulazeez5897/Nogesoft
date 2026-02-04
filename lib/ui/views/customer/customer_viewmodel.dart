@@ -1,57 +1,70 @@
 import 'package:stacked/stacked.dart';
+import '../../../app/app.locator.dart';
+import '../../../core/data/repositories/i_repository.dart';
+
 
 import 'model/customer.dart';
 
 class CustomerViewModel extends BaseViewModel {
   CustomerTab _tab = CustomerTab.all;
   String _query = '';
-
-  final List<Customer> _customers = [
-    const Customer(
-      id: 'c1',
-      name: 'Usman Ayuba',
-      phone: '09060169686',
-      address: 'Bassa village',
-      isDebtor: false,
-    ),
-    const Customer(
-      id: 'c2',
-      name: 'Saidu musa',
-      phone: '53566747',
-      address: 'Bassa village',
-      isDebtor: true,
-    ),
-    const Customer(
-      id: 'c3',
-      name: 'Abdulazeez Usman',
-      phone: '09060169686',
-      address: 'Bassa village',
-      isDebtor: false,
-    ),
-  ];
-
   CustomerTab get tab => _tab;
-  String get query => _query;
+
+  String _query = '';
 
   int get allCount => _customers.length;
-  int get debtorCount => _customers.where((c) => c.isDebtor).length;
+  int get debtorCount => _customers.where((c) => c.debt > 0).length;
 
   List<Customer> get visibleCustomers {
-    Iterable<Customer> list =
-    (_tab == CustomerTab.debtors) ? _customers.where((c) => c.isDebtor) : _customers;
-
-    final q = _query.trim().toLowerCase();
-    if (q.isNotEmpty) {
-      list = list.where((c) =>
-      c.name.toLowerCase().contains(q) || c.phone.toLowerCase().contains(q));
+    // 1. Filter by Tab
+    Iterable<Customer> result = _customers;
+    if (_tab == CustomerTab.debtors) {
+      result = result.where((c) => c.debt > 0);
     }
 
-    return list.toList(growable: false);
+    // 2. Filter by Query
+    final q = _query.trim().toLowerCase();
+    if (q.isNotEmpty) {
+      result = result.where((c) =>
+          c.name.toLowerCase().contains(q) || c.phone.contains(q));
+    }
+
+    return result.toList();
+  }
+  
+  Future<void> init() async {
+    setBusy(true);
+    // In real app: _customers = await _repository.getCustomers();
+    // Simulate delay and seed if empty
+    await Future.delayed(const Duration(milliseconds: 500));
+    
+    if (_customers.isEmpty) {
+      // Temporary seed until Repository is fully wired with persistent DB
+      _customers = [
+        const Customer(
+          id: '1',
+          name: 'Ibrahim Sani',
+          address: 'No 4, Kofar Ruwa',
+          phone: '08012345678',
+          debt: 0,
+          lastPurchaseDate: null,
+        ),
+        const Customer(
+          id: '2',
+          name: 'Grace Oyelowo',
+          address: 'Sabon Gari, Kano',
+          phone: '09087654321',
+          debt: 15000,
+          lastPurchaseDate: null,
+        ),
+      ];
+    }
+    
+    setBusy(false);
   }
 
-  void setTab(CustomerTab value) {
-    if (_tab == value) return;
-    _tab = value;
+  void setTab(CustomerTab tab) {
+    _tab = tab;
     notifyListeners();
   }
 
@@ -60,17 +73,19 @@ class CustomerViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void addCustomer({
+  Future<void> addCustomer({
     required String name,
     required String address,
     required String phone,
-  }) {
-    final item = Customer(
+    double initialDebt = 0.0,
+  }) async {
+    setBusy(true);
+    final newCustomer = Customer(
       id: DateTime.now().microsecondsSinceEpoch.toString(),
       name: name.trim(),
       address: address.trim(),
-      phone: phone.trim(),
-      isDebtor: false,
+      phone: phone,
+      debt: initialDebt, 
     );
     _customers.insert(0, item);
     notifyListeners();

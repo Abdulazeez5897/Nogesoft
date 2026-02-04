@@ -20,7 +20,9 @@ class DashboardView extends StackedView<DashboardViewModel> {
 
     return Material(
       color: Colors.transparent,
-      child: SingleChildScrollView(
+      child: viewModel.isBusy 
+          ? const Center(child: CircularProgressIndicator(color: Color(0xFF38B24A))) 
+          : SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,6 +67,7 @@ class DashboardView extends StackedView<DashboardViewModel> {
 
             /// ------- KPI GRID -------
             DashboardKpiGrid(
+              stats: viewModel.stats,
               onLowStockTap: viewModel.viewLowStockItems,
             ),
 
@@ -86,6 +89,7 @@ class DashboardView extends StackedView<DashboardViewModel> {
 
             /// ------- RECENT TRANSACTIONS -------
             DashboardRecentTransactions(
+              transactions: viewModel.recentTransactions,
               onViewAll: viewModel.viewAllTransactions,
             ),
           ],
@@ -93,6 +97,9 @@ class DashboardView extends StackedView<DashboardViewModel> {
       ),
     );
   }
+
+  @override
+  void onViewModelReady(DashboardViewModel viewModel) => viewModel.init();
 
   @override
   DashboardViewModel viewModelBuilder(BuildContext context) => DashboardViewModel();

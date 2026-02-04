@@ -76,6 +76,7 @@ class CustomerView extends StackedView<CustomerViewModel> {
       name: res.name,
       address: res.address,
       phone: res.phone,
+      initialDebt: res.initialDebt,
     );
   }
 

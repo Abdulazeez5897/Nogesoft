@@ -236,7 +236,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                     _ShellPageHost(
                       controller: _pageControllers[3],
                       onScrollNotification: (n) => _onScrollNotification(n, 3),
-                      child: const CustomerView()
+                      child: CustomerView()
                     ),
                     _ShellPageHost(
                       controller: _pageControllers[4],
@@ -246,7 +246,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                     _ShellPageHost(
                       controller: _pageControllers[5],
                       onScrollNotification: (n) => _onScrollNotification(n, 5),
-                      child: const StaffView(),
+                      child: StaffView(),
                     ),
                     _ShellPageHost(
                       controller: _pageControllers[6],

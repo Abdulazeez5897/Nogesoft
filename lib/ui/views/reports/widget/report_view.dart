@@ -9,6 +9,7 @@ import '../reports_viewmodel.dart';
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class ReportsView extends StackedView<ReportsViewModel> {
+  const ReportsView({super.key});
 // ...
   @override
   Widget builder(BuildContext context, ReportsViewModel viewModel, Widget? child) {

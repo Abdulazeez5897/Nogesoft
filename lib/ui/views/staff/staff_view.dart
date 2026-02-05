@@ -9,7 +9,8 @@ import 'staff_viewmodel.dart';
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class StaffView extends StackedView<StaffViewModel> {
-// ...
+  const StaffView({super.key});
+
   @override
   Widget builder(BuildContext context, StaffViewModel viewModel, Widget? child) {
     // Important: AppShell provides PrimaryScrollController so this scroll drives the global header.

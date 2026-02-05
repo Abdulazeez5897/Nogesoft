@@ -71,6 +71,7 @@ class PurchaseView extends StackedView<PurchaseViewModel> {
       backgroundColor: Colors.transparent,
       builder: (context) => NewPurchaseSheet(
         suppliers: viewModel.suppliers,
+        catalog: viewModel.catalog,
       ),
     );
   }

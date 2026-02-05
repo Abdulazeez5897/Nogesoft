@@ -7,8 +7,10 @@ import 'package:stacked/stacked.dart';
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 import 'customer_viewmodel.dart';
-// ...
-// Replace builder content
+
+class CustomerView extends StackedView<CustomerViewModel> {
+  const CustomerView({super.key});
+
   @override
   Widget builder(BuildContext context, CustomerViewModel viewModel, Widget? child) {
     // AppShell provides PrimaryScrollController; keep this page as a normal scrollable.
@@ -66,6 +68,7 @@ import 'customer_viewmodel.dart';
       ],
     );
   }
+
   Future<void> _onNewCustomer(BuildContext context, CustomerViewModel viewModel) async {
     final result = await NewCustomerDialog.show(context);
     if (result != null) {
@@ -77,7 +80,14 @@ import 'customer_viewmodel.dart';
       );
     }
   }
+
+  @override
+  CustomerViewModel viewModelBuilder(BuildContext context) => CustomerViewModel();
+
+  @override
+  void onViewModelReady(CustomerViewModel viewModel) => viewModel.init();
 }
+
 class _StatsRow extends StatelessWidget {
   final int allCount;
   final int debtorCount;

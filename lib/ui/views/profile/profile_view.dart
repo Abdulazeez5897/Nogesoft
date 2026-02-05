@@ -4,7 +4,7 @@ import 'package:stacked/stacked.dart';
 
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 
-import '../../../core/data/models/user_profile.dart'; // Fixed import to match typical structure or keep relative if correct. 
+import 'model/user_profile.dart'; 
 // Actually original was "import 'model/user_profile.dart';" which implies it's in the same folder?
 // Let's stick to relative if it was working or assume standard. 
 // "import 'model/user_profile.dart';" was line 7 in original.
@@ -47,7 +47,7 @@ class _ProfileViewBodyState extends State<_ProfileViewBody> {
   @override
   void initState() {
     super.initState();
-    final user = widget.viewModel.user;
+    final user = widget.viewModel.profile;
     _name = TextEditingController(text: user?.name);
     _email = TextEditingController(text: user?.email);
     _password = TextEditingController();
@@ -154,15 +154,15 @@ class _ProfileCard extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Icon(Icons.check_circle, color: Color(0xFF38B24A), size: 52),
+          children: [
+            const Icon(Icons.check_circle, color: Color(0xFF38B24A), size: 52),
             verticalSpace(16),
-            Text(
+            const Text(
               'Profile Updated!',
               style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
             ),
             verticalSpace(8),
-            Text(
+            const Text(
               'Your changes have been saved successfully.',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white70),

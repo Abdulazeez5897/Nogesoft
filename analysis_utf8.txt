@@ -1,0 +1,188 @@
+﻿Analyzing Nogesoft-1...                                         
+
+  error - Target of URI doesn't exist: '../ui/views/home_view/home_view.dart' - lib\app\app.dart:22:8 - uri_does_not_exist
+warning - Unused import: '../ui/views/profile/profile_view.dart' - lib\app\app.dart:25:8 - unused_import
+  error - Invalid constant value - lib\app\app.dart:49:25 - invalid_constant
+  error - Undefined name 'ProfileView' - lib\app\app.dart:49:25 - undefined_identifier
+   info - Dangling library doc comment - lib\app\app.logger.dart:9:1 - dangling_library_doc_comments
+  error - The name 'ProfileView' is being referenced through the prefix '_i11', but it isn't defined in any of the libraries imported using that prefix - lib\app\app.router.dart:107:18 - undefined_prefixed_name
+  error - The constructor being called isn't a const constructor - lib\app\app.router.dart:171:31 - const_with_non_const
+  error - The name 'ProfileView' is being referenced through the prefix '_i11', but it isn't defined in any of the libraries imported using that prefix - lib\app\app.router.dart:181:10 - undefined_prefixed_name
+  error - The name 'ProfileView' isn't a class - lib\app\app.router.dart:183:42 - creation_with_non_type
+   info - Use 'const' with the constructor to improve performance - lib\core\data\repositories\in_memory_repository.dart:35:5 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\core\data\repositories\in_memory_repository.dart:44:5 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\core\data\repositories\in_memory_repository.dart:52:5 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\core\data\repositories\in_memory_repository.dart:60:5 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\core\data\repositories\in_memory_repository.dart:121:10 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\core\data\repositories\in_memory_repository.dart:122:21 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\core\data\repositories\in_memory_repository.dart:137:9 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\core\data\repositories\in_memory_repository.dart:138:20 - prefer_const_constructors
+   info - The file name 'repository-interface.dart' isn't a lower_case_with_underscores identifier - lib\core\data\repositories\repository-interface.dart:1:1 - file_names
+   info - The file name 'api-responses.dart' isn't a lower_case_with_underscores identifier - lib\core\network\api-responses.dart:1:1 - file_names
+   info - The file name 'api-service.dart' isn't a lower_case_with_underscores identifier - lib\core\network\api-service.dart:1:1 - file_names
+   info - Don't invoke 'print' in production code - lib\core\network\interceptors.dart:78:7 - avoid_print
+warning - The value of the local variable 'res' isn't used - lib\core\network\interceptors.dart:82:21 - unused_local_variable
+warning - The value of the local variable 'res' isn't used - lib\core\network\interceptors.dart:112:17 - unused_local_variable
+warning - The value of the local variable 'res' isn't used - lib\core\network\interceptors.dart:130:15 - unused_local_variable
+   info - Don't invoke 'print' in production code - lib\core\network\interceptors.dart:163:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\network\interceptors.dart:166:5 - avoid_print
+   info - Don't invoke 'print' in production code - lib\core\network\interceptors.dart:167:5 - avoid_print
+   info - The local variable '_tabs' starts with an underscore - lib\core\utils\custom_pretty_dio_logger.dart:216:9 - no_leading_underscores_for_local_identifiers
+   info - Use 'const' with the constructor to improve performance - lib\core\utils\dialog_utils.dart:26:97 - prefer_const_constructors
+   info - The imported package 'path_provider' isn't a dependency of the importing package - lib\core\utils\local_storage.dart:3:8 - depend_on_referenced_packages
+   info - Dangling library doc comment - lib\core\utils\local_store_dir.dart:1:1 - dangling_library_doc_comments
+warning - Unused import: 'firebase_options.dart' - lib\main.dart:8:8 - unused_import
+   info - Don't invoke 'print' in production code - lib\main.dart:35:5 - avoid_print
+warning - Unused import: '../common/app_colors.dart' - lib\ui\components\animated_strip.dart:3:8 - unused_import
+   info - Constructors for public widgets should have a named 'key' parameter - lib\ui\components\animated_strip.dart:5:7 - use_key_in_widget_constructors
+   info - Invalid use of a private type in a public API - lib\ui\components\animated_strip.dart:7:3 - library_private_types_in_public_api
+   info - Convert 'key' to a super parameter - lib\ui\components\background.dart:9:9 - use_super_parameters
+   info - Constructors for public widgets should have a named 'key' parameter - lib\ui\components\code_input.dart:8:3 - use_key_in_widget_constructors
+   info - Constructors in '@immutable' classes should be declared as 'const' - lib\ui\components\code_input.dart:8:3 - prefer_const_constructors_in_immutables
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\code_input.dart:29:26 - prefer_const_constructors
+   info - The import of 'package:flutter/cupertino.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\ui\components\comment_input_bar.dart:2:8 - unnecessary_import
+   info - The import of 'package:flutter/cupertino.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\ui\components\custom_button_image.dart:1:8 - unnecessary_import
+warning - Unused import: 'package:flutter/services.dart' - lib\ui\components\custom_time_picker.dart:2:8 - unused_import
+warning - Unused import: 'dart:math' - lib\ui\components\custom_time_picker.dart:3:8 - unused_import
+   info - Convert 'key' to a super parameter - lib\ui\components\custom_time_picker.dart:14:9 - use_super_parameters
+   info - Invalid use of a private type in a public API - lib\ui\components\custom_time_picker.dart:26:3 - library_private_types_in_public_api
+   info - The import of 'package:photo_view/photo_view.dart' is unnecessary because all of the used elements are also provided by the import of 'package:pdfx/pdfx.dart' - lib\ui\components\document_preview.dart:3:8 - unnecessary_import
+   info - The imported package 'photo_view' isn't a dependency of the importing package - lib\ui\components\document_preview.dart:3:8 - depend_on_referenced_packages
+   info - The imported package 'http' isn't a dependency of the importing package - lib\ui\components\document_preview.dart:6:8 - depend_on_referenced_packages
+   info - Convert 'key' to a super parameter - lib\ui\components\document_preview.dart:13:9 - use_super_parameters
+   info - Convert 'key' to a super parameter - lib\ui\components\document_preview.dart:84:9 - use_super_parameters
+   info - Invalid use of a private type in a public API - lib\ui\components\document_preview.dart:87:3 - library_private_types_in_public_api
+   info - Don't invoke 'print' in production code - lib\ui\components\document_preview.dart:109:7 - avoid_print
+   info - Convert 'key' to a super parameter - lib\ui\components\empty_state.dart:17:9 - use_super_parameters
+   info - Convert 'key' to a super parameter - lib\ui\components\header_widget.dart:10:9 - use_super_parameters
+   info - Convert 'key' to a super parameter - lib\ui\components\outlined_submit_button.dart:23:9 - use_super_parameters
+warning - The left operand can't be null, so the right operand is never executed - lib\ui\components\outlined_submit_button.dart:44:45 - dead_null_aware_expression
+   info - 'color' is deprecated and shouldn't be used - lib\ui\components\outlined_submit_button.dart:127:17 - deprecated_member_use
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_header.dart:16:19 - prefer_const_constructors
+   info - Convert 'key' to a super parameter - lib\ui\components\profile_picker.dart:15:9 - use_super_parameters
+   info - The declaration '_cropImage' isn't referenced - lib\ui\components\profile_picker.dart:84:17 - unused_element
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:121:16 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:122:18 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:126:20 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:133:20 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:162:24 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:163:22 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:170:24 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:171:22 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:207:24 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:208:27 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\components\profile_picker.dart:212:22 - prefer_const_constructors
+   info - Convert 'key' to a super parameter - lib\ui\components\profile_picture.dart:7:9 - use_super_parameters
+   info - Convert 'key' to a super parameter - lib\ui\components\submit_button.dart:31:9 - use_super_parameters
+   info - Convert 'key' to a super parameter - lib\ui\components\success_page.dart:13:9 - use_super_parameters
+   info - Convert 'key' to a super parameter - lib\ui\components\text_field_autocomplete_widget.dart:9:9 - use_super_parameters
+warning - The receiver can't be null, so the null-aware operator '?.' is unnecessary - lib\ui\components\text_field_autocomplete_widget.dart:36:28 - invalid_null_aware_operator
+   info - Convert 'key' to a super parameter - lib\ui\components\text_field_widget.dart:19:9 - use_super_parameters
+warning - Unused import: 'package:time_picker_spinner/time_picker_spinner.dart' - lib\ui\components\time_picker_field.dart:3:8 - unused_import
+   info - Convert 'key' to a super parameter - lib\ui\components\time_picker_field.dart:15:9 - use_super_parameters
+   info - Invalid use of a private type in a public API - lib\ui\components\time_picker_field.dart:25:3 - library_private_types_in_public_api
+   info - 'VideoPlayerController.network' is deprecated and shouldn't be used. Use VideoPlayerController.networkUrl instead - lib\ui\components\update_media_carousel.dart:40:26 - deprecated_member_use
+   info - Convert 'key' to a super parameter - lib\ui\dialogs\info_alert_dialog.dart:21:9 - use_super_parameters
+   info - 'ReactiveServiceMixin' is deprecated and shouldn't be used. use ListenableServiceMixin instead - lib\ui\views\auth\authentication_service.dart:22:34 - deprecated_member_use
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\login.dart:169:29 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\login.dart:170:38 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\login.dart:172:40 - prefer_const_constructors
+   info - The import of 'package:flutter/widgets.dart' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart' - lib\ui\views\auth\register.dart:2:8 - unnecessary_import
+warning - Unused import: 'package:file_picker/file_picker.dart' - lib\ui\views\auth\register.dart:5:8 - unused_import
+warning - Unused import: '../../../app/app.locator.dart' - lib\ui\views\auth\register.dart:7:8 - unused_import
+warning - Unused import: '../../../app/app.router.dart' - lib\ui\views\auth\register.dart:8:8 - unused_import
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\register.dart:184:23 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\register.dart:405:20 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\register.dart:407:22 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\sign_up.dart:239:15 - prefer_const_constructors
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\ui\views\auth\sign_up.dart:240:27 - prefer_const_literals_to_create_immutables
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\sign_up.dart:241:19 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\sign_up.dart:242:28 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\sign_up.dart:247:19 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\sign_up.dart:249:28 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\sign_up.dart:251:30 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\sign_up.dart:256:19 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\auth\sign_up.dart:257:28 - prefer_const_constructors
+warning - Unused import: 'package:stacked/stacked.dart' - lib\ui\views\customer\customer_view.dart:5:8 - unused_import
+  error - Expected a method, getter, setter or operator declaration - lib\ui\views\customer\customer_view.dart:80:1 - expected_executable
+warning - The value of the field '_repository' isn't used - lib\ui\views\customer\customer_viewmodel.dart:11:9 - unused_field
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\customer\widget\customer_table.dart:67:12 - prefer_const_constructors
+warning - Unused import: 'dart:ui' - lib\ui\views\customer\widget\new_customer_dialog.dart:1:8 - unused_import
+   info - Use 'const' for final variables initialized to a constant value - lib\ui\views\customer\widget\new_customer_dialog.dart:233:5 - prefer_const_declarations
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\customer\widget\new_customer_dialog.dart:301:11 - prefer_const_constructors
+warning - Unused import: '../../../app/app.router.dart' - lib\ui\views\dashboard\dashboard_viewmodel.dart:5:8 - unused_import
+warning - The value of the field '_navigationService' isn't used - lib\ui\views\dashboard\dashboard_viewmodel.dart:18:9 - unused_field
+   info - Don't invoke 'print' in production code - lib\ui\views\dashboard\dashboard_viewmodel.dart:59:7 - avoid_print
+warning - The method doesn't override an inherited method - lib\ui\views\dashboard\dashboard_viewmodel.dart:138:8 - override_on_non_overriding_member
+   info - Unnecessary use of 'toList' in a spread - lib\ui\views\dashboard\widget\dashboard_recent_transaction.dart:70:67 - unnecessary_to_list_in_spreads
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\dashboard\widget\dashboard_sales_analytics.dart:97:31 - prefer_const_constructors
+warning - Unused import: 'package:nogesoft/ui/views/profile/profile_view.dart' - lib\ui\views\home\home_view.dart:5:8 - unused_import
+warning - Unused import: '../customer/customer_view.dart' - lib\ui\views\home\home_view.dart:16:8 - unused_import
+  error - The constructor being called isn't a const constructor - lib\ui\views\home\home_view.dart:234:30 - const_with_non_const
+  error - The name 'CustomerView' isn't a class - lib\ui\views\home\home_view.dart:239:36 - creation_with_non_type
+  error - The constructor being called isn't a const constructor - lib\ui\views\home\home_view.dart:244:30 - const_with_non_const
+  error - The constructor being called isn't a const constructor - lib\ui\views\home\home_view.dart:249:30 - const_with_non_const
+  error - The name 'ProfileView' isn't a class - lib\ui\views\home\home_view.dart:254:36 - creation_with_non_type
+   info - The declaration '_PlaceholderPage' isn't referenced - lib\ui\views\home\home_view.dart:300:7 - unused_element
+   info - A value for optional parameter 'key' isn't ever given - lib\ui\views\home\home_view.dart:321:21 - unused_element
+   info - The declaration '_showError' isn't referenced - lib\ui\views\my_business\my_business_view.dart:169:8 - unused_element
+warning - The value of the local variable 'isDark' isn't used - lib\ui\views\my_business\my_business_view.dart:287:11 - unused_local_variable
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\my_business\my_business_view.dart:478:25 - prefer_const_constructors
+warning - Unused import: '../../../app/app.locator.dart' - lib\ui\views\otp_verification\otp_verification.dart:5:8 - unused_import
+warning - Unused import: '../../../app/app.router.dart' - lib\ui\views\otp_verification\otp_verification.dart:6:8 - unused_import
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\otp_verification\otp_verification.dart:52:27 - prefer_const_constructors
+   info - Use 'const' literals as arguments to constructors of '@immutable' classes - lib\ui\views\otp_verification\otp_verification.dart:53:39 - prefer_const_literals_to_create_immutables
+   info - The declaration '_validateForm' isn't referenced - lib\ui\views\otp_verification\otp_verification_viewmodel.dart:134:8 - unused_element
+warning - Unused import: 'package:stacked/stacked.dart' - lib\ui\views\profile\profile_view.dart:3:8 - unused_import
+warning - Unused import: 'model/user_profile.dart' - lib\ui\views\profile\profile_view.dart:7:8 - unused_import
+  error - Undefined name '_name' - lib\ui\views\profile\profile_view.dart:40:31 - undefined_identifier
+  error - Undefined name '_email' - lib\ui\views\profile\profile_view.dart:41:32 - undefined_identifier
+  error - Undefined name '_password' - lib\ui\views\profile\profile_view.dart:42:35 - undefined_identifier
+  error - Undefined name '_obscure' - lib\ui\views\profile\profile_view.dart:43:24 - undefined_identifier
+  error - The function 'setState' isn't defined - lib\ui\views\profile\profile_view.dart:44:38 - undefined_function
+  error - Undefined name '_obscure' - lib\ui\views\profile\profile_view.dart:44:53 - undefined_identifier
+  error - Undefined name '_obscure' - lib\ui\views\profile\profile_view.dart:44:65 - undefined_identifier
+  error - Undefined name '_name' - lib\ui\views\profile\profile_view.dart:50:23 - undefined_identifier
+  error - Undefined name '_email' - lib\ui\views\profile\profile_view.dart:51:24 - undefined_identifier
+  error - Undefined name '_password' - lib\ui\views\profile\profile_view.dart:52:30 - undefined_identifier
+  error - Expected a method, getter, setter or operator declaration - lib\ui\views\profile\profile_view.dart:60:1 - expected_executable
+  error - Methods can't be invoked in constant expressions - lib\ui\views\profile\profile_view.dart:106:13 - const_eval_method_invocation
+  error - Methods can't be invoked in constant expressions - lib\ui\views\profile\profile_view.dart:111:13 - const_eval_method_invocation
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\profile\profile_view.dart:281:21 - prefer_const_constructors
+warning - Unused import: 'package:nogesoft/ui/views/purchase/widget/new_purchase_sheet.dart' - lib\ui\views\purchase\purchase_view.dart:2:8 - unused_import
+warning - Unused import: 'package:nogesoft/core/data/models/purchase.dart' - lib\ui\views\purchase\purchase_view.dart:4:8 - unused_import
+   info - Constructors for public widgets should have a named 'key' parameter - lib\ui\views\purchase\purchase_view.dart:10:7 - use_key_in_widget_constructors
+  error - Missing concrete implementation of 'StackedView.viewModelBuilder' - lib\ui\views\purchase\purchase_view.dart:10:7 - non_abstract_class_inherits_abstract_member
+  error - The method '_openNewPurchase' isn't defined for the type 'PurchaseView' - lib\ui\views\purchase\purchase_view.dart:24:28 - undefined_method
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\purchase\purchase_view.dart:72:9 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\purchase\purchase_view.dart:73:18 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\purchase\widget\new_purchase_sheet.dart:172:13 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\purchase\widget\new_purchase_sheet.dart:174:22 - prefer_const_constructors
+warning - The value of the field '_repository' isn't used - lib\ui\views\reports\reports_viewmodel.dart:11:9 - unused_field
+  error - The method '_valueColor' isn't defined for the type 'ReportMetricCard' - lib\ui\views\reports\widget\report_metric_card.dart:16:14 - undefined_method
+  error - Function expressions can't be named - lib\ui\views\reports\widget\report_metric_card.dart:37:9 - named_function_expression
+  error - Too many positional arguments: 0 expected, but 1 found - lib\ui\views\reports\widget\report_metric_card.dart:37:20 - extra_positional_arguments_could_be_named
+  error - Expected to find ';' - lib\ui\views\reports\widget\report_metric_card.dart:50:3 - expected_token
+  error - Expected to find ')' - lib\ui\views\reports\widget\report_metric_card.dart:51:1 - expected_token
+  error - Expected to find '}' - lib\ui\views\reports\widget\report_metric_card.dart:52:1 - expected_token
+   info - Constructors for public widgets should have a named 'key' parameter - lib\ui\views\reports\widget\report_view.dart:11:7 - use_key_in_widget_constructors
+  error - The named parameter 'onLatest' isn't defined - lib\ui\views\reports\widget\report_view.dart:39:15 - undefined_named_parameter
+  error - The named parameter 'onPdf' isn't defined - lib\ui\views\reports\widget\report_view.dart:40:15 - undefined_named_parameter
+  error - The named parameter 'onCsv' isn't defined - lib\ui\views\reports\widget\report_view.dart:41:15 - undefined_named_parameter
+  error - The named parameter 'isDark' is required, but there's no corresponding argument - lib\ui\views\reports\widget\report_view.dart:91:20 - missing_required_argument
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\reports\widget\report_view.dart:146:19 - prefer_const_constructors
+  error - Undefined name 'onLatest' - lib\ui\views\reports\widget\report_view.dart:176:20 - undefined_identifier
+  error - Undefined name 'onPdf' - lib\ui\views\reports\widget\report_view.dart:188:20 - undefined_identifier
+  error - Undefined name 'onCsv' - lib\ui\views\reports\widget\report_view.dart:200:20 - undefined_identifier
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\reports\widget\sales_chart.dart:31:27 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\reports\widget\sales_chart.dart:32:29 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\reports\widget\sales_chart.dart:45:30 - prefer_const_constructors
+   info - Constructors for public widgets should have a named 'key' parameter - lib\ui\views\staff\staff_view.dart:11:7 - use_key_in_widget_constructors
+warning - The value of the field '_repository' isn't used - lib\ui\views\staff\staff_viewmodel.dart:11:9 - unused_field
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\staff\widget\staff_form.dart:316:27 - prefer_const_constructors
+   info - 'ReactiveServiceMixin' is deprecated and shouldn't be used. use ListenableServiceMixin instead - lib\ui\views\startup\startup_viewmodel.dart:13:8 - deprecated_member_use
+warning - The value of the field '_repository' isn't used - lib\ui\views\store\store_viewmodel.dart:9:9 - unused_field
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\store\store_viewmodel.dart:31:9 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\ui\views\store\store_viewmodel.dart:39:9 - prefer_const_constructors
+warning - The value of the local variable 'now' isn't used - lib\ui\views\store\widget\store_product_dialog.dart:157:11 - unused_local_variable
+

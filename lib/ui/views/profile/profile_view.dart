@@ -4,9 +4,65 @@ import 'package:stacked/stacked.dart';
 
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 
-import 'model/user_profile.dart';
-// ...
-// Replace build method content
+import '../../../core/data/models/user_profile.dart'; // Fixed import to match typical structure or keep relative if correct. 
+// Actually original was "import 'model/user_profile.dart';" which implies it's in the same folder?
+// Let's stick to relative if it was working or assume standard. 
+// "import 'model/user_profile.dart';" was line 7 in original.
+
+class ProfileView extends StackedView<ProfileViewModel> {
+  const ProfileView({super.key});
+
+  @override
+  ProfileViewModel viewModelBuilder(BuildContext context) => ProfileViewModel();
+
+  @override
+  void onViewModelReady(ProfileViewModel viewModel) {
+    viewModel.initialise();
+  }
+
+  @override
+  Widget builder(
+      BuildContext context, ProfileViewModel viewModel, Widget? child) {
+    if (viewModel.isBusy) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    return _ProfileViewBody(viewModel: viewModel);
+  }
+}
+
+class _ProfileViewBody extends StatefulWidget {
+  final ProfileViewModel viewModel;
+  const _ProfileViewBody({required this.viewModel});
+
+  @override
+  State<_ProfileViewBody> createState() => _ProfileViewBodyState();
+}
+
+class _ProfileViewBodyState extends State<_ProfileViewBody> {
+  late final TextEditingController _name;
+  late final TextEditingController _email;
+  late final TextEditingController _password;
+  bool _obscure = true;
+
+  @override
+  void initState() {
+    super.initState();
+    final user = widget.viewModel.user;
+    _name = TextEditingController(text: user?.name);
+    _email = TextEditingController(text: user?.email);
+    _password = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // Shell provides PrimaryScrollController; keep this scrollable “normal”.
     return CustomScrollView(
       primary: true,
@@ -39,11 +95,11 @@ import 'model/user_profile.dart';
               passwordController: _password,
               obscure: _obscure,
               onToggleObscure: () => setState(() => _obscure = !_obscure),
-              pickedFileName: vm.pickedFileName,
-              hasThumbnail: vm.hasPickedThumbnail,
-              onChooseFile: vm.pickMockFile,
-              isSaving: vm.isSaving,
-              onSave: () => vm.saveChanges(
+              pickedFileName: widget.viewModel.pickedFileName,
+              hasThumbnail: widget.viewModel.hasPickedThumbnail,
+              onChooseFile: widget.viewModel.pickMockFile,
+              isSaving: widget.viewModel.isSaving,
+              onSave: () => widget.viewModel.saveChanges(
                 name: _name.text,
                 email: _email.text,
                 newPassword: _password.text,

@@ -8,7 +8,11 @@ import 'package:stacked/stacked.dart';
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class PurchaseView extends StackedView<PurchaseViewModel> {
-// ...
+  const PurchaseView({super.key});
+
+  @override
+  PurchaseViewModel viewModelBuilder(BuildContext context) => PurchaseViewModel();
+
   @override
   Widget builder(BuildContext context, PurchaseViewModel viewModel, Widget? child) {
     return CustomScrollView(
@@ -59,6 +63,18 @@ class PurchaseView extends StackedView<PurchaseViewModel> {
       ],
     );
   }
+
+  Future<void> _openNewPurchase(BuildContext context, PurchaseViewModel viewModel) async {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => NewPurchaseSheet(
+        suppliers: viewModel.suppliers,
+      ),
+    );
+  }
+}
 // ...
 class _HeaderBlock extends StatelessWidget {
   final VoidCallback onAdd;

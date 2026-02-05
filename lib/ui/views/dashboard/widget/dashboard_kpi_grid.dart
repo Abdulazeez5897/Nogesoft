@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nogesoft/core/utils/currency_formatter.dart';
 
 import 'package:nogesoft/core/data/models/dashboard_stats.dart';
 import 'package:nogesoft/ui/common/ui_helpers.dart';

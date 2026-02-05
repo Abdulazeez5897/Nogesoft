@@ -6,7 +6,41 @@ import 'staff_badge.dart';
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class StaffCard extends StatelessWidget {
-// ...
+  final StaffMember member;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
+
+  const StaffCard({
+    super.key,
+    required this.member,
+    required this.onEdit,
+    required this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final textPrimary = isDark ? Colors.white : const Color(0xFF0B1220);
+    final textMuted = isDark ? Colors.white54 : const Color(0xFF555F71);
+
+    final roleBadge = _roleBadge(member, isDark);
+    final statusBadge = _statusBadge(member, isDark);
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF101A2B) : const Color(0xFFEEF2F6),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isDark ? 0.25 : 0.08),
+            blurRadius: 18,
+            offset: const Offset(0, 10),
+          )
+        ],
+      ),
+      child: Column(
+        children: [
           _RowKV(
             label: 'User',
             labelColor: textMuted,
@@ -135,7 +169,16 @@ class StaffCard extends StatelessWidget {
 }
 
 class _RowKV extends StatelessWidget {
-// ...
+  final String label;
+  final Widget child;
+  final Color labelColor;
+
+  const _RowKV({
+    required this.label,
+    required this.child,
+    required this.labelColor,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Row(

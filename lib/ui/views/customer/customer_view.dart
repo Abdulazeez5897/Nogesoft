@@ -66,8 +66,29 @@ import 'customer_viewmodel.dart';
       ],
     );
   }
-// ...
-// Replace _StatsRow
+  Future<void> _onNewCustomer(BuildContext context, CustomerViewModel viewModel) async {
+    final result = await NewCustomerDialog.show(context);
+    if (result != null) {
+       await viewModel.addCustomer(
+        name: result.name,
+        address: result.address,
+        phone: result.phone,
+        initialDebt: result.initialDebt,
+      );
+    }
+  }
+}
+class _StatsRow extends StatelessWidget {
+  final int allCount;
+  final int debtorCount;
+  final VoidCallback onNewCustomer;
+
+  const _StatsRow({
+    required this.allCount,
+    required this.debtorCount,
+    required this.onNewCustomer,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Row(

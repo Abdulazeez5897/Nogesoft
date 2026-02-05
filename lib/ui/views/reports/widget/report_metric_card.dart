@@ -5,8 +5,25 @@ import '../model/report_models.dart';
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class ReportMetricCard extends StatelessWidget {
-// ...
-// Replace build content
+  final ReportMetric metric;
+  const ReportMetricCard({super.key, required this.metric});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final labelColor = isDark ? Colors.white70 : const Color(0xFF555F71);
+    final valueStyle = TextStyle(
+      color: _valueColor(isDark),
+      fontSize: 26,
+      fontWeight: FontWeight.w900,
+    );
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? const Color(0xFF101A2B) : const Color(0xFFEEF2F6),
+        borderRadius: BorderRadius.circular(16),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -15,7 +32,8 @@ class ReportMetricCard extends StatelessWidget {
           Text(metric.value, style: valueStyle),
         ],
       ),
-// ...
+    );
+  }
 
   Color _valueColor(bool isDark) {
     switch (metric.type) {

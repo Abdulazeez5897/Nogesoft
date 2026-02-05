@@ -92,6 +92,7 @@ class ReportsView extends StackedView<ReportsViewModel> {
               query: viewModel.productQuery,
               onQueryChanged: viewModel.setProductQuery,
               item: viewModel.selectedProduct,
+              isDark: Theme.of(context).brightness == Brightness.dark,
             ),
           ),
         ),
@@ -163,7 +164,16 @@ class _TopRow extends StatelessWidget {
 }
 
 class _ActionButtonsRow extends StatelessWidget {
-// ...
+  final VoidCallback onLatest;
+  final VoidCallback onPdf;
+  final VoidCallback onCsv;
+
+  const _ActionButtonsRow({
+    required this.onLatest,
+    required this.onPdf,
+    required this.onCsv,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Row(

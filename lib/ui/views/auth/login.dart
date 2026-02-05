@@ -140,7 +140,7 @@ class LoginView extends StackedView<AuthViewModel> {
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(width: 10),
+                                        horizontalSpaceSmall,
                                       const Text(
                                         'Remember me',
                                         style: TextStyle(

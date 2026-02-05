@@ -4,6 +4,7 @@ import 'package:nogesoft/ui/views/store/widget/store_product_dialog.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nogesoft/core/data/models/product.dart';
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 import 'store_viewmodel.dart';
 
 class StoreView extends StackedView<StoreViewModel> {
@@ -18,7 +19,7 @@ class StoreView extends StackedView<StoreViewModel> {
       primary: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const SliverToBoxAdapter(child: SizedBox(height: 14)),
+        SliverToBoxAdapter(child: verticalSpace(14)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -29,7 +30,7 @@ class StoreView extends StackedView<StoreViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 14)),
+        SliverToBoxAdapter(child: verticalSpace(14)),
 
         if (viewModel.isBusy)
            const SliverFillRemaining(
@@ -40,7 +41,7 @@ class StoreView extends StackedView<StoreViewModel> {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 18),
             sliver: SliverList.separated(
               itemCount: viewModel.products.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 14),
+              separatorBuilder: (_, __) => verticalSpace(14),
               itemBuilder: (ctx, i) {
                 final p = viewModel.products[i];
                 return StoreProductCard(

@@ -2,89 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:nogesoft/ui/views/profile/profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
+
 import 'model/user_profile.dart';
-
-class ProfileView extends StackedView<ProfileViewModel> {
-  const ProfileView({super.key});
-
-  @override
-  void onViewModelReady(ProfileViewModel viewModel) {
-    viewModel.initialise();
-  }
-
-  @override
-  Widget builder(BuildContext context, ProfileViewModel viewModel, Widget? child) {
-    final profile = viewModel.profile;
-
-    if (viewModel.isBusy && profile == null) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-
-    if (profile == null) {
-      return const Center(
-        child: Text(
-          'No profile data',
-          style: TextStyle(color: Colors.white60, fontWeight: FontWeight.w800),
-        ),
-      );
-    }
-
-    // ✅ Pass the VM down instead of using context.watch
-    return _MyProfileBody(profile: profile, viewModel: viewModel);
-  }
-
-  @override
-  ProfileViewModel viewModelBuilder(BuildContext context) => ProfileViewModel();
-}
-
-class _MyProfileBody extends StatefulWidget {
-  final UserProfile profile;
-  final ProfileViewModel viewModel;
-
-  const _MyProfileBody({
-    required this.profile,
-    required this.viewModel,
-  });
-
-  @override
-  State<_MyProfileBody> createState() => _MyProfileBodyState();
-}
-
-class _MyProfileBodyState extends State<_MyProfileBody> {
-  late final TextEditingController _name;
-  late final TextEditingController _email;
-  late final TextEditingController _password;
-
-  bool _obscure = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _name = TextEditingController(text: widget.profile.name);
-    _email = TextEditingController(text: widget.profile.email);
-    _password = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _name.dispose();
-    _email.dispose();
-    _password.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final vm = widget.viewModel; // ✅ Use the VM passed in
-
+// ...
+// Replace build method content
     // Shell provides PrimaryScrollController; keep this scrollable “normal”.
     return CustomScrollView(
       primary: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(child: verticalSpace(16)),
 
         const SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -100,7 +28,7 @@ class _MyProfileBodyState extends State<_MyProfileBody> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 14)),
+        SliverToBoxAdapter(child: verticalSpace(14)),
 
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
@@ -172,12 +100,12 @@ class _ProfileCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: const [
             Icon(Icons.check_circle, color: Color(0xFF38B24A), size: 52),
-            SizedBox(height: 16),
+            verticalSpace(16),
             Text(
               'Profile Updated!',
               style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            verticalSpace(8),
             Text(
               'Your changes have been saved successfully.',
               textAlign: TextAlign.center,
@@ -228,7 +156,7 @@ class _ProfileCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 4),
+          verticalSpace(4),
 
           // Avatar
           CircleAvatar(
@@ -237,7 +165,7 @@ class _ProfileCard extends StatelessWidget {
             child: const Icon(Icons.person, color: Colors.white, size: 46),
           ),
 
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           // Choose File row (matches video)
           Container(
@@ -265,7 +193,7 @@ class _ProfileCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                horizontalSpace(12),
                 if (hasThumbnail)
                   Container(
                     width: 18,
@@ -276,7 +204,7 @@ class _ProfileCard extends StatelessWidget {
                     ),
                     child: const Icon(Icons.image, size: 14, color: Colors.white70),
                   ),
-                if (hasThumbnail) const SizedBox(width: 8),
+                if (hasThumbnail) horizontalSpace(8),
                 Expanded(
                   child: Text(
                     pickedFileName ?? 'no file selected',
@@ -291,13 +219,13 @@ class _ProfileCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 8),
+          verticalSpace(8),
           const Text(
             'JPG, PNG up to 2MB',
             style: TextStyle(color: Colors.white54, fontWeight: FontWeight.w700),
           ),
 
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           TextField(
             controller: nameController,
@@ -305,7 +233,7 @@ class _ProfileCard extends StatelessWidget {
             decoration: dec(''),
           ),
 
-          const SizedBox(height: 12),
+          verticalSpace(12),
 
           TextField(
             controller: emailController,
@@ -314,7 +242,7 @@ class _ProfileCard extends StatelessWidget {
             decoration: dec(''),
           ),
 
-          const SizedBox(height: 12),
+          verticalSpace(12),
 
           TextField(
             controller: passwordController,
@@ -332,7 +260,7 @@ class _ProfileCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
+          verticalSpace(16),
 
           SizedBox(
             height: 48,

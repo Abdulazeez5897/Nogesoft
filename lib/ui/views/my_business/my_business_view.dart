@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
+
 import 'model/business_model.dart';
 import 'my_buisness_viewmodel.dart';
 
@@ -192,7 +194,7 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
       primary: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(child: verticalSpace(16)),
 
         const SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -204,7 +206,7 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 14)),
+        SliverToBoxAdapter(child: verticalSpace(14)),
 
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
@@ -332,7 +334,7 @@ class _BusinessFormCard extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          verticalSpace(10),
           const Center(
             child: Text(
               'PNG / JPG • Max 2MB',
@@ -340,7 +342,7 @@ class _BusinessFormCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           label('Company Header (Main Company Name)'),
           TextField(
@@ -349,7 +351,7 @@ class _BusinessFormCard extends StatelessWidget {
             decoration: dec(''),
           ),
 
-          const SizedBox(height: 12),
+          verticalSpace(12),
 
           label('Distributor Name (Optional)'),
           TextField(
@@ -358,7 +360,7 @@ class _BusinessFormCard extends StatelessWidget {
             decoration: dec('e.g. Al-Amin Foams Trading Company'),
           ),
 
-          const SizedBox(height: 12),
+          verticalSpace(12),
 
           label('Authorized Tag (Optional)'),
           TextField(
@@ -367,7 +369,7 @@ class _BusinessFormCard extends StatelessWidget {
             decoration: dec('e.g. Authorized Key Distributor'),
           ),
 
-          const SizedBox(height: 12),
+          verticalSpace(12),
 
           label('Email'),
           TextField(
@@ -377,7 +379,7 @@ class _BusinessFormCard extends StatelessWidget {
             decoration: dec(''),
           ),
 
-          const SizedBox(height: 12),
+          verticalSpace(12),
 
           label('Phone'),
           TextField(
@@ -387,13 +389,13 @@ class _BusinessFormCard extends StatelessWidget {
             decoration: dec(''),
           ),
 
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           const Text(
             'Business Addresses',
             style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w900, fontSize: 16),
           ),
-          const SizedBox(height: 10),
+          verticalSpace(10),
 
           _AddressBlock(
             titleController: TextEditingController(text: 'Head Office'),
@@ -402,7 +404,7 @@ class _BusinessFormCard extends StatelessWidget {
             dec: dec,
           ),
 
-          const SizedBox(height: 10),
+          verticalSpace(10),
 
           InkWell(
             onTap: isSaving ? null : onAddBranch,
@@ -419,7 +421,7 @@ class _BusinessFormCard extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 10),
+          verticalSpace(10),
 
           // Branch blocks
           ...branches.map((br) {
@@ -438,7 +440,7 @@ class _BusinessFormCard extends StatelessWidget {
                     titleHint: 'Branch',
                     addressHint: 'Enter address',
                   ),
-                  const SizedBox(height: 8),
+                  verticalSpace(8),
                   InkWell(
                     onTap: isSaving ? null : () => onRemoveBranch(br.id),
                     child: const Text(
@@ -454,7 +456,7 @@ class _BusinessFormCard extends StatelessWidget {
             );
           }),
 
-          const SizedBox(height: 8),
+          verticalSpace(8),
 
           // Save button aligned to end like video
           Row(
@@ -536,7 +538,7 @@ class _AddressBlock extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          verticalSpace(10),
           TextField(
             controller: addressController,
             maxLines: 2,

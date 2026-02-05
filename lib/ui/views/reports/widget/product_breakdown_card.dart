@@ -3,46 +3,14 @@ import 'package:flutter/material.dart';
 import '../model/report_models.dart';
 
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
+
 class ProductBreakdownCard extends StatelessWidget {
-  final String query;
-  final ValueChanged<String> onQueryChanged;
-  final ProductBreakdownItem? item;
-
-  const ProductBreakdownCard({
-    super.key,
-    required this.query,
-    required this.onQueryChanged,
-    required this.item,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    final isDark = brightness == Brightness.dark;
-
-    final cardColor = isDark ? const Color(0xFF101A2B) : const Color(0xFFEEF2F6);
-    final textPrimary = isDark ? Colors.white : const Color(0xFF0B1220);
-    final textMuted = isDark ? Colors.white60 : Colors.black54;
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.25 : 0.10),
-            blurRadius: 14,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+// ...
+// Replace build body
           Text('Product Breakdown',
               style: TextStyle(color: textPrimary, fontSize: 20, fontWeight: FontWeight.w900)),
-          const SizedBox(height: 12),
+          verticalSpace(12),
 
           _SearchField(
             hint: 'Search product...',
@@ -51,7 +19,7 @@ class ProductBreakdownCard extends StatelessWidget {
             isDark: isDark,
           ),
 
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           if (item == null)
             Center(
@@ -86,8 +54,9 @@ class ProductBreakdownCard extends StatelessWidget {
               labelColor: textMuted,
               valueColor: const Color(0xFF52E08A),
             ),
-            const SizedBox(height: 12),
+            verticalSpace(12),
             Row(
+// ...
               children: [
                 SizedBox(
                   width: 92,

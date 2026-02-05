@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nogesoft/core/data/models/product.dart';
 import 'package:nogesoft/core/utils/currency_formatter.dart';
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
+
 class DashboardTopSelling extends StatelessWidget {
   final List<Product> products;
 
@@ -37,7 +39,7 @@ class DashboardTopSelling extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           if (products.isEmpty)
             Text(
@@ -92,7 +94,7 @@ class _TopSellRow extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 6),
+        horizontalSpace(6),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +107,7 @@ class _TopSellRow extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 2),
+              verticalSpace(2),
               Text(
                 sold,
                 style: GoogleFonts.redHatDisplay(

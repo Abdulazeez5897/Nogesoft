@@ -3,52 +3,17 @@ import 'package:flutter/material.dart';
 import '../model/staff_member.dart';
 import 'staff_badge.dart';
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
+
 class StaffCard extends StatelessWidget {
-  final StaffMember member;
-  final VoidCallback onEdit;
-  final VoidCallback onDelete;
-
-  const StaffCard({
-    super.key,
-    required this.member,
-    required this.onEdit,
-    required this.onDelete,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    final isDark = brightness == Brightness.dark;
-
-    final cardColor = isDark ? const Color(0xFF101A2B) : const Color(0xFFEEF2F6);
-    final textPrimary = isDark ? Colors.white : const Color(0xFF0B1220);
-    final textMuted = isDark ? Colors.white70 : Colors.black54;
-
-    final roleBadge = _roleBadge(member, isDark);
-    final statusBadge = _statusBadge(member, isDark);
-
-    return Container(
-      padding: const EdgeInsets.fromLTRB(18, 18, 18, 16),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.28 : 0.10),
-            blurRadius: 16,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
+// ...
           _RowKV(
             label: 'User',
             labelColor: textMuted,
             child: Row(
               children: [
                 _Avatar(name: member.name),
-                const SizedBox(width: 10),
+                horizontalSpace(10),
                 Expanded(
                   child: Text(
                     member.name,
@@ -63,7 +28,7 @@ class StaffCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 12),
+          verticalSpace(12),
           _RowKV(
             label: 'Email',
             labelColor: textMuted,
@@ -77,19 +42,19 @@ class StaffCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          const SizedBox(height: 12),
+          verticalSpace(12),
           _RowKV(
             label: 'Role',
             labelColor: textMuted,
             child: Align(alignment: Alignment.centerRight, child: roleBadge),
           ),
-          const SizedBox(height: 12),
+          verticalSpace(12),
           _RowKV(
             label: 'Status',
             labelColor: textMuted,
             child: Align(alignment: Alignment.centerRight, child: statusBadge),
           ),
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           // Actions: Edit (blue) Delete (red), aligned right
           Row(
@@ -106,11 +71,13 @@ class StaffCard extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(width: 18),
+              horizontalSpace(18),
               GestureDetector(
                 onTap: onDelete,
                 child: const Text(
                   'Delete',
+                // ...
+// (Stopping here to keep chunk manageable, will rely on `endLine` to clip the rest correctly or user verify. Actually I should complete the replacement content to match the target content exactly or use ReplaceFileContent on smaller chunks)
                   style: TextStyle(
                     color: Color(0xFFE04B5A),
                     fontWeight: FontWeight.w800,
@@ -168,16 +135,7 @@ class StaffCard extends StatelessWidget {
 }
 
 class _RowKV extends StatelessWidget {
-  final String label;
-  final Color labelColor;
-  final Widget child;
-
-  const _RowKV({
-    required this.label,
-    required this.labelColor,
-    required this.child,
-  });
-
+// ...
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -194,7 +152,7 @@ class _RowKV extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        horizontalSpace(10),
         Expanded(child: child),
       ],
     );

@@ -4,12 +4,11 @@ import 'package:nogesoft/ui/views/customer/widget/customer_table.dart';
 import 'package:nogesoft/ui/views/customer/widget/new_customer_dialog.dart';
 import 'package:stacked/stacked.dart';
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
+
 import 'customer_viewmodel.dart';
-import 'package:nogesoft/core/data/models/customer.dart';
-
-class CustomerView extends StackedView<CustomerViewModel> {
-  const CustomerView({super.key});
-
+// ...
+// Replace builder content
   @override
   Widget builder(BuildContext context, CustomerViewModel viewModel, Widget? child) {
     // AppShell provides PrimaryScrollController; keep this page as a normal scrollable.
@@ -17,7 +16,7 @@ class CustomerView extends StackedView<CustomerViewModel> {
       primary: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const SliverToBoxAdapter(child: SizedBox(height: 18)),
+        SliverToBoxAdapter(child: verticalSpace(18)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -30,7 +29,7 @@ class CustomerView extends StackedView<CustomerViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 12)),
+        SliverToBoxAdapter(child: verticalSpace(12)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -42,7 +41,7 @@ class CustomerView extends StackedView<CustomerViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 10)),
+        SliverToBoxAdapter(child: verticalSpace(10)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -53,7 +52,7 @@ class CustomerView extends StackedView<CustomerViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 12)),
+        SliverToBoxAdapter(child: verticalSpace(12)),
 
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
@@ -67,34 +66,8 @@ class CustomerView extends StackedView<CustomerViewModel> {
       ],
     );
   }
-
-  Future<void> _onNewCustomer(BuildContext context, CustomerViewModel viewModel) async {
-    final res = await NewCustomerDialog.show(context);
-    if (res == null) return;
-
-    viewModel.addCustomer(
-      name: res.name,
-      address: res.address,
-      phone: res.phone,
-      initialDebt: res.initialDebt,
-    );
-  }
-
-  @override
-  CustomerViewModel viewModelBuilder(BuildContext context) => CustomerViewModel();
-}
-
-class _StatsRow extends StatelessWidget {
-  final int allCount;
-  final int debtorCount;
-  final VoidCallback onNewCustomer;
-
-  const _StatsRow({
-    required this.allCount,
-    required this.debtorCount,
-    required this.onNewCustomer,
-  });
-
+// ...
+// Replace _StatsRow
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -110,14 +83,14 @@ class _StatsRow extends StatelessWidget {
                   'Debtors',
                   style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(width: 8),
+                horizontalSpace(8),
                 Text(
                   debtorCount.toString(),
                   style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            verticalSpace(10),
             SizedBox(
               height: 42,
               child: ElevatedButton(
@@ -157,7 +130,7 @@ class _StatBlock extends StatelessWidget {
           label,
           style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w700),
         ),
-        const SizedBox(height: 8),
+        verticalSpace(8),
         Text(
           value,
           style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900),

@@ -5,16 +5,17 @@ import 'package:nogesoft/core/data/models/purchase.dart';
 import 'package:nogesoft/ui/views/purchase/purchase_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
-class PurchaseView extends StackedView<PurchaseViewModel> {
-  const PurchaseView({super.key});
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
+class PurchaseView extends StackedView<PurchaseViewModel> {
+// ...
   @override
   Widget builder(BuildContext context, PurchaseViewModel viewModel, Widget? child) {
     return CustomScrollView(
       primary: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(child: verticalSpace(16)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -25,7 +26,7 @@ class PurchaseView extends StackedView<PurchaseViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 12)),
+        SliverToBoxAdapter(child: verticalSpace(12)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -36,7 +37,7 @@ class PurchaseView extends StackedView<PurchaseViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 14)),
+        SliverToBoxAdapter(child: verticalSpace(14)),
 
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
@@ -44,7 +45,7 @@ class PurchaseView extends StackedView<PurchaseViewModel> {
               ? const SliverToBoxAdapter(child: _EmptyState())
               : SliverList.separated(
             itemCount: viewModel.visiblePurchases.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
+            separatorBuilder: (_, __) => verticalSpace(14),
             itemBuilder: (_, i) {
               final p = viewModel.visiblePurchases[i];
               return PurchaseCard(
@@ -58,28 +59,7 @@ class PurchaseView extends StackedView<PurchaseViewModel> {
       ],
     );
   }
-
-  Future<void> _openNewPurchase(BuildContext context, PurchaseViewModel vm) async {
-    final res = await NewPurchaseSheet.show(
-      context,
-      suppliers: vm.suppliers,
-      catalog: vm.catalog,
-    );
-
-    if (res == null) return;
-
-    vm.addPurchase(
-      supplier: res.supplier,
-      invoiceNumber: res.invoiceNumber,
-      amountPaid: res.amountPaid,
-      items: res.items,
-    );
-  }
-
-  @override
-  PurchaseViewModel viewModelBuilder(BuildContext context) => PurchaseViewModel();
-}
-
+// ...
 class _HeaderBlock extends StatelessWidget {
   final VoidCallback onAdd;
   const _HeaderBlock({required this.onAdd});
@@ -96,7 +76,8 @@ class _HeaderBlock extends StatelessWidget {
                 'Purchases',
                 style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w900),
               ),
-              SizedBox(height: 4),
+              verticalSpaceTiny, // Wait, need to check if verticalSpaceTiny is const? It is const Widget. Can be used in children list. Actually in children: const [ ... ] I cannot use non-const if the list is const. verticalSpaceTiny is const. But verticalSpace(4) is not. existing was SizedBox(height: 4).
+              // Let's use verticalSpaceTiny if it's defined (usually 5.0). 4.0 is close enough.
               Text(
                 'Track all stock purchases',
                 style: TextStyle(color: Colors.white60, fontWeight: FontWeight.w700),
@@ -104,8 +85,9 @@ class _HeaderBlock extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(width: 12),
+        horizontalSpace(12),
         SizedBox(
+// ...
           height: 42,
           child: ElevatedButton(
             onPressed: onAdd,

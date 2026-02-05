@@ -1,5 +1,6 @@
 import 'dart:ui' show lerpDouble;
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
 
 class NewCustomerResult {
@@ -134,7 +135,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             children: [
               Row(
                 children: [
-                  const Expanded(
+                   const Expanded(
                     child: Text(
                       'New Customer',
                       style: TextStyle(
@@ -151,9 +152,9 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
                 ],
               ),
 
-              const SizedBox(height: 8),
+              verticalSpace(8),
               _StepHeader(step: _step),
-              const SizedBox(height: 14),
+              verticalSpace(14),
 
               Flexible(
                 child: SingleChildScrollView(
@@ -179,7 +180,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             style: const TextStyle(color: Colors.white),
             decoration: _fieldDecoration(''),
           ),
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           const _Label('Address'),
           TextField(
@@ -187,7 +188,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             style: const TextStyle(color: Colors.white),
             decoration: _fieldDecoration(''),
           ),
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           const _Label('Phone'),
           TextField(
@@ -196,7 +197,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             style: const TextStyle(color: Colors.white),
             decoration: _fieldDecoration(''),
           ),
-          const SizedBox(height: 16),
+          verticalSpace(16),
 
           Align(
             alignment: Alignment.centerLeft,
@@ -251,7 +252,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
               ),
             ],
           ),
-          const SizedBox(height: 10),
+          verticalSpace(10),
 
           const _Label('Select Products'),
           _DropdownField(
@@ -259,7 +260,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             items: const ['Choose product', 'Amarya Foam', 'Vital Foam'],
             onChanged: (v) => setState(() => _selectedProduct = v),
           ),
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           const _Label('Discount'),
           TextField(
@@ -268,7 +269,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             style: const TextStyle(color: Colors.white),
             decoration: _fieldDecoration('0'),
           ),
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           const _Label('Amount Paid'),
           TextField(
@@ -277,7 +278,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             style: const TextStyle(color: Colors.white),
             decoration: _fieldDecoration(''),
           ),
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           const _Label('Payment Type'),
           _DropdownField(
@@ -285,7 +286,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             items: const ['Select type', 'Cash', 'Transfer', 'POS'],
             onChanged: (v) => setState(() => _paymentType = v),
           ),
-          const SizedBox(height: 14),
+          verticalSpace(14),
 
           const _Label('Description'),
           TextField(
@@ -295,7 +296,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             decoration: _fieldDecoration(''),
           ),
 
-          const SizedBox(height: 16),
+          verticalSpace(16),
 
           _SummaryLine(label: 'Subtotal:', value: '$subtotal'),
           _SummaryLine(
@@ -305,7 +306,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
           ),
           _SummaryLine(label: 'Final Total:', value: '$finalTotal'),
 
-          const SizedBox(height: 16),
+          verticalSpace(16),
 
           Row(
             children: [
@@ -427,7 +428,7 @@ class _StepPill extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        horizontalSpace(10),
         Text(
           label,
           style: TextStyle(
@@ -545,7 +546,7 @@ class _SummaryLine extends StatelessWidget {
             label,
             style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w700),
           ),
-          const SizedBox(width: 6),
+          horizontalSpace(6),
           Text(
             value,
             style: TextStyle(

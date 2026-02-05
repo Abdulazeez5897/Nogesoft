@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 import 'package:nogesoft/core/data/models/product.dart';
 import 'package:nogesoft/core/data/models/purchase.dart';
 
@@ -179,7 +180,7 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                 ),
               ),
             ),
-            const SizedBox(height: 14),
+            verticalSpace(14),
 
             // Form scroll area
             Flexible(
@@ -195,7 +196,7 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                       label: (s) => s.name,
                       onChanged: (v) => setState(() => _supplier = v),
                     ),
-                    const SizedBox(height: 12),
+                    verticalSpace(12),
 
                     const _Label('Invoice Number'),
                     TextField(
@@ -203,7 +204,7 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                       style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
                       decoration: _dec(''),
                     ),
-                    const SizedBox(height: 12),
+                    verticalSpace(12),
 
                     const _Label('Amount Paid'),
                     TextField(
@@ -212,13 +213,13 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                       style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
                       decoration: _dec(''),
                     ),
-                    const SizedBox(height: 14),
+                    verticalSpace(14),
 
                     const Text(
                       'Products',
                       style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w800),
                     ),
-                    const SizedBox(height: 8),
+                    verticalSpace(8),
 
                     // Lines
                     ...List.generate(_lines.length, (i) {
@@ -251,7 +252,7 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    verticalSpace(18),
                   ],
                 ),
               ),
@@ -275,7 +276,7 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                     child: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.w800)),
                   ),
                 ),
-                const SizedBox(width: 12),
+                horizontalSpace(12),
                 SizedBox(
                   height: 44,
                   child: ElevatedButton(
@@ -414,7 +415,7 @@ class _ProductLine extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 12),
+            horizontalSpace(12),
             SizedBox(
               width: 90,
               child: TextField(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/data/models/product.dart';
 import 'package:intl/intl.dart';
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class StoreProductCard extends StatelessWidget {
   final Product product;
@@ -37,6 +38,7 @@ class StoreProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           Text(
             product.name,
             style: const TextStyle(
@@ -45,7 +47,7 @@ class StoreProductCard extends StatelessWidget {
               fontWeight: FontWeight.w800,
             ),
           ),
-          const SizedBox(height: 4),
+          verticalSpace(4),
           Text(
             product.category,
             style: const TextStyle(
@@ -54,7 +56,7 @@ class StoreProductCard extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 10),
+          verticalSpaceSmall,
           Text(
             _formatNaira(product.price),
             style: const TextStyle(
@@ -63,7 +65,7 @@ class StoreProductCard extends StatelessWidget {
               fontWeight: FontWeight.w900,
             ),
           ),
-          const SizedBox(height: 12),
+          verticalSpace(12),
 
           Row(
             children: [
@@ -73,7 +75,7 @@ class StoreProductCard extends StatelessWidget {
                 textColor: const Color(0xFFFFC24A),
                 onTap: onEdit,
               ),
-              const SizedBox(width: 12),
+              horizontalSpace(12),
               _OutlineActionButton(
                 label: 'Delete',
                 borderColor: const Color(0xFFE04B5A),

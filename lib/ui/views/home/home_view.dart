@@ -12,6 +12,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
+import '../../common/ui_helpers.dart';
 import '../customer/customer_view.dart';
 import 'home_viewmodel.dart';
 
@@ -341,7 +342,7 @@ class _AppDrawer extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  verticalSpace(16),
 
                   _drawerItem(
                     context: context,

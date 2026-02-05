@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:nogesoft/core/data/models/dashboard_stats.dart';
-import 'package:nogesoft/core/utils/currency_formatter.dart';
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class DashboardKpiGrid extends StatelessWidget {
   final VoidCallback onLowStockTap;
@@ -32,7 +32,7 @@ class DashboardKpiGrid extends StatelessWidget {
                 valueColor: Colors.white,
               ),
             ),
-            const SizedBox(width: 12),
+            horizontalSpace(12),
             Expanded(
               child: _KpiCard(
                 title: "Profit", // Placeholder
@@ -42,7 +42,7 @@ class DashboardKpiGrid extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        verticalSpace(12),
         Row(
           children: [
             Expanded(
@@ -52,7 +52,7 @@ class DashboardKpiGrid extends StatelessWidget {
                 valueColor: Colors.white,
               ),
             ),
-            const SizedBox(width: 12),
+            horizontalSpace(12),
             Expanded(
               child: _KpiCard(
                 title: "Customers",
@@ -62,7 +62,7 @@ class DashboardKpiGrid extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        verticalSpace(12),
         Row(
           children: [
             Expanded(
@@ -72,7 +72,7 @@ class DashboardKpiGrid extends StatelessWidget {
                 valueColor: Colors.white,
               ),
             ),
-            const SizedBox(width: 12),
+            horizontalSpace(12),
             Expanded(
               child: _KpiCard(
                 title: "Unpaid Balance",
@@ -82,7 +82,7 @@ class DashboardKpiGrid extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 12),
+        verticalSpace(12),
         Row(
           children: [
             Expanded(
@@ -129,7 +129,7 @@ class _KpiCard extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 8),
+          verticalSpace(8),
           Text(
             value,
             maxLines: 1,

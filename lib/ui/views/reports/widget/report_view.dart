@@ -6,9 +6,10 @@ import 'package:stacked/stacked.dart';
 
 import '../reports_viewmodel.dart';
 
-class ReportsView extends StackedView<ReportsViewModel> {
-  const ReportsView({super.key});
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
+class ReportsView extends StackedView<ReportsViewModel> {
+// ...
   @override
   Widget builder(BuildContext context, ReportsViewModel viewModel, Widget? child) {
     // Shell provides PrimaryScrollController; keep this as normal scrollable.
@@ -16,7 +17,7 @@ class ReportsView extends StackedView<ReportsViewModel> {
       primary: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(child: verticalSpace(16)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -29,7 +30,7 @@ class ReportsView extends StackedView<ReportsViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 14)),
+        SliverToBoxAdapter(child: verticalSpace(14)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -42,7 +43,7 @@ class ReportsView extends StackedView<ReportsViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 18)),
+        SliverToBoxAdapter(child: verticalSpace(18)),
 
         if (viewModel.statusMessage.isNotEmpty)
           SliverToBoxAdapter(
@@ -54,7 +55,7 @@ class ReportsView extends StackedView<ReportsViewModel> {
             ),
           ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 18)),
+        SliverToBoxAdapter(child: verticalSpace(18)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -72,7 +73,7 @@ class ReportsView extends StackedView<ReportsViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 18)),
+        SliverToBoxAdapter(child: verticalSpace(18)),
 
         if (viewModel.weeklySales.isNotEmpty) ...[
           SliverPadding(
@@ -81,7 +82,7 @@ class ReportsView extends StackedView<ReportsViewModel> {
              child: SalesChart(weeklySales: viewModel.weeklySales),
             ),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 18)),
+          SliverToBoxAdapter(child: verticalSpace(18)),
         ],
 
         SliverPadding(
@@ -162,16 +163,7 @@ class _TopRow extends StatelessWidget {
 }
 
 class _ActionButtonsRow extends StatelessWidget {
-  final VoidCallback onLatest;
-  final VoidCallback onPdf;
-  final VoidCallback onCsv;
-
-  const _ActionButtonsRow({
-    required this.onLatest,
-    required this.onPdf,
-    required this.onCsv,
-  });
-
+// ...
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -185,7 +177,7 @@ class _ActionButtonsRow extends StatelessWidget {
             // no minWidth here
           ),
         ),
-        const SizedBox(width: 12),
+        horizontalSpace(12),
 
         SizedBox(
           width: 86,
@@ -197,7 +189,7 @@ class _ActionButtonsRow extends StatelessWidget {
             // no minWidth here
           ),
         ),
-        const SizedBox(width: 12),
+        horizontalSpace(12),
 
         SizedBox(
           width: 86,

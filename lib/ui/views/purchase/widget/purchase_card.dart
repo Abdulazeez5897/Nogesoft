@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:nogesoft/core/data/models/purchase.dart';
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class PurchaseCard extends StatelessWidget {
   final Purchase purchase;
@@ -50,7 +51,7 @@ class PurchaseCard extends StatelessWidget {
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                    const SizedBox(height: 4),
+                    verticalSpace(4),
                     Text(
                       purchase.supplier.name,
                       style: TextStyle(
@@ -58,7 +59,7 @@ class PurchaseCard extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    verticalSpace(6),
                     Text(
                       '${purchase.items.length} items',
                       style: TextStyle(
@@ -80,7 +81,7 @@ class PurchaseCard extends StatelessWidget {
                       fontWeight: FontWeight.w900,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  verticalSpace(4),
                   Text(
                     date(purchase.date),
                     style: TextStyle(
@@ -92,7 +93,7 @@ class PurchaseCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          verticalSpace(12),
           Align(
             alignment: Alignment.centerRight,
             child: Text(

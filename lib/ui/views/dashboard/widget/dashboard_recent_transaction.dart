@@ -5,6 +5,8 @@ import 'package:nogesoft/core/data/models/purchase.dart';
 import 'package:nogesoft/core/utils/currency_formatter.dart';
 import 'package:intl/intl.dart';
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
+
 class DashboardRecentTransactions extends StatelessWidget {
   final VoidCallback onViewAll;
   final List<Purchase> transactions;
@@ -55,7 +57,7 @@ class DashboardRecentTransactions extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          verticalSpace(12),
           if (transactions.isEmpty)
              Padding(
                padding: const EdgeInsets.all(20),
@@ -111,7 +113,7 @@ class _TxnCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 6),
+                verticalSpace(6),
                 Text(
                   _fmtDate(purchase.date),
                   style: GoogleFonts.redHatDisplay(
@@ -119,7 +121,7 @@ class _TxnCard extends StatelessWidget {
                     fontSize: 13,
                   ),
                 ),
-                const SizedBox(height: 10),
+                verticalSpaceSmall,
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
@@ -138,7 +140,7 @@ class _TxnCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 10),
+          horizontalSpaceSmall,
           Text(
             CurrencyFormatter.formatNaira(purchase.totalAmount.toDouble()),
             style: GoogleFonts.redHatDisplay(

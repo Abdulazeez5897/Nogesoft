@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
+
 class DashboardSalesAnalytics extends StatelessWidget {
   final String selectedRange;
   final List<String> ranges;
@@ -46,7 +48,7 @@ class DashboardSalesAnalytics extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            const SizedBox(height: 12),
+            verticalSpace(12),
 
             // Dropdown styled like recording (bordered field)
             Container(
@@ -83,11 +85,11 @@ class DashboardSalesAnalytics extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 14),
+            verticalSpace(14),
 
             SizedBox(
               height: 190,
-                child: LineChart(
+              child: LineChart(
                   LineChartData(
                     clipData: const FlClipData.all(),
                     minY: 0,

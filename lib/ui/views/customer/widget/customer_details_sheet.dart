@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:nogesoft/core/data/models/customer.dart';
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class CustomerDetailsSheet extends StatelessWidget {
   final Customer customer;
@@ -45,7 +46,7 @@ class CustomerDetailsSheet extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(height: 6),
+            verticalSpace(6),
 
             Text(
               customer.name,
@@ -55,7 +56,7 @@ class CustomerDetailsSheet extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
-            const SizedBox(height: 4),
+            verticalSpace(4),
             Text(
               customer.phone,
               style: const TextStyle(
@@ -64,7 +65,7 @@ class CustomerDetailsSheet extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const SizedBox(height: 14),
+            verticalSpace(14),
 
             RichText(
               text: TextSpan(
@@ -78,7 +79,7 @@ class CustomerDetailsSheet extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 14),
+            verticalSpace(14),
 
             GestureDetector(
               onTap: () {
@@ -93,7 +94,7 @@ class CustomerDetailsSheet extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            verticalSpace(16),
 
             SizedBox(
               width: double.infinity,

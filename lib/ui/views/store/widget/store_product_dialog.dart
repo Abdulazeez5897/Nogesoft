@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class StoreProductDialogResult {
   final String name;
@@ -188,6 +189,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               Text(
                 widget.title,
                 style: const TextStyle(
@@ -196,7 +198,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                   fontWeight: FontWeight.w800,
                 ),
               ),
-              const SizedBox(height: 18),
+              verticalSpace(18),
 
               TextField(
                 controller: _name,
@@ -204,7 +206,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                 decoration: _fieldDecoration('Name'),
                 textInputAction: TextInputAction.next,
               ),
-              const SizedBox(height: 12),
+              verticalSpace(12),
 
               TextField(
                 controller: _category,
@@ -212,7 +214,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                 decoration: _fieldDecoration('Category'),
                 textInputAction: TextInputAction.next,
               ),
-              const SizedBox(height: 12),
+              verticalSpace(12),
 
               Row(children: [
                 Expanded(
@@ -224,7 +226,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                     textInputAction: TextInputAction.next,
                   ),
                 ),
-                const SizedBox(width: 12),
+                horizontalSpace(12),
                 Expanded(
                   child: TextField(
                     controller: _stock,
@@ -235,7 +237,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                   ),
                 ),
               ]),
-              const SizedBox(height: 12),
+              verticalSpace(12),
 
               // Dimensions Input
               TextField(
@@ -244,7 +246,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                 decoration: _fieldDecoration('Dimensions (e.g. 10x12)'),
                 textInputAction: TextInputAction.done,
               ),
-              const SizedBox(height: 14),
+              verticalSpace(14),
 
               // Unit Dropdown + Date Picker Row
               Row(
@@ -275,7 +277,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  horizontalSpace(12),
                   // Date Picker Button
                   Expanded(
                     child: InkWell(
@@ -298,7 +300,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                 ],
               ),
 
-              const SizedBox(height: 24),
+              verticalSpace(24),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -308,7 +310,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                     isPrimary: false,
                     onTap: () => Navigator.of(context).pop(),
                   ),
-                  const SizedBox(width: 12),
+                  horizontalSpace(12),
                   _DialogButton(
                     label: 'Save',
                     isPrimary: true,

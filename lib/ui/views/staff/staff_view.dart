@@ -6,9 +6,10 @@ import 'package:stacked/stacked.dart';
 import 'model/staff_member.dart';
 import 'staff_viewmodel.dart';
 
-class StaffView extends StackedView<StaffViewModel> {
-  const StaffView({super.key});
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
+class StaffView extends StackedView<StaffViewModel> {
+// ...
   @override
   Widget builder(BuildContext context, StaffViewModel viewModel, Widget? child) {
     // Important: AppShell provides PrimaryScrollController so this scroll drives the global header.
@@ -16,7 +17,7 @@ class StaffView extends StackedView<StaffViewModel> {
       primary: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        const SliverToBoxAdapter(child: SizedBox(height: 16)),
+        SliverToBoxAdapter(child: verticalSpace(16)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -27,7 +28,7 @@ class StaffView extends StackedView<StaffViewModel> {
           ),
         ),
 
-        const SliverToBoxAdapter(child: SizedBox(height: 14)),
+        SliverToBoxAdapter(child: verticalSpace(14)),
 
         SliverPadding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
@@ -35,7 +36,7 @@ class StaffView extends StackedView<StaffViewModel> {
               ? const SliverToBoxAdapter(child: _EmptyState())
               : SliverList.separated(
             itemCount: viewModel.staff.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 14),
+            separatorBuilder: (_, __) => verticalSpace(14),
             itemBuilder: (_, i) {
               final m = viewModel.staff[i];
               return StaffCard(

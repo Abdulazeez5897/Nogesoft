@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 import '../model/staff_member.dart';
 
 class StaffFormResult {
@@ -158,6 +159,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+// ... Inside build method
             Row(
               children: [
                 Expanded(
@@ -172,7 +174,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            verticalSpace(12),
 
             TextField(
               controller: _name,
@@ -180,7 +182,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
               decoration: _dec('Name'),
               textInputAction: TextInputAction.next,
             ),
-            const SizedBox(height: 10),
+            verticalSpace(10),
 
             TextField(
               controller: _email,
@@ -189,7 +191,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
             ),
-            const SizedBox(height: 10),
+            verticalSpace(10),
 
             TextField(
               controller: _password,
@@ -206,7 +208,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
               obscureText: _obscure,
               textInputAction: TextInputAction.done,
             ),
-            const SizedBox(height: 10),
+            verticalSpace(10),
 
             _DropdownRow(
               value: _role,
@@ -214,7 +216,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
               items: StaffRole.values,
               onChanged: (v) => setState(() => _role = v),
             ),
-            const SizedBox(height: 10),
+            verticalSpace(10),
 
             _DropdownRow(
               value: _status,
@@ -223,7 +225,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
               onChanged: (v) => setState(() => _status = v),
             ),
 
-            const SizedBox(height: 10),
+            verticalSpace(10),
 
             Row(
               children: [
@@ -265,7 +267,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
                       child: const Text('Choose File'),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  horizontalSpace(10),
                   Expanded(
                     child: Text(
                       _fileName ?? 'no file selected',
@@ -277,7 +279,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
               ),
             ),
 
-            const SizedBox(height: 14),
+            verticalSpace(14),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -296,8 +298,9 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
                     child: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.w800)),
                   ),
                 ),
-                const SizedBox(width: 12),
+                horizontalSpace(12),
                 SizedBox(
+// ...
                   height: 44,
                   child: ElevatedButton(
                     onPressed: widget.isSaving ? null : _submit,

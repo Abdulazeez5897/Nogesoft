@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:nogesoft/core/data/models/customer.dart';
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class CustomerTable extends StatelessWidget {
   final List<Customer> customers;
@@ -30,11 +31,11 @@ class CustomerTable extends StatelessWidget {
       child: Column(
         children: [
           const _HeaderRow(),
-          const SizedBox(height: 6),
+          verticalSpace(6),
           const Divider(color: Colors.white10, height: 1),
 
           if (customers.isEmpty) ...[
-            const SizedBox(height: 28),
+            verticalSpace(28),
             const Center(
               child: Text(
                 'No customers found',
@@ -45,7 +46,7 @@ class CustomerTable extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 28),
+            verticalSpace(28),
           ] else ...[
             ...customers.map((c) => _CustomerRow(
               customer: c,

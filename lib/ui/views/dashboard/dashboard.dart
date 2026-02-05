@@ -9,6 +9,7 @@ import 'package:nogesoft/ui/views/dashboard/widget/dashboard_kpi_grid.dart';
 import 'package:nogesoft/ui/views/dashboard/widget/dashboard_sales_analytics.dart';
 import 'package:nogesoft/ui/views/dashboard/widget/dashboard_top_selling.dart';
 import 'package:nogesoft/ui/views/dashboard/widget/dashboard_recent_transaction.dart';
+import 'package:nogesoft/ui/common/ui_helpers.dart';
 
 class DashboardView extends StackedView<DashboardViewModel> {
   const DashboardView({super.key});
@@ -71,7 +72,7 @@ class DashboardView extends StackedView<DashboardViewModel> {
               onLowStockTap: viewModel.viewLowStockItems,
             ),
 
-            const SizedBox(height: 16),
+            verticalSpace(16),
 
             /// ------- SALES ANALYTICS -------
             DashboardSalesAnalytics(
@@ -82,14 +83,14 @@ class DashboardView extends StackedView<DashboardViewModel> {
               bottomTitles: viewModel.salesBottomTitles,
             ),
 
-            const SizedBox(height: 16),
+            verticalSpace(16),
 
             /// ------- TOP SELLING -------
             DashboardTopSelling(
               products: viewModel.topSellingProducts,
             ),
 
-            const SizedBox(height: 16),
+            verticalSpace(16),
 
             /// ------- RECENT TRANSACTIONS -------
             DashboardRecentTransactions(

@@ -49,11 +49,9 @@ class GlobalHeader extends StatelessWidget {
     final iconBox = ui.lerpDouble(48, 40, tt)!;
     final iconRadius = ui.lerpDouble(12, 20, tt)!; // Square-ish to rounder
 
-    // Transparency for blur effect
-    // Fully opaque when expanded, slightly transparent when collapsed/floating
-    final opacity = isDarkMode 
-        ? ui.lerpDouble(1.0, 0.85, tt)! 
-        : ui.lerpDouble(1.0, 0.90, tt)!;
+    // Transparency:
+    // 0.0 = fully transparent background always (Glassmorphism relies on blur)
+    final opacity = 0.0;
 
     final bgColor = bg.withOpacity(opacity);
 

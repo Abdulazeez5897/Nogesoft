@@ -194,27 +194,10 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
         endDrawer: _AppDrawer(viewModel: viewModel),
         body: SafeArea(
           bottom: false,
-          child: Column(
+          child: Stack(
             children: [
-              // ✅ Pinned, animated global header (only this rebuilds on scroll)
-              ValueListenableBuilder<double>(
-                valueListenable: _t,
-                builder: (_, t, __) {
-                  return Builder(
-                    builder: (ctx) => GlobalHeader(
-                      isDarkMode: isDark,
-                      t: t,
-                      expandedHeight: _expandedHeaderHeight,
-                      collapsedHeight: _collapsedHeaderHeight,
-                      onToggleTheme: viewModel.toggleTheme,
-                      onOpenDrawer: () => Scaffold.of(ctx).openEndDrawer(),
-                    ),
-                  );
-                },
-              ),
-
-              // ✅ Only page content scrolls
-              Expanded(
+              // ✅ Only page content scrolls (First in stack = behind)
+              Positioned.fill(
                 child: IndexedStack(
                   index: _activeIndex,
                   children: [
@@ -259,6 +242,28 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                       child: const MyBusinessView(),
                     ),
                   ],
+                ),
+              ),
+
+              // ✅ Pinned, animated global header (Overlay on top)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: ValueListenableBuilder<double>(
+                  valueListenable: _t,
+                  builder: (_, t, __) {
+                    return Builder(
+                      builder: (ctx) => GlobalHeader(
+                        isDarkMode: isDark,
+                        t: t,
+                        expandedHeight: _expandedHeaderHeight,
+                        collapsedHeight: _collapsedHeaderHeight,
+                        onToggleTheme: viewModel.toggleTheme,
+                        onOpenDrawer: () => Scaffold.of(ctx).openEndDrawer(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

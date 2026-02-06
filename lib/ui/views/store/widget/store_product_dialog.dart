@@ -154,7 +154,7 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
   }
 
   Future<void> _pickDate() async {
-    final now = DateTime.now();
+
     final d = await showDatePicker(
       context: context,
       initialDate: _selectedDate,

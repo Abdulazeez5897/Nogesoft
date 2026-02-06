@@ -1,6 +1,4 @@
 import 'package:stacked/stacked.dart';
-import '../../../app/app.locator.dart';
-import '../../../core/data/repositories/i_repository.dart';
 
 
 import 'package:nogesoft/core/data/models/customer.dart';
@@ -8,7 +6,7 @@ import 'package:nogesoft/core/data/models/customer.dart';
 enum CustomerTab { all, debtors }
 
 class CustomerViewModel extends BaseViewModel {
-  final _repository = locator<IRepository>();
+
 
   CustomerTab _tab = CustomerTab.all;
   String _query = '';

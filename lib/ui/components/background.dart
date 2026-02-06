@@ -6,7 +6,7 @@ import '../common/app_colors.dart';
 class Background extends StatelessWidget {
   final List<Widget> children;
 
-  const Background({required this.children, Key? key}) : super(key: key);
+  const Background({required this.children, super.key});
 
   @override
   Widget build(BuildContext context) {

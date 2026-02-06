@@ -19,7 +19,7 @@ class User {
 }
 
 // Authentication Service
-class AuthenticationService with ReactiveServiceMixin {
+class AuthenticationService with ListenableServiceMixin {
   final ReactiveValue<User?> _currentUser = ReactiveValue<User?>(null);
   final ReactiveValue<bool> _isLoggedIn = ReactiveValue<bool>(false);
 

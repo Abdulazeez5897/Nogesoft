@@ -5,7 +5,6 @@ import 'package:stacked_services/stacked_services.dart';
 import 'app/app.dialogs.dart';
 import 'app/app.locator.dart';
 import 'app/app.router.dart';
-import 'firebase_options.dart';
 import 'state.dart';
 import 'core/utils/local_storage.dart';
 import 'core/utils/local_store_dir.dart';
@@ -32,7 +31,7 @@ Future<void> main() async {
     await Firebase.initializeApp();
   } catch (e) {
     // Ignore duplicate initialization errors
-    print('Firebase already initialized: $e');
+    // print('Firebase already initialized: $e');
   }
 
   runApp(const NogesoftApp());

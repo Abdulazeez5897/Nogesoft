@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:pdfx/pdfx.dart';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
@@ -11,10 +10,10 @@ class DocumentPreview extends StatelessWidget {
   final String documentName;
 
   const DocumentPreview({
-    Key? key,
+    super.key,
     required this.documentUrl,
     required this.documentName,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,10 +80,10 @@ class DocumentPreview extends StatelessWidget {
 class FullScreenDocumentViewer extends StatefulWidget {
   final String url;
 
-  const FullScreenDocumentViewer({Key? key, required this.url}) : super(key: key);
+  const FullScreenDocumentViewer({super.key, required this.url});
 
   @override
-  _FullScreenDocumentViewerState createState() => _FullScreenDocumentViewerState();
+  State<FullScreenDocumentViewer> createState() => _FullScreenDocumentViewerState();
 }
 
 class _FullScreenDocumentViewerState extends State<FullScreenDocumentViewer> {
@@ -106,7 +105,7 @@ class _FullScreenDocumentViewerState extends State<FullScreenDocumentViewer> {
       }
     } catch (e) {
       setState(() => isError = true);
-      print("Error loading PDF: $e");
+      debugPrint("Error loading PDF: $e");
     } finally {
       setState(() => isLoading = false);
     }

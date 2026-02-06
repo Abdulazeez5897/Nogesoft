@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../common/app_colors.dart';
 
 class AnimatedRedStrip extends StatefulWidget {
+  const AnimatedRedStrip({super.key});
+
   @override
-  _AnimatedRedStripState createState() => _AnimatedRedStripState();
+  State<AnimatedRedStrip> createState() => _AnimatedRedStripState();
 }
 
 class _AnimatedRedStripState extends State<AnimatedRedStrip>

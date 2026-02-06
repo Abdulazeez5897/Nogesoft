@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // For HapticFeedback
-import 'dart:math';
+// For HapticFeedback
 
 class CustomTimePickerSpinner extends StatefulWidget {
   final DateTime? time;
@@ -12,7 +11,7 @@ class CustomTimePickerSpinner extends StatefulWidget {
   final TimeOfDay? minTime; // ⬅️ Added constraint for limiting time selection
 
   const CustomTimePickerSpinner({
-    Key? key,
+    super.key,
     this.time,
     this.is24HourMode = true,
     this.isForce2Digits = false,
@@ -20,10 +19,10 @@ class CustomTimePickerSpinner extends StatefulWidget {
     this.normalTextStyle,
     required this.onTimeChange,
     this.minTime, // ⬅️ New constraint
-  }) : super(key: key);
+  });
 
   @override
-  _CustomTimePickerSpinnerState createState() => _CustomTimePickerSpinnerState();
+  State<CustomTimePickerSpinner> createState() => _CustomTimePickerSpinnerState();
 }
 
 class _CustomTimePickerSpinnerState extends State<CustomTimePickerSpinner> {

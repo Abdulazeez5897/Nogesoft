@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:stacked/stacked.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:file_picker/file_picker.dart';
 
-import '../../../app/app.locator.dart';
-import '../../../app/app.router.dart';
 import '../../common/app_colors.dart';
 import '../../common/ui_helpers.dart';
 import '../../components/outlined_submit_button.dart';
@@ -181,7 +177,7 @@ class RegistrationView extends StackedView<AuthViewModel> {
         LinearProgressIndicator(
           value: viewModel.registrationSection / 3, // 33%, 66%, or 100%
           backgroundColor: kcLightGrey,
-          valueColor: AlwaysStoppedAnimation<Color>(kcBlackColor),
+          valueColor: const AlwaysStoppedAnimation<Color>(kcBlackColor),
           borderRadius: BorderRadius.circular(8),
         ),
         verticalSpaceSmall,
@@ -402,7 +398,7 @@ class RegistrationView extends StackedView<AuthViewModel> {
         if (viewModel.resumeFile != null)
           TextButton(
             onPressed: viewModel.removeResume,
-            child: Text(
+            child: const Text(
               'Remove File',
               style: TextStyle(
                 color: Colors.red,

@@ -29,7 +29,7 @@ class SubmitButton extends StatelessWidget {
 
 
   const SubmitButton(
-      {Key? key,
+      {super.key,
         required this.isLoading,
         required this.label,
         required this.submit,
@@ -42,8 +42,7 @@ class SubmitButton extends StatelessWidget {
         this.iconIsPrefix = false,
         this.buttonDisabled = false,
         this.textSize = 16.0,
-        this.svgFileName, this.family})
-      : super(key: key);
+        this.svgFileName, this.family});
 
   @override
   Widget build(BuildContext context) {

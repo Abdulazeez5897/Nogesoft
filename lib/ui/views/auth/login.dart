@@ -166,7 +166,7 @@ class LoginView extends StackedView<AuthViewModel> {
                             const Spacer(),
 
                             /// Footer stays at bottom
-                            Center(
+                            const Center(
                               child: Text(
                                 '© 2026 Nogesoft',
                                 style: TextStyle(

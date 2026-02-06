@@ -17,7 +17,7 @@ class TextFieldWidget extends StatelessWidget {
   final TextInputAction? textInputAction;
 
   const TextFieldWidget({
-    Key? key,
+    super.key,
     this.label,
     this.validator,
     this.inputType,
@@ -30,7 +30,7 @@ class TextFieldWidget extends StatelessWidget {
     this.suffix,
     this.focusNode,
     this.textInputAction,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

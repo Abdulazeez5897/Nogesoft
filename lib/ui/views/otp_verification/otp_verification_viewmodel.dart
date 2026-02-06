@@ -131,28 +131,7 @@ class OtpVerificationViewModel extends BaseViewModel {
     _navigationService.back();
   }
 
-  bool _validateForm() {
-    if (firstNameController.text.isEmpty) {
-      return false;
-    }
-    if (lastNameController.text.isEmpty) {
-      return false;
-    }
-    if (emailController.text.isEmpty || !emailController.text.contains('@')) {
-      return false;
-    }
-    if (phoneController.text.isEmpty) {
-      return false;
-    }
-    if (passwordController.text.isEmpty || passwordController.text.length < 6) {
-      return false;
-    }
-    if (passwordController.text != confirmPasswordController.text) {
-      return false;
-    }
 
-    return true;
-  }
 
   @override
   void dispose() {

@@ -5,7 +5,7 @@ class CodeInputWidget extends StatelessWidget {
   final TextEditingController codeController;
   final Function(String) onCompleted;
 
-  CodeInputWidget({required this.codeController, required this.onCompleted});
+  const CodeInputWidget({super.key, required this.codeController, required this.onCompleted});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class CodeInputWidget extends StatelessWidget {
         selectedColor: Colors.black,
         inactiveColor: Colors.black26,
       ),
-      animationDuration: Duration(milliseconds: 300),
+      animationDuration: const Duration(milliseconds: 300),
       backgroundColor: Colors.transparent,
       enableActiveFill: true,
       controller: codeController,

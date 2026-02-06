@@ -19,7 +19,6 @@ import '../ui/views/auth/login.dart';
 import '../ui/views/auth/register.dart';
 import '../ui/views/auth/sign_up.dart';
 
-import '../ui/views/home/home_view.dart';
 import '../ui/views/jobs/jobs_view.dart';
 import '../ui/views/otp_verification/otp_verification.dart';
 import '../ui/views/profile/profile_view.dart';

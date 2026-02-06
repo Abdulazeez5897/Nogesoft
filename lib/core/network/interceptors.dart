@@ -75,11 +75,11 @@ final requestInterceptors = InterceptorsWrapper(
     }
     // else if (dioError.response?.statusCode == 401 && !dioError.requestOptions.path.startsWith('auth')) {
     else if (dioError.response?.statusCode == 401) {
-      print('value of path is ${dioError.requestOptions.path}');
+
       if (refreshTokenRetryCount >= maxRetryCount) {
         // Reset counter and redirect user to login
         refreshTokenRetryCount = 0;
-        ApiResponse res = await repo.logOut();
+        await repo.logOut();
         // if (res.statusCode == 200) {
         //   locator<NavigationService>()
         //       .clearStackAndShow(Routes.authView, arguments:const AuthViewArguments(authType: AuthType.selection) );
@@ -109,7 +109,7 @@ final requestInterceptors = InterceptorsWrapper(
             onError: (e) => handler.reject(e),
           );
         } else {
-          final res = await locator<DialogService>().showCustomDialog(
+          await locator<DialogService>().showCustomDialog(
               variant: DialogType.infoAlert,
               title: "Session Expired",
               description: "Login again to continue");
@@ -127,7 +127,7 @@ final requestInterceptors = InterceptorsWrapper(
         if (kDebugMode) {
           print('refresh token is null');
         }
-        final res = await showDialogWithResponse("Session Expired", "Login again to continue", isDialogBeingDisplayed);
+        await showDialogWithResponse("Session Expired", "Login again to continue", isDialogBeingDisplayed);
         // if (res!.confirmed) {
         //   locator<NavigationService>()
         //       .clearStackAndShow(Routes.authView, arguments:const AuthViewArguments(authType: AuthType.selection) );
@@ -137,7 +137,7 @@ final requestInterceptors = InterceptorsWrapper(
     }
     else if(dioError.response?.statusCode == 401 && dioError.requestOptions.path.startsWith('/auth')){
       if (kDebugMode) {
-        print('incorrect credentials');
+        // print('incorrect credentials');
       }
       if(dioError.response != null && dioError.response!.statusMessage != null){
         await showDialog(dioError.response!.statusMessage!, null, isDialogBeingDisplayed);
@@ -160,11 +160,10 @@ Future<bool> refreshAccessToken() async {
     String refreshToken = res.data['data']["refreshToken"];
     await locator<LocalStorage>().save(LocalStorageDir.authToken, accessToken);
     await locator<LocalStorage>().save(LocalStorageDir.authRefreshToken, refreshToken);
-    print('refresh successful');
+
     return true; // Refresh successful
   } else {
-    print('refresh conditions aint true');
-    print(res.data);
+
     return false; // Refresh failed
   }
 

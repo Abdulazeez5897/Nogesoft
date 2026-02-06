@@ -37,7 +37,7 @@ class _UpdateMediaCarouselState extends State<UpdateMediaCarousel> {
 
   void _initializeVideo(int index) async {
     if (_videoControllers[index] == null && _isVideo(widget.mediaUrls[index])) {
-      final controller = VideoPlayerController.network(widget.mediaUrls[index]);
+      final controller = VideoPlayerController.networkUrl(Uri.parse(widget.mediaUrls[index]));
       await controller.initialize();
       setState(() {
         _videoControllers[index] = controller..setLooping(true);

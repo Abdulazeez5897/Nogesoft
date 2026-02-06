@@ -1,4 +1,3 @@
-import 'dart:ui' show lerpDouble;
 
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 import 'package:flutter/material.dart';
@@ -230,7 +229,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
     final discount = int.tryParse(_discount.text.trim()) ?? 0;
     // In video, subtotal/final total are shown but not derived from real cart.
     const subtotal = 0;
-    final finalTotal = 0; // match video: stays 0 while discount shows -2,000 etc.
+    const finalTotal = 0; // match video: stays 0 while discount shows -2,000 etc.
 
     return _FormCard(
       child: Column(
@@ -298,13 +297,13 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
 
           verticalSpace(16),
 
-          _SummaryLine(label: 'Subtotal:', value: '$subtotal'),
+          const _SummaryLine(label: 'Subtotal:', value: '$subtotal'),
           _SummaryLine(
             label: 'Discount:',
             value: '-${_formatMoney(discount)}',
             valueColor: const Color(0xFFE04B5A),
           ),
-          _SummaryLine(label: 'Final Total:', value: '$finalTotal'),
+          const _SummaryLine(label: 'Final Total:', value: '$finalTotal'),
 
           verticalSpace(16),
 

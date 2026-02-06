@@ -14,8 +14,8 @@ class SuccessPage extends StatefulWidget {
     required this.title,
     required this.description,
     required this.callback,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<SuccessPage> createState() => _SuccessPageState();

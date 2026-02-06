@@ -10,6 +10,7 @@ class StartupViewModel extends ReactiveViewModel {
   final _auth = FirebaseAuth.instance;
 
   @override
+  // ignore: deprecated_member_use
   List<ReactiveServiceMixin> get reactiveServices => [];
 
   void init() {

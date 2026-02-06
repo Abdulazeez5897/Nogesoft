@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -13,12 +13,12 @@ class ProfilePicturePicker extends StatefulWidget {
   final String? defaultImage;
 
   const ProfilePicturePicker({
-    Key? key,
+    super.key,
     this.selectedFile,
     required this.onImagePicked,
     this.size = 80,
     this.defaultImage,
-  }) : super(key: key);
+  });
 
   @override
   State<ProfilePicturePicker> createState() => _ProfilePicturePickerState();
@@ -81,56 +81,26 @@ class _ProfilePicturePickerState extends State<ProfilePicturePicker> {
     return false;
   }
 
-  Future<File?> _cropImage(String path) async {
-    try {
-      final cropped = await ImageCropper().cropImage(
-        sourcePath: path,
-        cropStyle: CropStyle.circle,
-        compressQuality: 90,
-        aspectRatioPresets: [CropAspectRatioPreset.square],
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Crop Image',
-            toolbarColor: Colors.black,
-            toolbarWidgetColor: Colors.white,
-            hideBottomControls: true,
-          ),
-          IOSUiSettings(
-            title: 'Crop Image',
-          ),
-        ],
-      );
 
-      if (cropped == null) {
-        debugPrint('Cropping cancelled or failed.');
-        return null;
-      }
-
-      return File(cropped.path);
-    } catch (e) {
-      debugPrint('Cropper error: $e');
-      return null;
-    }
-  }
 
 
   void _showPermissionDialog() {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text("Permission Required"),
-        content: Text("Enable camera/gallery permission in settings."),
+        title: const Text("Permission Required"),
+        content: const Text("Enable camera/gallery permission in settings."),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text("Cancel"),
+            child: const Text("Cancel"),
           ),
           TextButton(
             onPressed: () {
               openAppSettings();
               Navigator.pop(context);
             },
-            child: Text("Open Settings"),
+            child: const Text("Open Settings"),
           ),
         ],
       ),
@@ -159,16 +129,16 @@ class _ProfilePicturePickerState extends State<ProfilePicturePicker> {
         child: Wrap(
           children: [
             ListTile(
-              leading: Icon(Icons.camera_alt),
-              title: Text("Take Photo"),
+              leading: const Icon(Icons.camera_alt),
+              title: const Text("Take Photo"),
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.camera);
               },
             ),
             ListTile(
-              leading: Icon(Icons.photo_library),
-              title: Text("Choose from Gallery"),
+              leading: const Icon(Icons.photo_library),
+              title: const Text("Choose from Gallery"),
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.gallery);
@@ -204,12 +174,12 @@ class _ProfilePicturePickerState extends State<ProfilePicturePicker> {
             bottom: 4,
             right: 4,
             child: Container(
-              padding: EdgeInsets.all(4),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(4),
+              decoration: const BoxDecoration(
                 color: kcPrimaryColor,
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.edit, color: Colors.white, size: 20),
+              child: const Icon(Icons.edit, color: Colors.white, size: 20),
             ),
           ),
         ],

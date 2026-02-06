@@ -236,7 +236,7 @@ class SignUp extends StackedView<AuthViewModel> {
               verticalSpaceMedium,
 
               // Divider with "Or" text
-              Row(
+              const Row(
                 children: [
                   Expanded(
                     child: Divider(
@@ -245,7 +245,7 @@ class SignUp extends StackedView<AuthViewModel> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       'Or continue with',
                       style: TextStyle(

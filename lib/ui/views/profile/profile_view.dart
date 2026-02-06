@@ -4,7 +4,6 @@ import 'package:stacked/stacked.dart';
 
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 
-import 'model/user_profile.dart'; 
 // Actually original was "import 'model/user_profile.dart';" which implies it's in the same folder?
 // Let's stick to relative if it was working or assume standard. 
 // "import 'model/user_profile.dart';" was line 7 in original.
@@ -331,9 +330,9 @@ class _ProfileCard extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
               ),
               child: isSaving
-                  ? Row(
+                  ? const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     width: 16,
                     height: 16,

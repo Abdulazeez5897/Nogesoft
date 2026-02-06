@@ -166,23 +166,7 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
     widget.viewModel.pickLogoMock();
   }
 
-  void _showError(String message) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: const Color(0xFF0E1626),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Error', style: TextStyle(color: Color(0xFFE04B5A), fontWeight: FontWeight.bold)),
-        content: Text(message, style: const TextStyle(color: Colors.white70)),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('OK', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -284,7 +268,7 @@ class _BusinessFormCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+
 
     final border = Colors.white.withOpacity(0.22);
     final inputBorder = Colors.white.withOpacity(0.22);
@@ -475,8 +459,8 @@ class _BusinessFormCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                   ),
                   child: isSaving
-                      ? Row(
-                    children: const [
+                      ? const Row(
+                    children: [
                       SizedBox(
                         width: 16,
                         height: 16,

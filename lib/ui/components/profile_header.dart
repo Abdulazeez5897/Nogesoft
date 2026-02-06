@@ -13,7 +13,7 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: kcBlackColor,
         // gradient: LinearGradient(
         //   begin: Alignment.topCenter,

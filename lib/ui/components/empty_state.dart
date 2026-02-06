@@ -17,8 +17,8 @@ class EmptyState extends StatelessWidget {
   const EmptyState({
     required this.animation,
     required this.label,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

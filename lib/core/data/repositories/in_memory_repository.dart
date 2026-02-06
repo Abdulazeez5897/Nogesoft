@@ -32,7 +32,7 @@ class InMemoryRepository implements IRepository {
 
   // Products (Seed with some dummy data)
   final List<Product> _products = [
-    Product(
+    const Product(
       id: 'p1',
       name: 'MacBook Pro M3',
       price: 2500000.0,
@@ -41,7 +41,7 @@ class InMemoryRepository implements IRepository {
       description: 'Latest Apple laptop',
       dimensions: '30x21x1.5 cm',
     ),
-    Product(
+    const Product(
       id: 'p2',
       name: 'iPhone 15 Pro',
       price: 1800000.0,
@@ -49,7 +49,7 @@ class InMemoryRepository implements IRepository {
       sku: 'IPH-15P-002',
       dimensions: '15x7x0.8 cm',
     ),
-    Product(
+    const Product(
       id: 'p3',
       name: 'Samsung S24 Ultra',
       price: 1950000.0,
@@ -57,7 +57,7 @@ class InMemoryRepository implements IRepository {
       sku: 'SAM-S24U-003',
       dimensions: '16x8x0.9 cm',
     ),
-    Product(
+    const Product(
       id: 'p4',
       name: 'Sony WH-1000XM5',
       price: 450000.0,
@@ -118,7 +118,7 @@ class InMemoryRepository implements IRepository {
       invoiceNumber: 'INV-001',
       supplier: const Supplier(id: 'sup1', name: 'Amraya foam'),
       items: [
-         PurchaseItem(
+         const PurchaseItem(
            product: Product(id: 'p1', name: 'MacBook Pro M3', price: 2500000, stockQuantity: 10, sku: 'MAC', dimensions: '30x21'),
            qty: 1,
            cost: 2000000,
@@ -134,7 +134,7 @@ class InMemoryRepository implements IRepository {
       invoiceNumber: '46784',
       supplier: const Supplier(id: 'sup2', name: 'Vital foam'),
       items: [
-        PurchaseItem(
+        const PurchaseItem(
           product: Product(id: 'p2', name: 'iPhone 15 Pro', price: 1800000, stockQuantity: 25, sku: 'IPH', dimensions: '15x7'),
           qty: 2,
           cost: 1500000,

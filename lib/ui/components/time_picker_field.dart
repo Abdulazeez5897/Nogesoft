@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:time_picker_spinner/time_picker_spinner.dart';
 
 import '../common/app_colors.dart';
 import 'custom_time_picker.dart';
@@ -13,16 +12,16 @@ class TimePickerField extends StatefulWidget {
   final String? errorText;
 
   const TimePickerField({
-    Key? key,
+    super.key,
     required this.label,
     required this.onTimeSelected,
     this.initialValue,
     this.minTime,
     this.errorText,
-  }) : super(key: key);
+  });
 
   @override
-  _TimePickerFieldState createState() => _TimePickerFieldState();
+  State<TimePickerField> createState() => _TimePickerFieldState();
 }
 
 class _TimePickerFieldState extends State<TimePickerField> {

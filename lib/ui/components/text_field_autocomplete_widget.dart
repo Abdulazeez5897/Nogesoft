@@ -7,12 +7,11 @@ class AutocompleteTextField extends StatefulWidget {
   final InputDecoration? decoration;
   final String? Function(String?)? validator;
   const AutocompleteTextField(
-      {Key? key,
+      {super.key,
         required this.items,
         required this.onItemSelect,
         this.decoration,
-        this.validator})
-      : super(key: key);
+        this.validator});
 
   @override
   State<AutocompleteTextField> createState() => _AutocompleteTextFieldState();
@@ -33,7 +32,7 @@ class _AutocompleteTextFieldState extends State<AutocompleteTextField> {
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
         _overlayEntry = _createOverlayEntry();
-        Overlay.of(context)?.insert(_overlayEntry);
+        Overlay.of(context).insert(_overlayEntry);
       } else {
         _overlayEntry.remove();
       }

@@ -94,7 +94,7 @@ class DashboardSalesAnalytics extends StatelessWidget {
                     clipData: const FlClipData.all(),
                     minY: 0,
                     // maxY: 220000, // Removed hardcoded limit for dynamic scaling
-                    gridData: FlGridData(show: false),
+                    gridData: const FlGridData(show: false),
                     borderData: FlBorderData(
                       show: true,
                       border: const Border(

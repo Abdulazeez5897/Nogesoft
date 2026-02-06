@@ -28,8 +28,8 @@ class SalesChart extends StatelessWidget {
 // ...
             child: LineChart(
               LineChartData(
-                gridData: FlGridData(show: false),
-                titlesData: FlTitlesData(show: false),
+                gridData: const FlGridData(show: false),
+                titlesData: const FlTitlesData(show: false),
                 borderData: FlBorderData(show: false),
                 minX: 0,
                 maxX: 6,
@@ -42,7 +42,7 @@ class SalesChart extends StatelessWidget {
                     isCurved: true,
                     color: const Color(0xFF38B24A),
                     barWidth: 4,
-                    dotData: FlDotData(show: false),
+                    dotData: const FlDotData(show: false),
                     belowBarData: BarAreaData(
                       show: true,
                       color: const Color(0xFF38B24A).withOpacity(0.2),

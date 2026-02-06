@@ -1,12 +1,10 @@
 import 'package:stacked/stacked.dart';
 
-import '../../../app/app.locator.dart';
 import '../../../core/data/models/product.dart';
-import '../../../core/data/repositories/i_repository.dart';
 
 
 class StoreViewModel extends BaseViewModel {
-  final _repository = locator<IRepository>();
+
   
   List<Product> _products = [];
   List<Product> get products => _products;
@@ -28,7 +26,7 @@ class StoreViewModel extends BaseViewModel {
     // Seed if empty (fake repo logic)
     if (_products.isEmpty) {
       _products = [
-        Product(
+        const Product(
           id: 'p1',
           name: 'Amarya Foam',
           category: 'Home',
@@ -36,7 +34,7 @@ class StoreViewModel extends BaseViewModel {
           stockQuantity: 24,
           unit: 'pcs',
         ),
-        Product(
+        const Product(
           id: 'p2',
           name: 'Vital Foam',
           category: 'Home',

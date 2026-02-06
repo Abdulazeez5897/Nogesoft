@@ -1,8 +1,6 @@
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../../app/app.locator.dart';
-import '../../../app/app.router.dart';
 import '../../../core/data/models/dashboard_stats.dart';
 import '../../../core/data/models/purchase.dart';
 import '../../../core/data/models/product.dart';
@@ -15,7 +13,7 @@ class DashboardViewModel extends BaseViewModel {
   bool isCreateVisitLoading = false;
 
   final _repository = locator<IRepository>();
-  final _navigationService = locator<NavigationService>();
+
 
   final _shellService = locator<AppShellService>();
 
@@ -56,7 +54,7 @@ class DashboardViewModel extends BaseViewModel {
 
     } catch (e) {
       // Handle error
-      print('Dashboard refresh error: $e');
+      // print('Dashboard refresh error: $e');
     } finally {
       setBusy(false);
     }
@@ -134,7 +132,7 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   // Override setSalesRange to trigger refresh or recompute
-  @override
+
   void setSalesRange(String value) {
     _selectedSalesRange = value;
     // For now, trigger refresh to recompute (in real app, separate fetch vs compute)

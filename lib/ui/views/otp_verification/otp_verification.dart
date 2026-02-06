@@ -2,8 +2,6 @@
 import 'package:stacked/stacked.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../app/app.locator.dart';
-import '../../../app/app.router.dart';
 import '../../common/app_colors.dart';
 import '../../common/ui_helpers.dart';
 import '../../components/submit_button.dart';
@@ -49,7 +47,7 @@ class OtpVerificationView extends StackedView<OtpVerificationViewModel> {
                       children: [
                         // Image/Illustration
                         if (!viewModel.otpSent)
-                          Column(
+                          const Column(
                             children: [
                               // Image.asset(
                               //   "assets/images/email_verification.png",

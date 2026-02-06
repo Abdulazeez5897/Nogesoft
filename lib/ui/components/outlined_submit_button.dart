@@ -21,7 +21,7 @@ class OutlinedSubmitButton extends StatelessWidget {
   final double borderWidth;
 
   const OutlinedSubmitButton({
-    Key? key,
+    super.key,
     required this.isLoading,
     required this.label,
     required this.submit,
@@ -37,11 +37,11 @@ class OutlinedSubmitButton extends StatelessWidget {
     this.svgFileName,
     this.family,
     this.borderWidth = 2.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final effectiveTextColor = textColor ?? color;
+    final effectiveTextColor = textColor;
 
     return GestureDetector(
       onTap: buttonDisabled
@@ -124,7 +124,7 @@ class OutlinedSubmitButton extends StatelessWidget {
               SvgPicture.asset(
                 'assets/images/$svgFileName',
                 height: 20,
-                color: effectiveTextColor,
+                colorFilter: ColorFilter.mode(effectiveTextColor, BlendMode.srcIn),
               ),
               horizontalSpaceTiny,
               Text(

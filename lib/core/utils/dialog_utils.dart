@@ -23,7 +23,7 @@ Future<DialogResponse?> showDialogWithResponse(String title, String? description
 Future<bool?> showDialog(String title, String? description, bool isDialogBeingDisplayed) async {
   if (!isDialogBeingDisplayed) {
     isDialogBeingDisplayed = true;
-    locator<SnackbarService>().showSnackbar(title: title,message: description ?? '' , duration: Duration(seconds: 1));
+    locator<SnackbarService>().showSnackbar(title: title,message: description ?? '' , duration: const Duration(seconds: 1));
     isDialogBeingDisplayed = false;
     return isDialogBeingDisplayed;
   }

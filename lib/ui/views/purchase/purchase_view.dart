@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nogesoft/ui/views/purchase/widget/new_purchase_sheet.dart';
 import 'package:nogesoft/ui/views/purchase/widget/purchase_card.dart';
-import 'package:nogesoft/core/data/models/purchase.dart';
 import 'package:nogesoft/ui/views/purchase/purchase_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -85,10 +84,10 @@ class _HeaderBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
+        const Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 'Purchases',
                 style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w900),

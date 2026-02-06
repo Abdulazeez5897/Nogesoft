@@ -169,11 +169,11 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             // Title
-            Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'New Purchase',
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.w900,

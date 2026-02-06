@@ -236,7 +236,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                     _ShellPageHost(
                       controller: _pageControllers[3],
                       onScrollNotification: (n) => _onScrollNotification(n, 3),
-                      child: CustomerView()
+                      child: const CustomerView()
                     ),
                     _ShellPageHost(
                       controller: _pageControllers[4],
@@ -246,7 +246,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
                     _ShellPageHost(
                       controller: _pageControllers[5],
                       onScrollNotification: (n) => _onScrollNotification(n, 5),
-                      child: StaffView(),
+                      child: const StaffView(),
                     ),
                     _ShellPageHost(
                       controller: _pageControllers[6],
@@ -297,28 +297,11 @@ class _ShellPageHost extends StatelessWidget {
 
 /// Simple placeholder so enum/page count matches IndexedStack.
 /// Not a redesign; just prevents crashes/mismatch.
-class _PlaceholderPage extends StatelessWidget {
-  final String title;
-  const _PlaceholderPage({required this.title});
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white54,
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-}
 
 /// ---------------- DRAWER ----------------
 class _AppDrawer extends StatelessWidget {
-  _AppDrawer({super.key, required this.viewModel});
+  _AppDrawer({required this.viewModel});
 
   final HomeViewModel viewModel;
   final NavigationService _nav = locator<NavigationService>();

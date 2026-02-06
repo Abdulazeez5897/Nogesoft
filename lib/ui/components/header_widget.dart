@@ -8,12 +8,12 @@ class HeaderContainer extends StatelessWidget {
   final Color textColor;
 
   const HeaderContainer({
-    Key? key,
+    super.key,
     required this.title,
     this.imagePath = 'assets/images/header-image.png',
     this.borderColor = Colors.blue, // Replace with kcPrimaryColor
     this.textColor = Colors.white, // Replace with kcWhiteColor
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

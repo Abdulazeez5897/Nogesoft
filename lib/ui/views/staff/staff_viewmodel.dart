@@ -1,6 +1,4 @@
 import 'package:stacked/stacked.dart';
-import '../../../app/app.locator.dart';
-import '../../../core/data/repositories/i_repository.dart';
 
 
 import 'model/staff_member.dart';
@@ -8,7 +6,7 @@ import 'model/staff_member.dart';
 
 class StaffViewModel extends BaseViewModel {
   static const Object saveBusyKey = 'saveStaff';
-  final _repository = locator<IRepository>();
+
 
   List<StaffMember> _staff = [];
   List<StaffMember> get staff => List.unmodifiable(_staff);

@@ -313,8 +313,8 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
                       padding: const EdgeInsets.symmetric(horizontal: 18),
                     ),
                     child: widget.isSaving
-                        ? Row(
-                      children: const [
+                        ? const Row(
+                      children: [
                         SizedBox(
                           width: 16,
                           height: 16,

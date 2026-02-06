@@ -145,8 +145,8 @@ class _TopRow extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 18),
             ),
             child: isRefreshing
-                ? Row(
-              children: const [
+                ? const Row(
+              children: [
                 SizedBox(
                   width: 16,
                   height: 16,

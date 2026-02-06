@@ -1,6 +1,4 @@
 import 'package:stacked/stacked.dart';
-import '../../../app/app.locator.dart';
-import '../../../core/data/repositories/i_repository.dart';
 
 
 import 'model/report_models.dart';
@@ -8,7 +6,7 @@ import 'model/report_models.dart';
 
 class ReportsViewModel extends BaseViewModel {
   static const Object refreshBusyKey = 'refreshReports';
-  final _repository = locator<IRepository>();
+
 
   String _productQuery = '';
 

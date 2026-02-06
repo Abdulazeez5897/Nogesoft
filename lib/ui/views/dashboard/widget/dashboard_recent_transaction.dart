@@ -67,7 +67,7 @@ class DashboardRecentTransactions extends StatelessWidget {
                ),
              )
           else
-            ...transactions.map((txn) => _TxnCard(purchase: txn)).toList(),
+            ...transactions.map((txn) => _TxnCard(purchase: txn)),
         ],
       ),
     );

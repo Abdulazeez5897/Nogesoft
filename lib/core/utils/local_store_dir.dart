@@ -2,6 +2,7 @@
 /// email: abdulazeezusmn732@gmail.com
 /// Aug, 2025
 ///
+library;
 
 class LocalStorageDir {
   static const String dbName = "247remotejobs.db";

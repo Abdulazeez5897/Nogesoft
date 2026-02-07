@@ -19,7 +19,7 @@ class StoreView extends StackedView<StoreViewModel> {
       primary: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        SliverToBoxAdapter(child: verticalSpace(14)),
+        SliverToBoxAdapter(child: verticalSpace(106)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),

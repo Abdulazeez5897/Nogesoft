@@ -18,7 +18,7 @@ class CustomerView extends StackedView<CustomerViewModel> {
       primary: true,
       physics: const BouncingScrollPhysics(),
       slivers: [
-        SliverToBoxAdapter(child: verticalSpace(18)),
+        SliverToBoxAdapter(child: verticalSpace(110)),
 
         SliverPadding(
           padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -24,7 +24,7 @@ class DashboardView extends StackedView<DashboardViewModel> {
       child: viewModel.isBusy 
           ? const Center(child: CircularProgressIndicator(color: Color(0xFF38B24A))) 
           : SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
+        padding: const EdgeInsets.fromLTRB(16, 108, 16, 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

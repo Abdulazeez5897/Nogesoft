@@ -14,19 +14,10 @@ class StartupView extends StackedView<StartupViewModel> {
       Widget? child,
       ) {
     return Scaffold(
-      body: Container(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF0B1220),
-              Color(0xFF0F1B2D),
-            ],
-          ),
-        ),
         child: SafeArea(
           child: Center(
             child: Column(
@@ -37,7 +28,7 @@ class StartupView extends StackedView<StartupViewModel> {
                   'Nogesoft',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.primary, // Adapts to Light/Dark
                   ),
                 ),
 
@@ -47,7 +38,7 @@ class StartupView extends StackedView<StartupViewModel> {
                 Text(
                   'Business Operating System',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.white70,
+                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
                   ),
                 ),
 

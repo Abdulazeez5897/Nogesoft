@@ -15,44 +15,47 @@ class StoreView extends StackedView<StoreViewModel> {
     // IMPORTANT:
     // AppShell supplies the PrimaryScrollController for each page.
     // So we keep this as a "normal scrollable" and it will drive the global header.
-    return CustomScrollView(
-      primary: true,
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        SliverToBoxAdapter(child: verticalSpace(106)),
+    return Material(
+      color: Colors.transparent,
+      child: CustomScrollView(
+        primary: true,
+        // physics: const BouncingScrollPhysics(), // Match Dashboard (use default Platform physics)
+        slivers: [
+          SliverToBoxAdapter(child: verticalSpace(106)),
 
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _TopRow(
-              onAdd: () => _openCreateDialog(context, viewModel),
-            ),
-          ),
-        ),
-
-        SliverToBoxAdapter(child: verticalSpace(14)),
-
-        if (viewModel.isBusy)
-           const SliverFillRemaining(
-             child: Center(child: CircularProgressIndicator(color: Color(0xFF38B24A))),
-           )
-        else
           SliverPadding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 18),
-            sliver: SliverList.separated(
-              itemCount: viewModel.products.length,
-              separatorBuilder: (_, __) => verticalSpace(14),
-              itemBuilder: (ctx, i) {
-                final p = viewModel.products[i];
-                return StoreProductCard(
-                  product: p,
-                  onEdit: () => _openEditDialog(context, viewModel, p),
-                  onDelete: () => viewModel.deleteProduct(p.id),
-                );
-              },
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _TopRow(
+                onAdd: () => _openCreateDialog(context, viewModel),
+              ),
             ),
           ),
-      ],
+
+          SliverToBoxAdapter(child: verticalSpace(14)),
+
+          if (viewModel.isBusy)
+             const SliverFillRemaining(
+               child: Center(child: CircularProgressIndicator(color: Color(0xFF38B24A))),
+             )
+          else
+            SliverPadding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 18),
+              sliver: SliverList.separated(
+                itemCount: viewModel.products.length,
+                separatorBuilder: (_, __) => verticalSpace(14),
+                itemBuilder: (ctx, i) {
+                  final p = viewModel.products[i];
+                  return StoreProductCard(
+                    product: p,
+                    onEdit: () => _openEditDialog(context, viewModel, p),
+                    onDelete: () => viewModel.deleteProduct(p.id),
+                  );
+                },
+              ),
+            ),
+        ],
+      ),
     );
   }
 

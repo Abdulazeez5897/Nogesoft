@@ -14,22 +14,24 @@ class ReportsView extends StackedView<ReportsViewModel> {
   @override
   Widget builder(BuildContext context, ReportsViewModel viewModel, Widget? child) {
     // Shell provides PrimaryScrollController; keep this as normal scrollable.
-    return CustomScrollView(
-      primary: true,
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        SliverToBoxAdapter(child: verticalSpace(16)),
+    return Material(
+      color: Colors.transparent,
+      child: CustomScrollView(
+        primary: true,
+        // physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(child: verticalSpace(108)), // 92 (Header) + 16 (Padding)
 
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _TopRow(
-              title: 'Purchase Report',
-              isRefreshing: viewModel.isRefreshing,
-              onRefresh: viewModel.refresh,
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _TopRow(
+                title: 'Purchase Report',
+                isRefreshing: viewModel.isRefreshing,
+                onRefresh: viewModel.refresh,
+              ),
             ),
           ),
-        ),
 
         SliverToBoxAdapter(child: verticalSpace(14)),
 
@@ -98,6 +100,7 @@ class ReportsView extends StackedView<ReportsViewModel> {
           ),
         ),
       ],
+      ),
     );
   }
 

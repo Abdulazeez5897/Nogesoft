@@ -21,6 +21,10 @@ class DashboardKpiGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     // Show zeroes if stats is null (loading/error)
     final s = stats ?? const DashboardStats();
+    
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final primaryTextColor = isDark ? Colors.white : const Color(0xFF0B1220);
 
     return Column(
       children: [
@@ -30,7 +34,7 @@ class DashboardKpiGrid extends StatelessWidget {
               child: _KpiCard(
                 title: "Total Revenue", // Renamed from Today for now
                 value: CurrencyFormatter.formatNaira(s.totalRevenue),
-                valueColor: Colors.white,
+                valueColor: primaryTextColor,
               ),
             ),
             horizontalSpace(12),
@@ -50,7 +54,7 @@ class DashboardKpiGrid extends StatelessWidget {
               child: _KpiCard(
                 title: "This Month",
                 value: CurrencyFormatter.formatNaira(s.totalRevenue), // Mapping total for now
-                valueColor: Colors.white,
+                valueColor: primaryTextColor,
               ),
             ),
             horizontalSpace(12),
@@ -58,7 +62,7 @@ class DashboardKpiGrid extends StatelessWidget {
               child: _KpiCard(
                 title: "Customers",
                 value: "${s.totalCustomers}",
-                valueColor: Colors.white,
+                valueColor: primaryTextColor,
               ),
             ),
           ],
@@ -70,7 +74,7 @@ class DashboardKpiGrid extends StatelessWidget {
               child: _KpiCard(
                 title: "Transactions",
                 value: "${s.totalSales}",
-                valueColor: Colors.white,
+                valueColor: primaryTextColor,
               ),
             ),
             horizontalSpace(12),

@@ -9,6 +9,7 @@ import 'authentication_service.dart';
 
 import '../../../core/utils/local_storage.dart';
 import '../../../core/utils/local_store_dir.dart';
+import '../../../state.dart'; // Import global state for uiMode
 
 class AuthViewModel extends BaseViewModel {
   final _authenticationService = locator<AuthenticationService>();
@@ -310,6 +311,17 @@ class AuthViewModel extends BaseViewModel {
     return true;
   }
 
+  void toggleTheme() async {
+    uiMode.value = uiMode.value == AppUiModes.dark ? AppUiModes.light : AppUiModes.dark;
+    
+    // Persist
+    await _localStorage.save(LocalStorageDir.uiMode, uiMode.value == AppUiModes.dark ? "dark" : "light");
+    
+    notifyListeners();
+  }
+
+  bool get isDarkMode => uiMode.value == AppUiModes.dark;
+
   @override
   void dispose() {
     firstNameController.dispose();
@@ -320,5 +332,4 @@ class AuthViewModel extends BaseViewModel {
     confirmPasswordController.dispose();
     super.dispose();
   }
-
 }

@@ -14,41 +14,45 @@ class StaffView extends StackedView<StaffViewModel> {
   @override
   Widget builder(BuildContext context, StaffViewModel viewModel, Widget? child) {
     // Important: AppShell provides PrimaryScrollController so this scroll drives the global header.
-    return CustomScrollView(
-      primary: true,
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        SliverToBoxAdapter(child: verticalSpace(16)),
+    // Important: AppShell provides PrimaryScrollController so this scroll drives the global header.
+    return Material(
+      color: Colors.transparent,
+      child: CustomScrollView(
+        primary: true,
+        // physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(child: verticalSpace(108)),
 
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _TopRow(
-              onAdd: () => _openAddDialog(context, viewModel),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _TopRow(
+                onAdd: () => _openAddDialog(context, viewModel),
+              ),
             ),
           ),
-        ),
 
-        SliverToBoxAdapter(child: verticalSpace(14)),
+          SliverToBoxAdapter(child: verticalSpace(14)),
 
-        SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
-          sliver: viewModel.staff.isEmpty
-              ? const SliverToBoxAdapter(child: _EmptyState())
-              : SliverList.separated(
-            itemCount: viewModel.staff.length,
-            separatorBuilder: (_, __) => verticalSpace(14),
-            itemBuilder: (_, i) {
-              final m = viewModel.staff[i];
-              return StaffCard(
-                member: m,
-                onEdit: () => _openEditDialog(context, viewModel, m),
-                onDelete: () => _delete(context, viewModel, m.id),
-              );
-            },
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
+            sliver: viewModel.staff.isEmpty
+                ? const SliverToBoxAdapter(child: _EmptyState())
+                : SliverList.separated(
+              itemCount: viewModel.staff.length,
+              separatorBuilder: (_, __) => verticalSpace(14),
+              itemBuilder: (_, i) {
+                final m = viewModel.staff[i];
+                return StaffCard(
+                  member: m,
+                  onEdit: () => _openEditDialog(context, viewModel, m),
+                  onDelete: () => _delete(context, viewModel, m.id),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

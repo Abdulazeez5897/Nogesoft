@@ -14,52 +14,55 @@ class PurchaseView extends StackedView<PurchaseViewModel> {
 
   @override
   Widget builder(BuildContext context, PurchaseViewModel viewModel, Widget? child) {
-    return CustomScrollView(
-      primary: true,
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        SliverToBoxAdapter(child: verticalSpace(16)),
+    return Material(
+      color: Colors.transparent,
+      child: CustomScrollView(
+        primary: true,
+        // physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(child: verticalSpace(108)),
 
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _HeaderBlock(
-              onAdd: () => _openNewPurchase(context, viewModel),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _HeaderBlock(
+                onAdd: () => _openNewPurchase(context, viewModel),
+              ),
             ),
           ),
-        ),
 
-        SliverToBoxAdapter(child: verticalSpace(12)),
+          SliverToBoxAdapter(child: verticalSpace(12)),
 
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _SearchBar(
-              onChanged: viewModel.setQuery,
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _SearchBar(
+                onChanged: viewModel.setQuery,
+              ),
             ),
           ),
-        ),
 
-        SliverToBoxAdapter(child: verticalSpace(14)),
+          SliverToBoxAdapter(child: verticalSpace(14)),
 
-        SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
-          sliver: viewModel.visiblePurchases.isEmpty
-              ? const SliverToBoxAdapter(child: _EmptyState())
-              : SliverList.separated(
-            itemCount: viewModel.visiblePurchases.length,
-            separatorBuilder: (_, __) => verticalSpace(14),
-            itemBuilder: (_, i) {
-              final p = viewModel.visiblePurchases[i];
-              return PurchaseCard(
-                purchase: p,
-                money: viewModel.formatNaira,
-                date: viewModel.formatDate,
-              );
-            },
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
+            sliver: viewModel.visiblePurchases.isEmpty
+                ? const SliverToBoxAdapter(child: _EmptyState())
+                : SliverList.separated(
+              itemCount: viewModel.visiblePurchases.length,
+              separatorBuilder: (_, __) => verticalSpace(14),
+              itemBuilder: (_, i) {
+                final p = viewModel.visiblePurchases[i];
+                return PurchaseCard(
+                  purchase: p,
+                  money: viewModel.formatNaira,
+                  date: viewModel.formatDate,
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

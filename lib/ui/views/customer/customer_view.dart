@@ -14,58 +14,61 @@ class CustomerView extends StackedView<CustomerViewModel> {
   @override
   Widget builder(BuildContext context, CustomerViewModel viewModel, Widget? child) {
     // AppShell provides PrimaryScrollController; keep this page as a normal scrollable.
-    return CustomScrollView(
-      primary: true,
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        SliverToBoxAdapter(child: verticalSpace(110)),
+    return Material(
+      color: Colors.transparent,
+      child: CustomScrollView(
+        primary: true,
+        // physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(child: verticalSpace(110)),
 
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _StatsRow(
-              allCount: viewModel.allCount,
-              debtorCount: viewModel.debtorCount,
-              onNewCustomer: () => _onNewCustomer(context, viewModel),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _StatsRow(
+                allCount: viewModel.allCount,
+                debtorCount: viewModel.debtorCount,
+                onNewCustomer: () => _onNewCustomer(context, viewModel),
+              ),
             ),
           ),
-        ),
 
-        SliverToBoxAdapter(child: verticalSpace(12)),
+          SliverToBoxAdapter(child: verticalSpace(12)),
 
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _SegmentedTabs(
-              tab: viewModel.tab,
-              onTab: viewModel.setTab,
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _SegmentedTabs(
+                tab: viewModel.tab,
+                onTab: viewModel.setTab,
+              ),
             ),
           ),
-        ),
 
-        SliverToBoxAdapter(child: verticalSpace(10)),
+          SliverToBoxAdapter(child: verticalSpace(10)),
 
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _SearchField(
-              onChanged: viewModel.setQuery,
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _SearchField(
+                onChanged: viewModel.setQuery,
+              ),
             ),
           ),
-        ),
 
-        SliverToBoxAdapter(child: verticalSpace(12)),
+          SliverToBoxAdapter(child: verticalSpace(12)),
 
-        SliverPadding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
-          sliver: SliverToBoxAdapter(
-            child: CustomerTable(
-              customers: viewModel.visibleCustomers,
-              onView: (c) => CustomerDetailsSheet.show(context, c),
+          SliverPadding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 22),
+            sliver: SliverToBoxAdapter(
+              child: CustomerTable(
+                customers: viewModel.visibleCustomers,
+                onView: (c) => CustomerDetailsSheet.show(context, c),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

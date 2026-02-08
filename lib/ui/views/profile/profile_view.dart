@@ -63,25 +63,28 @@ class _ProfileViewBodyState extends State<_ProfileViewBody> {
   @override
   Widget build(BuildContext context) {
     // Shell provides PrimaryScrollController; keep this scrollable “normal”.
-    return CustomScrollView(
-      primary: true,
-      physics: const BouncingScrollPhysics(),
-      slivers: [
-        SliverToBoxAdapter(child: verticalSpace(16)),
+    return Material(
+      color: Colors.transparent,
+      child: CustomScrollView(
+        primary: true,
+        // physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(child: verticalSpace(108)),
 
-        const SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: Text(
-              'My Profile',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 26,
-                fontWeight: FontWeight.w900,
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: Text(
+                'My Profile',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
           ),
-        ),
+
 
         SliverToBoxAdapter(child: verticalSpace(14)),
 
@@ -106,7 +109,8 @@ class _ProfileViewBodyState extends State<_ProfileViewBody> {
             ),
           ),
         ),
-      ],
+        ],
+      ),
     );
   }
 }

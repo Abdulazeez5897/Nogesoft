@@ -144,6 +144,6 @@ class DashboardViewModel extends BaseViewModel {
   }
 
   void viewLowStockItems() {
-     _shellService.navigateToStore();
+     _shellService.navigateToReports();
   }
 }

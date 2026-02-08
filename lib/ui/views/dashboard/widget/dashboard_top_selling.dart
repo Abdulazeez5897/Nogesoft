@@ -120,7 +120,7 @@ class _TopSellRow extends StatelessWidget {
         ),
         Text(
           amount,
-          style: GoogleFonts.redHatDisplay(
+          style: TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w700,

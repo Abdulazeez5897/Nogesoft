@@ -143,7 +143,7 @@ class _TxnCard extends StatelessWidget {
           horizontalSpaceSmall,
           Text(
             CurrencyFormatter.formatNaira(purchase.totalAmount.toDouble()),
-            style: GoogleFonts.redHatDisplay(
+            style: TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w700,

@@ -131,11 +131,11 @@ class _TxnCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF0E2A1B),
+                    color: const Color(0xFF38B24A).withOpacity(0.15), // Light green background
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    purchase.status, 
+                    purchase.status == 'Completed' ? 'Income' : purchase.status,
                     style: GoogleFonts.redHatDisplay(
                       color: const Color(0xFF38B24A),
                       fontSize: 13,

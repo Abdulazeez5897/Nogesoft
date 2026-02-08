@@ -33,10 +33,11 @@ class NewPurchaseSheet extends StatefulWidget {
         required List<Supplier> suppliers,
         required List<Product> catalog,
       }) {
+    final theme = Theme.of(context);
     return showModalBottomSheet<NewPurchaseResult>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: const Color(0xFF0E1626),
+      backgroundColor: theme.scaffoldBackgroundColor, // or cardColor
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(0)),
       ),
@@ -72,14 +73,14 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
     super.dispose();
   }
 
-  InputDecoration _dec(String hint) {
+  InputDecoration _dec(String hint, {required bool isDark}) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: const TextStyle(color: Colors.white38, fontWeight: FontWeight.w700),
+      hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38, fontWeight: FontWeight.w700),
       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Colors.white10),
+        borderSide: BorderSide(color: isDark ? Colors.white10 : Colors.black12),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
@@ -156,6 +157,12 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
+    final textPrimary = isDark ? Colors.white : const Color(0xFF0B1220);
+    final textMuted = isDark ? Colors.white70 : const Color(0xFF555F71);
+
     return SafeArea(
       top: true,
       child: Padding(
@@ -169,12 +176,12 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             // Title
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'New Purchase',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: textPrimary,
                   fontSize: 20,
                   fontWeight: FontWeight.w900,
                 ),
@@ -189,35 +196,36 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const _Label('Supplier'),
+                    _Label('Supplier', isDark: isDark),
                     _Dropdown<Supplier>(
                       value: _supplier,
                       items: widget.suppliers,
                       label: (s) => s.name,
                       onChanged: (v) => setState(() => _supplier = v),
+                      isDark: isDark,
                     ),
                     verticalSpace(12),
 
-                    const _Label('Invoice Number'),
+                    _Label('Invoice Number', isDark: isDark),
                     TextField(
                       controller: _invoice,
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                      decoration: _dec(''),
+                      style: TextStyle(color: textPrimary, fontWeight: FontWeight.w700),
+                      decoration: _dec('', isDark: isDark),
                     ),
                     verticalSpace(12),
 
-                    const _Label('Amount Paid'),
+                    _Label('Amount Paid', isDark: isDark),
                     TextField(
                       controller: _amountPaid,
                       keyboardType: TextInputType.number,
-                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                      decoration: _dec(''),
+                      style: TextStyle(color: textPrimary, fontWeight: FontWeight.w700),
+                      decoration: _dec('', isDark: isDark),
                     ),
                     verticalSpace(14),
 
-                    const Text(
+                    Text(
                       'Products',
-                      style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w800),
+                      style: TextStyle(color: textMuted, fontWeight: FontWeight.w800),
                     ),
                     verticalSpace(8),
 
@@ -231,6 +239,7 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                           ctrl: l,
                           onRemove: () => _removeLine(i),
                           dec: _dec,
+                          isDark: isDark,
                         ),
                       );
                     }),
@@ -242,8 +251,8 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                       child: OutlinedButton(
                         onPressed: _addProductLine,
                         style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Colors.white24, width: 1.4),
-                          foregroundColor: Colors.white70,
+                          side: BorderSide(color: isDark ? Colors.white24 : Colors.black12, width: 1.4),
+                          foregroundColor: isDark ? Colors.white70 : Colors.black54,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
                         child: const Text(
@@ -268,8 +277,8 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                     onPressed: () => Navigator.of(context).pop(),
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: const Color(0xFF141E31),
-                      foregroundColor: Colors.white70,
+                      backgroundColor: isDark ? const Color(0xFF141E31) : Colors.grey[300],
+                      foregroundColor: isDark ? Colors.white70 : Colors.black87,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       padding: const EdgeInsets.symmetric(horizontal: 18),
                     ),
@@ -302,7 +311,8 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
 
 class _Label extends StatelessWidget {
   final String text;
-  const _Label(this.text);
+  final bool isDark;
+  const _Label(this.text, {required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -310,7 +320,7 @@ class _Label extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w800),
+        style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontWeight: FontWeight.w800),
       ),
     );
   }
@@ -321,29 +331,35 @@ class _Dropdown<T> extends StatelessWidget {
   final List<T> items;
   final String Function(T) label;
   final ValueChanged<T?> onChanged;
+  final bool isDark;
 
   const _Dropdown({
     required this.value,
     required this.items,
     required this.label,
     required this.onChanged,
+    required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
+    final border = isDark ? Colors.white10 : Colors.black12;
+    final text = isDark ? Colors.white : const Color(0xFF0B1220);
+    final dropdownBg = isDark ? const Color(0xFF0E1626) : Colors.white;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.white10),
+        border: Border.all(color: border),
         borderRadius: BorderRadius.circular(10),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<T>(
           value: value,
           isExpanded: true,
-          dropdownColor: const Color(0xFF0E1626),
-          icon: const Icon(Icons.unfold_more, color: Colors.white54),
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+          dropdownColor: dropdownBg,
+          icon: Icon(Icons.unfold_more, color: isDark ? Colors.white54 : Colors.black54),
+          style: TextStyle(color: text, fontWeight: FontWeight.w700),
           items: items
               .map((e) => DropdownMenuItem<T>(value: e, child: Text(label(e))))
               .toList(),
@@ -373,17 +389,23 @@ class _ProductLine extends StatelessWidget {
   final List<Product> catalog;
   final _LineControllers ctrl;
   final VoidCallback onRemove;
-  final InputDecoration Function(String) dec;
+  final InputDecoration Function(String, {required bool isDark}) dec;
+  final bool isDark;
 
   const _ProductLine({
     required this.catalog,
     required this.ctrl,
     required this.onRemove,
     required this.dec,
+    required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
+    final border = isDark ? Colors.white10 : Colors.black12;
+    final text = isDark ? Colors.white : const Color(0xFF0B1220);
+    final dropdownBg = isDark ? const Color(0xFF0E1626) : Colors.white;
+
     return Column(
       children: [
         // Product + Qty
@@ -393,16 +415,16 @@ class _ProductLine extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white10),
+                  border: Border.all(color: border),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<Product>(
                     value: ctrl.product,
                     isExpanded: true,
-                    dropdownColor: const Color(0xFF0E1626),
-                    icon: const Icon(Icons.unfold_more, color: Colors.white54, size: 18),
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                    dropdownColor: dropdownBg,
+                    icon: Icon(Icons.unfold_more, color: isDark ? Colors.white54 : Colors.black54, size: 18),
+                    style: TextStyle(color: text, fontWeight: FontWeight.w700),
                     items: catalog
                         .map((p) => DropdownMenuItem(value: p, child: Text(p.name)))
                         .toList(),
@@ -421,8 +443,8 @@ class _ProductLine extends StatelessWidget {
               child: TextField(
                 controller: ctrl.qty,
                 keyboardType: TextInputType.number,
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                decoration: dec('Qty'),
+                style: TextStyle(color: text, fontWeight: FontWeight.w700),
+                decoration: dec('Qty', isDark: isDark),
               ),
             ),
           ],
@@ -436,8 +458,8 @@ class _ProductLine extends StatelessWidget {
               child: TextField(
                 controller: ctrl.cost,
                 keyboardType: TextInputType.number,
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                decoration: dec('Cost'),
+                style: TextStyle(color: text, fontWeight: FontWeight.w700),
+                decoration: dec('Cost', isDark: isDark),
               ),
             ),
             const SizedBox(width: 12),
@@ -445,8 +467,8 @@ class _ProductLine extends StatelessWidget {
               child: TextField(
                 controller: ctrl.sell,
                 keyboardType: TextInputType.number,
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                decoration: dec('Sell'),
+                style: TextStyle(color: text, fontWeight: FontWeight.w700),
+                decoration: dec('Sell', isDark: isDark),
               ),
             ),
           ],

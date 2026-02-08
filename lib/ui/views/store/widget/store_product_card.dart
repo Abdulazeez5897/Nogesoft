@@ -22,16 +22,19 @@ class StoreProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
       decoration: BoxDecoration(
-        color: const Color(0xFF101A2B),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(14),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.black26,
+            color: Colors.black.withOpacity(isDark ? 0.26 : 0.05),
             blurRadius: 14,
-            offset: Offset(0, 10),
+            offset: const Offset(0, 10),
           ),
         ],
       ),
@@ -41,8 +44,8 @@ class StoreProductCard extends StatelessWidget {
 
           Text(
             product.name,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: theme.textTheme.titleLarge?.color,
               fontSize: 18,
               fontWeight: FontWeight.w800,
             ),
@@ -50,8 +53,8 @@ class StoreProductCard extends StatelessWidget {
           verticalSpace(4),
           Text(
             product.category,
-            style: const TextStyle(
-              color: Colors.white54,
+            style: TextStyle(
+              color: isDark ? Colors.white54 : Colors.black54,
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
@@ -59,8 +62,8 @@ class StoreProductCard extends StatelessWidget {
           verticalSpaceSmall,
           Text(
             _formatNaira(product.price),
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: theme.textTheme.titleLarge?.color,
               fontSize: 20,
               fontWeight: FontWeight.w900,
             ),

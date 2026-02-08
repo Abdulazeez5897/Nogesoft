@@ -140,12 +140,15 @@ class _TopRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Row(
       children: [
-        const Text(
+        Text(
           'Staff & Users',
           style: TextStyle(
-            color: Colors.white,
+            color: theme.textTheme.titleLarge?.color,
             fontSize: 24,
             fontWeight: FontWeight.w900,
           ),
@@ -178,17 +181,20 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFF101A2B),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
           'No staff found',
           style: TextStyle(
-            color: Colors.white60,
+            color: isDark ? Colors.white60 : Colors.black54,
             fontSize: 16,
             fontWeight: FontWeight.w800,
           ),

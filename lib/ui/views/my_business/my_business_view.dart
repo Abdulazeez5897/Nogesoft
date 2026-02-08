@@ -172,6 +172,8 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
   Widget build(BuildContext context) {
     final vm = widget.viewModel;
     final b = widget.business;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     
     // ...
     return Material(
@@ -182,12 +184,16 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
         slivers: [
           SliverToBoxAdapter(child: verticalSpace(108)),
 
-          const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverToBoxAdapter(
               child: Text(
                 'My Business',
-                style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900),
+                style: TextStyle(
+                  color: theme.textTheme.titleLarge?.color,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w900,
+                ),
               ),
             ),
           ),
@@ -272,15 +278,19 @@ class _BusinessFormCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
-
-    final border = Colors.white.withOpacity(0.22);
-    final inputBorder = Colors.white.withOpacity(0.22);
+    final border = isDark ? Colors.white.withOpacity(0.22) : Colors.black12;
+    final inputBorder = isDark ? Colors.white.withOpacity(0.22) : Colors.black12;
 
     InputDecoration dec(String hint) {
       return InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: Colors.white38, fontWeight: FontWeight.w700),
+        hintStyle: TextStyle(
+          color: isDark ? Colors.white38 : Colors.black38, 
+          fontWeight: FontWeight.w700
+        ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -297,7 +307,10 @@ class _BusinessFormCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
-        style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w800),
+        style: TextStyle(
+          color: isDark ? Colors.white70 : Colors.black54, 
+          fontWeight: FontWeight.w800
+        ),
       ),
     );
 

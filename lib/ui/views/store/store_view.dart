@@ -128,12 +128,15 @@ class _TopRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Row(
       children: [
-        const Text(
+        Text(
           'Products',
           style: TextStyle(
-            color: Colors.white,
+            color: theme.textTheme.titleLarge?.color,
             fontSize: 22,
             fontWeight: FontWeight.w900,
           ),

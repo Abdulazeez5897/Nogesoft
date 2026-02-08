@@ -15,19 +15,26 @@ class LoginView extends StackedView<AuthViewModel> {
       AuthViewModel viewModel,
       Widget? child,
       ) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
+        decoration: BoxDecoration(
+          // Gradient only in Dark Mode. Solid color in Light Mode.
+          gradient: isDark
+              ? const LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
               Color(0xFF0B1220),
               Color(0xFF0F1B2D),
             ],
-          ),
+          )
+              : null,
+          color: isDark ? null : theme.scaffoldBackgroundColor,
         ),
         child: SafeArea(
           child: LayoutBuilder(
@@ -50,11 +57,11 @@ class LoginView extends StackedView<AuthViewModel> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(24),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF111C2E),
+                              color: theme.cardColor,
                               borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.35),
+                                  color: Colors.black.withOpacity(isDark ? 0.35 : 0.05),
                                   blurRadius: 20,
                                   offset: const Offset(0, 10),
                                 ),
@@ -68,7 +75,7 @@ class LoginView extends StackedView<AuthViewModel> {
                                   style: GoogleFonts.redHatDisplay(
                                     fontSize: 26,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.white,
+                                    color: theme.textTheme.titleLarge?.color,
                                   ),
                                 ),
                                 verticalSpaceTiny,
@@ -76,7 +83,7 @@ class LoginView extends StackedView<AuthViewModel> {
                                   'Manage your business in one place',
                                   style: GoogleFonts.redHatDisplay(
                                     fontSize: 15,
-                                    color: Colors.white70,
+                                    color: isDark ? Colors.white70 : Colors.black54,
                                   ),
                                 ),
 
@@ -84,15 +91,12 @@ class LoginView extends StackedView<AuthViewModel> {
 
                                 /// Email
                                 TextField(
-                                  controller:
-                                  viewModel.emailController,
-                                  keyboardType:
-                                  TextInputType.emailAddress,
-                                  style: const TextStyle(
-                                      color: Colors.white),
-                                  decoration: _inputDecoration(
-                                    label: 'Email',
-                                    hint: 'you@business.com',
+                                  controller: viewModel.emailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  style: TextStyle(color: theme.textTheme.bodyMedium?.color),
+                                  decoration: InputDecoration(
+                                    labelText: 'Email',
+                                    hintText: 'you@business.com',
                                   ),
                                 ),
 
@@ -100,127 +104,93 @@ class LoginView extends StackedView<AuthViewModel> {
 
                                 /// Password
                                 TextField(
-                                  controller:
-                                  viewModel.passwordController,
-                                  obscureText:
-                                  viewModel.obscurePassword,
-                                  style: const TextStyle(
-                                      color: Colors.white),
-                                  decoration: _inputDecoration(
-                                    label: 'Password',
-                                    hint:
-                                    'Enter your password',
+                                  controller: viewModel.passwordController,
+                                  obscureText: viewModel.obscurePassword,
+                                  style: TextStyle(color: theme.textTheme.bodyMedium?.color),
+                                  decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    hintText: 'Enter your password',
                                     suffixIcon: IconButton(
                                       onPressed: viewModel.togglePasswordVisibility,
                                       icon: Text(
                                         viewModel.obscurePassword ? '🙈' : '👁️',
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                        ),
+                                        style: const TextStyle(fontSize: 20),
                                       ),
                                     ),
                                   ),
                                 ),
 
-                                  verticalSpaceLarge,
+                                verticalSpaceLarge,
 
-                                  /// Remember Me
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        height: 24,
-                                        width: 24,
-                                        child: Checkbox(
-                                          value: viewModel.rememberMe,
-                                          onChanged: viewModel.toggleRememberMe,
-                                          activeColor: Colors.green,
-                                          side: const BorderSide(color: Colors.white54),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(4),
-                                          ),
+                                /// Remember Me
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 24,
+                                      width: 24,
+                                      child: Checkbox(
+                                        value: viewModel.rememberMe,
+                                        onChanged: viewModel.toggleRememberMe,
+                                        activeColor: Colors.green,
+                                        side: BorderSide(
+                                          color: isDark ? Colors.white54 : Colors.black45,
+                                        ),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(4),
                                         ),
                                       ),
-                                        horizontalSpaceSmall,
-                                      const Text(
-                                        'Remember me',
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 14,
-                                        ),
+                                    ),
+                                    horizontalSpaceSmall,
+                                    Text(
+                                      'Remember me',
+                                      style: TextStyle(
+                                        color: isDark ? Colors.white70 : Colors.black54,
+                                        fontSize: 14,
                                       ),
-                                    ],
-                                  ),
-
-                                  verticalSpaceLarge,
-
-                                  SubmitButton(
-                                    isLoading: viewModel.isBusy,
-                                    label: 'Sign in',
-                                    submit: viewModel.login,
-                                    color: Colors.green,
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            const Spacer(),
-
-                            /// Footer stays at bottom
-                            const Center(
-                              child: Text(
-                                '© 2026 Nogesoft',
-                                style: TextStyle(
-                                  color: Colors.white38,
-                                  fontSize: 13,
+                                    ),
+                                  ],
                                 ),
+
+                                verticalSpaceLarge,
+
+                                SubmitButton(
+                                  isLoading: viewModel.isBusy,
+                                  label: 'Sign in',
+                                  submit: viewModel.login,
+                                  color: Colors.green,
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const Spacer(),
+
+                          /// Footer stays at bottom
+                          Center(
+                            child: Text(
+                              '© 2026 Nogesoft',
+                              style: TextStyle(
+                                color: isDark ? Colors.white38 : Colors.black38,
+                                fontSize: 13,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
 
   @override
   void onViewModelReady(AuthViewModel viewModel) => viewModel.init();
 
   @override
-  AuthViewModel viewModelBuilder(BuildContext context) =>
-      AuthViewModel();
-}
-
-/// Dark input decoration
-InputDecoration _inputDecoration({
-  required String label,
-  required String hint,
-  Widget? suffixIcon,
-}) {
-  return InputDecoration(
-    labelText: label,
-    hintText: hint,
-    labelStyle: const TextStyle(color: Colors.white70),
-    hintStyle: const TextStyle(color: Colors.white38),
-    filled: true,
-    fillColor: const Color(0xFF0C1524),
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide.none,
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide:
-      const BorderSide(color: Colors.green),
-    ),
-    contentPadding:
-    const EdgeInsets.symmetric(
-        horizontal: 16, vertical: 14),
-    suffixIcon: suffixIcon,
-  );
+  AuthViewModel viewModelBuilder(BuildContext context) => AuthViewModel();
 }

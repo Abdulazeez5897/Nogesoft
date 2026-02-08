@@ -85,28 +85,36 @@ class _HeaderBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Row(
       children: [
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Purchases',
-                style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w900),
+                style: TextStyle(
+                  color: theme.textTheme.titleLarge?.color, 
+                  fontSize: 24, 
+                  fontWeight: FontWeight.w900
+                ),
               ),
-              verticalSpaceTiny, // Wait, need to check if verticalSpaceTiny is const? It is const Widget. Can be used in children list. Actually in children: const [ ... ] I cannot use non-const if the list is const. verticalSpaceTiny is const. But verticalSpace(4) is not. existing was SizedBox(height: 4).
-              // Let's use verticalSpaceTiny if it's defined (usually 5.0). 4.0 is close enough.
+              verticalSpaceTiny,
               Text(
                 'Track all stock purchases',
-                style: TextStyle(color: Colors.white60, fontWeight: FontWeight.w700),
+                style: TextStyle(
+                  color: isDark ? Colors.white60 : Colors.black54, 
+                  fontWeight: FontWeight.w700
+                ),
               ),
             ],
           ),
         ),
         horizontalSpace(12),
         SizedBox(
-// ...
           height: 42,
           child: ElevatedButton(
             onPressed: onAdd,
@@ -131,21 +139,31 @@ class _SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       height: 46,
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFF101A2B),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: isDark ? Colors.transparent : Colors.black12),
       ),
       child: Center(
         child: TextField(
           onChanged: onChanged,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-          decoration: const InputDecoration(
+          style: TextStyle(
+            color: theme.textTheme.bodyMedium?.color, 
+            fontWeight: FontWeight.w700
+          ),
+          decoration: InputDecoration(
             border: InputBorder.none,
             hintText: 'Search by invoice number...',
-            hintStyle: TextStyle(color: Colors.white38, fontWeight: FontWeight.w700),
+            hintStyle: TextStyle(
+              color: isDark ? Colors.white38 : Colors.black38, 
+              fontWeight: FontWeight.w700
+            ),
           ),
         ),
       ),
@@ -158,16 +176,23 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFF101A2B),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
           'No purchases found',
-          style: TextStyle(color: Colors.white60, fontSize: 16, fontWeight: FontWeight.w800),
+          style: TextStyle(
+            color: isDark ? Colors.white60 : Colors.black54, 
+            fontSize: 16, 
+            fontWeight: FontWeight.w800
+          ),
         ),
       ),
     );

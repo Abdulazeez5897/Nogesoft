@@ -104,6 +104,9 @@ class _StatsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Row(
       children: [
         _StatBlock(label: 'All Customers', value: allCount.toString()),
@@ -113,14 +116,14 @@ class _StatsRow extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Text(
+                Text(
                   'Debtors',
-                  style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w700),
+                  style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontWeight: FontWeight.w700),
                 ),
                 horizontalSpace(8),
                 Text(
                   debtorCount.toString(),
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+                  style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w900),
                 ),
               ],
             ),
@@ -157,17 +160,20 @@ class _StatBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w700),
+          style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontWeight: FontWeight.w700),
         ),
         verticalSpace(8),
         Text(
           value,
-          style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.w900),
+          style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontSize: 26, fontWeight: FontWeight.w900),
         ),
       ],
     );
@@ -182,12 +188,16 @@ class _SegmentedTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       height: 44,
       padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
-        color: const Color(0xFF101A2B),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(12),
+        border: isDark ? null : Border.all(color: Colors.black12),
       ),
       child: Row(
         children: [
@@ -220,7 +230,15 @@ class _SegItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor = selected ? const Color(0xFFFFC24A) : Colors.white70;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
+    // In light mode: selected = dark blue, unselected = grey
+    // In dark mode: selected = orange, unselected = white70
+    
+    final textColor = selected 
+        ? (isDark ? const Color(0xFFFFC24A) : Colors.black) 
+        : (isDark ? Colors.white70 : Colors.black45);
 
     return Expanded(
       child: GestureDetector(
@@ -247,21 +265,28 @@ class _SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       height: 46,
       padding: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFF101A2B),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(12),
+        border: isDark ? null : Border.all(color: Colors.black12),
       ),
       child: Center(
         child: TextField(
           onChanged: onChanged,
-          style: const TextStyle(color: Colors.white),
-          decoration: const InputDecoration(
+          style: TextStyle(color: theme.textTheme.bodyMedium?.color),
+          decoration: InputDecoration(
             border: InputBorder.none,
             hintText: 'Search by name or phone...',
-            hintStyle: TextStyle(color: Colors.white38, fontWeight: FontWeight.w700),
+            hintStyle: TextStyle(
+                color: isDark ? Colors.white38 : Colors.black38, 
+                fontWeight: FontWeight.w700
+            ),
           ),
         ),
       ),

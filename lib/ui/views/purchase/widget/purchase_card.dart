@@ -17,19 +17,21 @@ class PurchaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardColor = isDark ? const Color(0xFF101A2B) : const Color(0xFFEEF2F6);
-    final primary = isDark ? Colors.white : const Color(0xFF0B1220);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
+    // Fallback logic if needed, or just use theme colors directly
+    final primary = theme.textTheme.titleLarge?.color ?? (isDark ? Colors.white : const Color(0xFF0B1220));
     final muted = isDark ? Colors.white60 : Colors.black54;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
       decoration: BoxDecoration(
-        color: cardColor,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.25 : 0.10),
+            color: Colors.black.withOpacity(isDark ? 0.25 : 0.05),
             blurRadius: 16,
             offset: const Offset(0, 10),
           ),

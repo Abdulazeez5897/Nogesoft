@@ -18,6 +18,9 @@ class DashboardView extends StackedView<DashboardViewModel> {
   Widget builder(BuildContext context, DashboardViewModel viewModel, Widget? child) {
     // This view is "content only" because your AppShell owns the global header/drawer.
     // BUT: it still must provide Material + scrolling for Ink/Dropdown to work safely.
+    
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Material(
       color: Colors.transparent,
@@ -36,7 +39,7 @@ class DashboardView extends StackedView<DashboardViewModel> {
                   style: GoogleFonts.redHatDisplay(
                     fontSize: 30,
                     fontWeight: FontWeight.w900,
-                    color: Colors.white,
+                    color: theme.textTheme.titleLarge?.color,
                   ),
                 ),
                 const Spacer(),

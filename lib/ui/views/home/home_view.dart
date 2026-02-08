@@ -183,6 +183,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final isDark = viewModel.isDarkMode;
+    final theme = Theme.of(context);
 
     // Keep current index synced with VM (in case VM updated by drawer).
     _syncActiveIndexFromViewModel();
@@ -190,7 +191,7 @@ class _CollapsingShellScaffoldState extends State<_CollapsingShellScaffold> {
     return Material(
       color: Colors.transparent,
       child: Scaffold(
-        backgroundColor: const Color(0xFF0B1220),
+        backgroundColor: theme.scaffoldBackgroundColor,
         endDrawer: _AppDrawer(viewModel: viewModel),
         body: SafeArea(
           bottom: false,
@@ -313,8 +314,11 @@ class _AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Drawer(
-      backgroundColor: const Color(0xFF0C1524),
+      backgroundColor: theme.canvasColor,
       child: SafeArea(
         child: Column(
           children: [
@@ -322,10 +326,10 @@ class _AppDrawer extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  const Text(
+                  Text(
                     'Menu',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: isDark ? Colors.white : const Color(0xFF0B1220),
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
@@ -391,6 +395,7 @@ class _AppDrawer extends StatelessWidget {
                   Navigator.of(context).pop();
                   _nav.clearStackAndShow(Routes.loginView);
                 },
+                isDark: isDark,
               ),
             ),
           ],
@@ -410,15 +415,20 @@ class _AppDrawer extends StatelessWidget {
     required bool selected,
     required VoidCallback onTap,
   }) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Material(
-      color: selected ? const Color(0xFF111C2E) : Colors.transparent,
+      color: selected
+          ? (isDark ? const Color(0xFF111C2E) : const Color(0xFFE2E8F0))
+          : Colors.transparent,
       borderRadius: BorderRadius.circular(12),
       child: ListTile(
         onTap: onTap,
         title: Text(
           title,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: isDark ? Colors.white : const Color(0xFF0B1220),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -427,7 +437,7 @@ class _AppDrawer extends StatelessWidget {
     );
   }
 
-  Widget _logoutButton({required VoidCallback onTap}) {
+  Widget _logoutButton({required VoidCallback onTap, required bool isDark}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(

@@ -10,10 +10,11 @@ class ReportMetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final labelColor = isDark ? Colors.white70 : const Color(0xFF555F71);
     final valueStyle = TextStyle(
-      color: _valueColor(isDark),
+      color: _valueColor(isDark, theme),
       fontSize: 26,
       fontWeight: FontWeight.w900,
     );
@@ -21,7 +22,7 @@ class ReportMetricCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF101A2B) : const Color(0xFFEEF2F6),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -35,7 +36,7 @@ class ReportMetricCard extends StatelessWidget {
     );
   }
 
-  Color _valueColor(bool isDark) {
+  Color _valueColor(bool isDark, ThemeData theme) {
     switch (metric.type) {
       case ReportMetricType.remaining:
         return const Color(0xFFFFC24A);
@@ -46,7 +47,7 @@ class ReportMetricCard extends StatelessWidget {
       case ReportMetricType.profit:
         return const Color(0xFF52E08A);
       default:
-        return isDark ? Colors.white : const Color(0xFF0B1220);
+        return theme.textTheme.titleLarge?.color ?? (isDark ? Colors.white : const Color(0xFF0B1220));
     }
   }
 }

@@ -63,6 +63,9 @@ class _ProfileViewBodyState extends State<_ProfileViewBody> {
   @override
   Widget build(BuildContext context) {
     // Shell provides PrimaryScrollController; keep this scrollable “normal”.
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Material(
       color: Colors.transparent,
       child: CustomScrollView(
@@ -71,13 +74,13 @@ class _ProfileViewBodyState extends State<_ProfileViewBody> {
         slivers: [
           SliverToBoxAdapter(child: verticalSpace(108)),
 
-          const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             sliver: SliverToBoxAdapter(
               child: Text(
                 'My Profile',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: theme.textTheme.titleLarge?.color,
                   fontSize: 26,
                   fontWeight: FontWeight.w900,
                 ),
@@ -149,10 +152,13 @@ class _ProfileCard extends StatelessWidget {
 
     if (!context.mounted) return;
     
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        backgroundColor: const Color(0xFF0E1626),
+        backgroundColor: theme.cardColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
         content: Column(
@@ -160,15 +166,15 @@ class _ProfileCard extends StatelessWidget {
           children: [
             const Icon(Icons.check_circle, color: Color(0xFF38B24A), size: 52),
             verticalSpace(16),
-            const Text(
+            Text(
               'Profile Updated!',
-              style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(color: theme.textTheme.titleLarge?.color, fontSize: 18, fontWeight: FontWeight.bold),
             ),
             verticalSpace(8),
-            const Text(
+            Text(
               'Your changes have been saved successfully.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white70),
+              style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
             ),
           ],
         ),
@@ -178,15 +184,19 @@ class _ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardColor = isDark ? const Color(0xFF101A2B) : const Color(0xFFEEF2F6);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
     final border = isDark ? Colors.white24 : Colors.black12;
-    final textPrimary = isDark ? Colors.white : const Color(0xFF0B1220);
+    // We can use theme.textTheme for primary text
 
     InputDecoration dec(String hint, {Widget? suffixIcon}) {
       return InputDecoration(
         hintText: hint,
-        hintStyle: const TextStyle(color: Colors.white38, fontWeight: FontWeight.w700),
+        hintStyle: TextStyle(
+          color: isDark ? Colors.white38 : Colors.black38, 
+          fontWeight: FontWeight.w700
+        ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -203,11 +213,11 @@ class _ProfileCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 18),
       decoration: BoxDecoration(
-        color: cardColor,
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.25 : 0.10),
+            color: Colors.black.withOpacity(isDark ? 0.25 : 0.05),
             blurRadius: 18,
             offset: const Offset(0, 10),
           ),
@@ -258,10 +268,10 @@ class _ProfileCard extends StatelessWidget {
                     width: 18,
                     height: 18,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Colors.white24,
+                    borderRadius: BorderRadius.circular(4),
+                    color: isDark ? Colors.white24 : Colors.grey[300],
                     ),
-                    child: const Icon(Icons.image, size: 14, color: Colors.white70),
+                    child: Icon(Icons.image, size: 14, color: isDark ? Colors.white70 : Colors.black54),
                   ),
                 if (hasThumbnail) horizontalSpace(8),
                 Expanded(
@@ -279,16 +289,16 @@ class _ProfileCard extends StatelessWidget {
           ),
 
           verticalSpace(8),
-          const Text(
+          Text(
             'JPG, PNG up to 2MB',
-            style: TextStyle(color: Colors.white54, fontWeight: FontWeight.w700),
+            style: TextStyle(color: isDark ? Colors.white54 : Colors.black45, fontWeight: FontWeight.w700),
           ),
 
           verticalSpace(14),
 
           TextField(
             controller: nameController,
-            style: TextStyle(color: textPrimary, fontWeight: FontWeight.w700),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             decoration: dec(''),
           ),
 
@@ -296,7 +306,7 @@ class _ProfileCard extends StatelessWidget {
 
           TextField(
             controller: emailController,
-            style: TextStyle(color: textPrimary, fontWeight: FontWeight.w700),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             keyboardType: TextInputType.emailAddress,
             decoration: dec(''),
           ),
@@ -305,7 +315,7 @@ class _ProfileCard extends StatelessWidget {
 
           TextField(
             controller: passwordController,
-            style: TextStyle(color: textPrimary, fontWeight: FontWeight.w700),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             obscureText: obscure,
             decoration: dec(
               'New password (optional)',
@@ -313,7 +323,7 @@ class _ProfileCard extends StatelessWidget {
                 onPressed: isSaving ? null : onToggleObscure,
                 icon: Icon(
                   obscure ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.white54,
+                  color: isDark ? Colors.white54 : Colors.black45,
                 ),
               ),
             ),

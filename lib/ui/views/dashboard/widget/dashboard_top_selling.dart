@@ -15,14 +15,17 @@ class DashboardTopSelling extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF111C2E),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withOpacity(isDark ? 0.25 : 0.05),
             blurRadius: 18,
             offset: const Offset(0, 10),
           )
@@ -36,7 +39,7 @@ class DashboardTopSelling extends StatelessWidget {
             style: GoogleFonts.redHatDisplay(
               fontSize: 18,
               fontWeight: FontWeight.w700,
-              color: Colors.white,
+              color: theme.textTheme.titleLarge?.color,
             ),
           ),
           verticalSpace(14),
@@ -44,7 +47,7 @@ class DashboardTopSelling extends StatelessWidget {
           if (products.isEmpty)
             Text(
               "No sales data yet",
-              style: GoogleFonts.redHatDisplay(color: Colors.white54),
+              style: GoogleFonts.redHatDisplay(color: isDark ? Colors.white54 : Colors.black45),
             )
           else
             ...products.asMap().entries.map((e) {
@@ -55,7 +58,7 @@ class DashboardTopSelling extends StatelessWidget {
                 child: _TopSellRow(
                   rank: '${index + 1}',
                   name: product.name,
-                  sold: '${product.stockQuantity} sold', // Using stock as simplified 'sold' for now or need a better metric
+                  sold: '${product.stockQuantity} sold', // Using stock as simplified 'sold' for now
                   amount: CurrencyFormatter.formatNaira(product.price),
                 ),
               );
@@ -81,6 +84,9 @@ class _TopSellRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Row(
       children: [
         SizedBox(
@@ -88,7 +94,7 @@ class _TopSellRow extends StatelessWidget {
           child: Text(
             rank,
             style: GoogleFonts.redHatDisplay(
-              color: Colors.white70,
+              color: isDark ? Colors.white70 : Colors.black54,
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
@@ -102,7 +108,7 @@ class _TopSellRow extends StatelessWidget {
               Text(
                 name,
                 style: GoogleFonts.redHatDisplay(
-                  color: Colors.white,
+                  color: theme.textTheme.bodyMedium?.color,
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
@@ -111,7 +117,7 @@ class _TopSellRow extends StatelessWidget {
               Text(
                 sold,
                 style: GoogleFonts.redHatDisplay(
-                  color: Colors.white60,
+                  color: isDark ? Colors.white60 : Colors.black45,
                   fontSize: 13,
                 ),
               ),
@@ -121,7 +127,7 @@ class _TopSellRow extends StatelessWidget {
         Text(
           amount,
           style: TextStyle(
-            color: Colors.white,
+            color: theme.textTheme.bodyMedium?.color,
             fontSize: 16,
             fontWeight: FontWeight.w700,
           ),

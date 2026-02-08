@@ -22,16 +22,19 @@ class DashboardSalesAnalytics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Material(
       type: MaterialType.transparency, // ✅ fixes "No Material widget found"
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF111C2E),
+          color: theme.cardColor,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.25),
+              color: Colors.black.withOpacity(isDark ? 0.25 : 0.05),
               blurRadius: 18,
               offset: const Offset(0, 10),
             )
@@ -45,7 +48,7 @@ class DashboardSalesAnalytics extends StatelessWidget {
               style: GoogleFonts.redHatDisplay(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: theme.textTheme.titleLarge?.color,
               ),
             ),
             verticalSpace(12),
@@ -56,15 +59,15 @@ class DashboardSalesAnalytics extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.white38, width: 1),
+                border: Border.all(color: isDark ? Colors.white38 : Colors.black26, width: 1),
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   value: selectedRange,
                   isExpanded: true,
-                  dropdownColor: const Color(0xFF0C1524),
-                  iconEnabledColor: Colors.white70,
-                  style: const TextStyle(color: Colors.white),
+                  dropdownColor: theme.cardColor,
+                  iconEnabledColor: isDark ? Colors.white70 : Colors.black54,
+                  style: TextStyle(color: theme.textTheme.bodyMedium?.color),
                   items: ranges
                       .map(
                         (e) => DropdownMenuItem<String>(
@@ -73,7 +76,7 @@ class DashboardSalesAnalytics extends StatelessWidget {
                         e,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: theme.textTheme.bodyMedium?.color),
                       ),
                     ),
                   )
@@ -97,11 +100,11 @@ class DashboardSalesAnalytics extends StatelessWidget {
                     gridData: const FlGridData(show: false),
                     borderData: FlBorderData(
                       show: true,
-                      border: const Border(
-                        left: BorderSide(color: Colors.white24),
-                        bottom: BorderSide(color: Colors.white24),
-                      right: BorderSide(color: Colors.transparent),
-                      top: BorderSide(color: Colors.transparent),
+                      border: Border(
+                        left: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
+                        bottom: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
+                        right: const BorderSide(color: Colors.transparent),
+                        top: const BorderSide(color: Colors.transparent),
                     ),
                   ),
                   titlesData: FlTitlesData(
@@ -121,8 +124,8 @@ class DashboardSalesAnalytics extends StatelessWidget {
                             padding: const EdgeInsets.only(right: 8),
                             child: Text(
                               value == 0 ? '0' : '${(value / 1000).round()},000',
-                              style: const TextStyle(
-                                color: Colors.white54,
+                              style: TextStyle(
+                                color: isDark ? Colors.white54 : Colors.black54,
                                 fontSize: 11,
                               ),
                             ),
@@ -142,7 +145,7 @@ class DashboardSalesAnalytics extends StatelessWidget {
                                padding: const EdgeInsets.only(top: 8.0),
                                child: Text(
                                  bottomTitles[index],
-                                 style: const TextStyle(color: Colors.white54, fontSize: 11),
+                                 style: TextStyle(color: isDark ? Colors.white54 : Colors.black54, fontSize: 11),
                                ),
                              );
                           }

@@ -113,10 +113,13 @@ class _KpiCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF111C2E),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -125,7 +128,7 @@ class _KpiCard extends StatelessWidget {
           Text(
             title,
             style: GoogleFonts.redHatDisplay(
-              color: Colors.white60,
+              color: isDark ? Colors.white60 : Colors.black54,
               fontSize: 13,
               fontWeight: FontWeight.w500,
             ),
@@ -154,15 +157,18 @@ class _LowStockCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       height: 92,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFF111C2E),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withOpacity(isDark ? 0.25 : 0.05),
             blurRadius: 18,
             offset: const Offset(0, 10),
           )
@@ -175,7 +181,7 @@ class _LowStockCard extends StatelessWidget {
             'Low Stock Items',
             style: GoogleFonts.redHatDisplay(
               fontSize: 14,
-              color: Colors.white70,
+              color: isDark ? Colors.white70 : Colors.black54,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -197,7 +203,7 @@ class _LowStockCard extends StatelessWidget {
                   'View Items',
                   style: GoogleFonts.redHatDisplay(
                     fontSize: 13,
-                    color: Colors.white70,
+                    color: isDark ? Colors.white70 : Colors.black87,
                     decoration: TextDecoration.underline,
                   ),
                 ),

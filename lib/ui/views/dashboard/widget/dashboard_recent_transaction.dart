@@ -19,14 +19,17 @@ class DashboardRecentTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF111C2E),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withOpacity(isDark ? 0.25 : 0.05),
             blurRadius: 18,
             offset: const Offset(0, 10),
           )
@@ -41,7 +44,7 @@ class DashboardRecentTransactions extends StatelessWidget {
                 style: GoogleFonts.redHatDisplay(
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                  color: theme.textTheme.titleLarge?.color,
                 ),
               ),
               const Spacer(),
@@ -51,7 +54,7 @@ class DashboardRecentTransactions extends StatelessWidget {
                   'View all',
                   style: GoogleFonts.redHatDisplay(
                     fontSize: 14,
-                    color: Colors.white70,
+                    color: isDark ? Colors.white70 : Colors.black54,
                   ),
                 ),
               ),
@@ -63,7 +66,7 @@ class DashboardRecentTransactions extends StatelessWidget {
                padding: const EdgeInsets.all(20),
                child: Text(
                  "No recent transactions", 
-                 style: GoogleFonts.redHatDisplay(color: Colors.white54),
+                 style: GoogleFonts.redHatDisplay(color: isDark ? Colors.white54 : Colors.black45),
                ),
              )
           else
@@ -86,6 +89,9 @@ class _TxnCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     final name = purchase.supplier.name.isNotEmpty 
         ? purchase.supplier.name 
         : (purchase.items.isNotEmpty ? purchase.items.first.product.name : "Unknown");
@@ -96,7 +102,7 @@ class _TxnCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.white24, width: 1),
+        border: Border.all(color: isDark ? Colors.white24 : Colors.black12, width: 1),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +114,7 @@ class _TxnCard extends StatelessWidget {
                 Text(
                   name,
                   style: GoogleFonts.redHatDisplay(
-                    color: Colors.white,
+                    color: theme.textTheme.bodyMedium?.color,
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -117,7 +123,7 @@ class _TxnCard extends StatelessWidget {
                 Text(
                   _fmtDate(purchase.date),
                   style: GoogleFonts.redHatDisplay(
-                    color: Colors.white60,
+                    color: isDark ? Colors.white60 : Colors.black54,
                     fontSize: 13,
                   ),
                 ),
@@ -144,7 +150,7 @@ class _TxnCard extends StatelessWidget {
           Text(
             CurrencyFormatter.formatNaira(purchase.totalAmount.toDouble()),
             style: TextStyle(
-              color: Colors.white,
+              color: theme.textTheme.bodyMedium?.color,
               fontSize: 16,
               fontWeight: FontWeight.w700,
             ),

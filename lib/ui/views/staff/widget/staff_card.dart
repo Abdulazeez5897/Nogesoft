@@ -19,8 +19,9 @@ class StaffCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textPrimary = isDark ? Colors.white : const Color(0xFF0B1220);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textPrimary = theme.textTheme.titleLarge?.color ?? (isDark ? Colors.white : const Color(0xFF0B1220));
     final textMuted = isDark ? Colors.white54 : const Color(0xFF555F71);
 
     final roleBadge = _roleBadge(member, isDark);
@@ -29,7 +30,7 @@ class StaffCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF101A2B) : const Color(0xFFEEF2F6),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -110,8 +111,6 @@ class StaffCard extends StatelessWidget {
                 onTap: onDelete,
                 child: const Text(
                   'Delete',
-                // ...
-// (Stopping here to keep chunk manageable, will rely on `endLine` to clip the rest correctly or user verify. Actually I should complete the replacement content to match the target content exactly or use ReplaceFileContent on smaller chunks)
                   style: TextStyle(
                     color: Color(0xFFE04B5A),
                     fontWeight: FontWeight.w800,

@@ -102,7 +102,7 @@ class ReportsViewModel extends BaseViewModel {
     }
   }
 
-  void onLatestPurchase() {}
+
   void onExportPdf() {}
   void onExportCsv() {}
 }

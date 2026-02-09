@@ -35,16 +35,17 @@ class ReportsView extends StackedView<ReportsViewModel> {
 
         SliverToBoxAdapter(child: verticalSpace(14)),
 
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          sliver: SliverToBoxAdapter(
-            child: _ActionButtonsRow(
-              onLatest: viewModel.onLatestPurchase,
-              onPdf: viewModel.onExportPdf,
-              onCsv: viewModel.onExportCsv,
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            sliver: SliverToBoxAdapter(
+              child: _ActionButtonsRow(
+                searchQuery: viewModel.productQuery,
+                onSearchChanged: viewModel.setProductQuery,
+                onPdf: viewModel.onExportPdf,
+                onCsv: viewModel.onExportCsv,
+              ),
             ),
           ),
-        ),
 
         SliverToBoxAdapter(child: verticalSpace(18)),
 
@@ -171,27 +172,61 @@ class _TopRow extends StatelessWidget {
 }
 
 class _ActionButtonsRow extends StatelessWidget {
-  final VoidCallback onLatest;
+  final String searchQuery;
+  final ValueChanged<String> onSearchChanged;
   final VoidCallback onPdf;
   final VoidCallback onCsv;
 
   const _ActionButtonsRow({
-    required this.onLatest,
+    required this.searchQuery,
+    required this.onSearchChanged,
     required this.onPdf,
     required this.onCsv,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Row(
       children: [
         Expanded(
-          child: _OutlineButton(
-            label: 'Latest Purchase',
-            borderColor: Colors.white24,
-            textColor: Colors.white70,
-            onTap: onLatest,
-            // no minWidth here
+          child: Container(
+            height: 44,
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: isDark ? Colors.white24 : Colors.black12, width: 1.6),
+              color: Colors.transparent,
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.search, color: isDark ? Colors.white54 : Colors.black45, size: 20),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    onChanged: onSearchChanged,
+                    style: TextStyle(
+                      color: theme.textTheme.bodyMedium?.color,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      border: InputBorder.none,
+                      hintText: 'Search latest product...',
+                      hintStyle: TextStyle(
+                        color: isDark ? Colors.white38 : Colors.black38,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         horizontalSpace(12),

@@ -111,16 +111,16 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
     super.dispose();
   }
 
-  InputDecoration _fieldDecoration(String hint) {
+  InputDecoration _fieldDecoration(String hint, bool isDark) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: const TextStyle(color: Colors.white38),
+      hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38),
       filled: true,
       fillColor: Colors.transparent,
       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Colors.white12),
+        borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.black12),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
@@ -154,7 +154,8 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
   }
 
   Future<void> _pickDate() async {
-
+    final theme = Theme.of(context);
+    // Use standard theme for picker
     final d = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
@@ -162,10 +163,10 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
       lastDate: DateTime(2030),
       builder: (context, child) {
         return Theme(
-          data: ThemeData.dark().copyWith(
-             colorScheme: const ColorScheme.dark(
-               primary: Color(0xFF38B24A),
-             ),
+          data: theme.copyWith(
+            colorScheme: theme.colorScheme.copyWith(
+              primary: const Color(0xFF38B24A),
+            ),
           ),
           child: child!,
         );
@@ -178,9 +179,14 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white : const Color(0xFF0B1220);
+    final borderColor = isDark ? Colors.white12 : Colors.black12;
+
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 22),
-      backgroundColor: const Color(0xFF0E1626),
+      backgroundColor: theme.cardColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       child: Padding(
         padding: const EdgeInsets.fromLTRB(18, 18, 18, 14),
@@ -192,8 +198,8 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
 
               Text(
                 widget.title,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: textColor,
                   fontSize: 22,
                   fontWeight: FontWeight.w800,
                 ),
@@ -202,16 +208,16 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
 
               TextField(
                 controller: _name,
-                style: const TextStyle(color: Colors.white),
-                decoration: _fieldDecoration('Name'),
+                style: TextStyle(color: textColor),
+                decoration: _fieldDecoration('Name', isDark),
                 textInputAction: TextInputAction.next,
               ),
               verticalSpace(12),
 
               TextField(
                 controller: _category,
-                style: const TextStyle(color: Colors.white),
-                decoration: _fieldDecoration('Category'),
+                style: TextStyle(color: textColor),
+                decoration: _fieldDecoration('Category', isDark),
                 textInputAction: TextInputAction.next,
               ),
               verticalSpace(12),
@@ -220,8 +226,8 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                 Expanded(
                   child: TextField(
                     controller: _price,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: _fieldDecoration('Price'),
+                    style: TextStyle(color: textColor),
+                    decoration: _fieldDecoration('Price', isDark),
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                   ),
@@ -230,8 +236,8 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                 Expanded(
                   child: TextField(
                     controller: _stock,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: _fieldDecoration('Stock'),
+                    style: TextStyle(color: textColor),
+                    decoration: _fieldDecoration('Stock', isDark),
                     keyboardType: TextInputType.number,
                     textInputAction: TextInputAction.next,
                   ),
@@ -242,8 +248,8 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
               // Dimensions Input
               TextField(
                 controller: _dimensions,
-                style: const TextStyle(color: Colors.white),
-                decoration: _fieldDecoration('Dimensions (e.g. 10x12)'),
+                style: TextStyle(color: textColor),
+                decoration: _fieldDecoration('Dimensions (e.g. 10x12)', isDark),
                 textInputAction: TextInputAction.done,
               ),
               verticalSpace(14),
@@ -257,18 +263,20 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.white12),
+                        border: Border.all(color: borderColor),
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           value: _unit,
-                          dropdownColor: const Color(0xFF0E1626),
-                          icon: const Icon(Icons.unfold_more, color: Colors.white54),
-                          items: const [
-                            DropdownMenuItem(value: 'pcs', child: Text('pcs', style: TextStyle(color: Colors.white))),
-                            DropdownMenuItem(value: 'kg', child: Text('kg', style: TextStyle(color: Colors.white))),
-                            DropdownMenuItem(value: 'ltr', child: Text('ltr', style: TextStyle(color: Colors.white))),
-                          ],
+                          dropdownColor: theme.cardColor,
+                          icon: Icon(Icons.unfold_more, color: isDark ? Colors.white54 : Colors.black54),
+                          style: TextStyle(color: textColor),
+                          items: [
+                            'pcs', 'kg', 'ltr'
+                          ].map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(e, style: TextStyle(color: textColor)),
+                          )).toList(),
                           onChanged: (v) {
                             if (v == null) return;
                             setState(() => _unit = v);
@@ -287,12 +295,12 @@ class _StoreProductDialogState extends State<StoreProductDialog> {
                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                          decoration: BoxDecoration(
                            borderRadius: BorderRadius.circular(10),
-                           border: Border.all(color: Colors.white12),
+                           border: Border.all(color: borderColor),
                          ),
                          child: Text(
                            "${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}",
                            textAlign: TextAlign.center,
-                           style: const TextStyle(color: Colors.white),
+                           style: TextStyle(color: textColor),
                          ),
                       ),
                     ),
@@ -339,8 +347,16 @@ class _DialogButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = isPrimary ? const Color(0xFF38B24A) : const Color(0xFF141E31);
-    final fg = isPrimary ? Colors.white : Colors.white70;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
+    final bg = isPrimary 
+        ? const Color(0xFF38B24A) 
+        : (isDark ? const Color(0xFF141E31) : const Color(0xFFE0E0E0));
+        
+    final fg = isPrimary 
+        ? Colors.white 
+        : (isDark ? Colors.white70 : Colors.black87);
 
     return SizedBox(
       height: 44,

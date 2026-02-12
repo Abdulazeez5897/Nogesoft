@@ -192,40 +192,35 @@ class _ActionButtonsRow extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Container(
+          child: SizedBox(
             height: 44,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: isDark ? Colors.white24 : Colors.black12, width: 1.6),
-              color: Colors.transparent,
-            ),
-            child: Row(
-              children: [
-                Icon(Icons.search, color: isDark ? Colors.white54 : Colors.black45, size: 20),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    onChanged: onSearchChanged,
-                    style: TextStyle(
-                      color: theme.textTheme.bodyMedium?.color,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: EdgeInsets.zero,
-                      border: InputBorder.none,
-                      hintText: 'Search latest product...',
-                      hintStyle: TextStyle(
-                        color: isDark ? Colors.white38 : Colors.black38,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600
-                      ),
-                    ),
-                  ),
+            child: TextField(
+              onChanged: onSearchChanged,
+              textAlignVertical: TextAlignVertical.center,
+              style: TextStyle(
+                color: theme.textTheme.bodyMedium?.color,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+              decoration: InputDecoration(
+                isDense: true,
+                prefixIcon: Icon(Icons.search, color: isDark ? Colors.white54 : Colors.black45, size: 20),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+                hintText: 'Search latest product...',
+                hintStyle: TextStyle(
+                  color: isDark ? Colors.white38 : Colors.black38,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600
                 ),
-              ],
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12, width: 1.6),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: Color(0xFF38B24A), width: 1.6),
+                ),
+              ),
             ),
           ),
         ),

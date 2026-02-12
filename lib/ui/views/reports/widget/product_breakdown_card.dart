@@ -181,22 +181,24 @@ class _SearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 46,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: isDark ? Colors.white24 : Colors.black12),
-        color: Colors.transparent,
-      ),
-      child: Center(
-        child: TextField(
-          onChanged: onChanged,
-          style: TextStyle(color: isDark ? Colors.white : const Color(0xFF0B1220), fontWeight: FontWeight.w700),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: hint,
-            hintStyle: const TextStyle(color: Colors.white38, fontWeight: FontWeight.w700),
+      child: TextField(
+        onChanged: onChanged,
+        textAlignVertical: TextAlignVertical.center,
+        style: TextStyle(color: isDark ? Colors.white : const Color(0xFF0B1220), fontWeight: FontWeight.w700),
+        decoration: InputDecoration(
+          isDense: true,
+          hintText: hint,
+          hintStyle: const TextStyle(color: Colors.white38, fontWeight: FontWeight.w700),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 14),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Color(0xFF38B24A), width: 1.5),
           ),
         ),
       ),

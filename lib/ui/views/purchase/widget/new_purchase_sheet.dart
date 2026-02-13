@@ -37,9 +37,9 @@ class NewPurchaseSheet extends StatefulWidget {
     return showModalBottomSheet<NewPurchaseResult>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: theme.scaffoldBackgroundColor, // or cardColor
+      backgroundColor: theme.scaffoldBackgroundColor,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(0)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
       ),
       builder: (_) => NewPurchaseSheet(suppliers: suppliers, catalog: catalog),
     );
@@ -77,10 +77,12 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
     return InputDecoration(
       hintText: hint,
       hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38, fontWeight: FontWeight.w700),
+      filled: true,
+      fillColor: Colors.transparent,
       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
-        borderSide: BorderSide(color: isDark ? Colors.white10 : Colors.black12),
+        borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12, width: 1.2),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
@@ -176,16 +178,23 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             // Title
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'New Purchase',
-                style: TextStyle(
-                  color: textPrimary,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w900,
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'New Purchase',
+                    style: TextStyle(
+                      color: textPrimary,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
                 ),
-              ),
+                IconButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: Icon(Icons.close, color: textMuted),
+                ),
+              ],
             ),
             verticalSpace(14),
 
@@ -277,12 +286,15 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                     onPressed: () => Navigator.of(context).pop(),
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: isDark ? const Color(0xFF141E31) : Colors.grey[300],
-                      foregroundColor: isDark ? Colors.white70 : Colors.black87,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      backgroundColor: theme.cardColor,
+                      foregroundColor: textPrimary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        side: isDark ? BorderSide.none : const BorderSide(color: Colors.black12),
+                      ),
                       padding: const EdgeInsets.symmetric(horizontal: 18),
                     ),
-                    child: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.w800)),
+                    child: Text('Cancel', style: TextStyle(fontWeight: FontWeight.w800, color: textMuted)),
                   ),
                 ),
                 horizontalSpace(12),
@@ -320,7 +332,11 @@ class _Label extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
-        style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontWeight: FontWeight.w800),
+        style: TextStyle(
+          color: isDark ? Colors.white70 : Colors.black54, 
+          fontSize: 14,
+          fontWeight: FontWeight.w800
+        ),
       ),
     );
   }
@@ -343,14 +359,14 @@ class _Dropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final border = isDark ? Colors.white10 : Colors.black12;
+    final border = isDark ? Colors.white24 : Colors.black12; // Adjusted to match other inputs
     final text = isDark ? Colors.white : const Color(0xFF0B1220);
-    final dropdownBg = isDark ? const Color(0xFF0E1626) : Colors.white;
+    final dropdownBg = Theme.of(context).cardColor;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
       decoration: BoxDecoration(
-        border: Border.all(color: border),
+        border: Border.all(color: border, width: 1.2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: DropdownButtonHideUnderline(
@@ -402,9 +418,9 @@ class _ProductLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final border = isDark ? Colors.white10 : Colors.black12;
+    final border = isDark ? Colors.white24 : Colors.black12;
     final text = isDark ? Colors.white : const Color(0xFF0B1220);
-    final dropdownBg = isDark ? const Color(0xFF0E1626) : Colors.white;
+    final dropdownBg = Theme.of(context).cardColor;
 
     return Column(
       children: [
@@ -415,7 +431,7 @@ class _ProductLine extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
                 decoration: BoxDecoration(
-                  border: Border.all(color: border),
+                  border: Border.all(color: border, width: 1.2),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: DropdownButtonHideUnderline(

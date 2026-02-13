@@ -67,14 +67,10 @@ class PurchaseView extends StackedView<PurchaseViewModel> {
   }
 
   Future<void> _openNewPurchase(BuildContext context, PurchaseViewModel viewModel) async {
-    await showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => NewPurchaseSheet(
-        suppliers: viewModel.suppliers,
-        catalog: viewModel.catalog,
-      ),
+    await NewPurchaseSheet.show(
+      context,
+      suppliers: viewModel.suppliers,
+      catalog: viewModel.catalog,
     );
   }
 }

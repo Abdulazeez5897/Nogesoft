@@ -191,13 +191,15 @@ class _SegmentedTabs extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
+    // Light: Grey[200] container. Dark: 0xFF0C1524 container.
+    final containerColor = isDark ? const Color(0xFF0C1524) : Colors.grey[200];
+
     return Container(
-      height: 44,
-      padding: const EdgeInsets.all(6),
+      height: 48,
+      padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: theme.cardColor,
+        color: containerColor,
         borderRadius: BorderRadius.circular(12),
-        border: isDark ? null : Border.all(color: Colors.black12),
       ),
       child: Row(
         children: [
@@ -232,24 +234,38 @@ class _SegItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    
-    // In light mode: selected = dark blue, unselected = grey
-    // In dark mode: selected = orange, unselected = white70
-    
-    final textColor = selected 
-        ? (isDark ? const Color(0xFFFFC24A) : const Color(0xFF38B24A)) 
-        : (isDark ? Colors.white70 : const Color(0xFF0B1220).withOpacity(0.6));
+
+    final activeBg = isDark ? const Color(0xFF1F2937) : Colors.white;
+    final activeText = isDark ? Colors.white : Colors.black;
+    final inactiveText = isDark ? Colors.white54 : Colors.grey[600];
 
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
-        child: Center(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          margin: const EdgeInsets.symmetric(horizontal: 2),
+          decoration: selected
+              ? BoxDecoration(
+            color: activeBg,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              if (!isDark)
+                const BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 3,
+                  offset: Offset(0, 1),
+                ),
+            ],
+          )
+              : null,
+          alignment: Alignment.center,
           child: Text(
             label,
             style: TextStyle(
-              color: textColor,
-              fontWeight: FontWeight.w900,
+              color: selected ? activeText : inactiveText,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),

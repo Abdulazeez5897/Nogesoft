@@ -212,6 +212,7 @@ class _NewPurchaseSheetState extends State<NewPurchaseSheet> {
                       label: (s) => s.name,
                       onChanged: (v) => setState(() => _supplier = v),
                       isDark: isDark,
+                      decoration: _dec('', isDark: isDark),
                     ),
                     verticalSpace(12),
 
@@ -348,6 +349,7 @@ class _Dropdown<T> extends StatelessWidget {
   final String Function(T) label;
   final ValueChanged<T?> onChanged;
   final bool isDark;
+  final InputDecoration decoration;
 
   const _Dropdown({
     required this.value,
@@ -355,24 +357,21 @@ class _Dropdown<T> extends StatelessWidget {
     required this.label,
     required this.onChanged,
     required this.isDark,
+    required this.decoration,
   });
 
   @override
   Widget build(BuildContext context) {
-    final border = isDark ? Colors.white24 : Colors.black12; // Adjusted to match other inputs
     final text = isDark ? Colors.white : const Color(0xFF0B1220);
     final dropdownBg = Theme.of(context).cardColor;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-      decoration: BoxDecoration(
-        border: Border.all(color: border, width: 1.2),
-        borderRadius: BorderRadius.circular(10),
-      ),
+    return InputDecorator(
+      decoration: decoration,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<T>(
           value: value,
           isExpanded: true,
+          isDense: true,
           dropdownColor: dropdownBg,
           icon: Icon(Icons.unfold_more, color: isDark ? Colors.white54 : Colors.black54),
           style: TextStyle(color: text, fontWeight: FontWeight.w700),
@@ -418,39 +417,25 @@ class _ProductLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final border = isDark ? Colors.white24 : Colors.black12;
     final text = isDark ? Colors.white : const Color(0xFF0B1220);
-    final dropdownBg = Theme.of(context).cardColor;
 
     return Column(
       children: [
         // Product + Qty
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-                decoration: BoxDecoration(
-                  border: Border.all(color: border, width: 1.2),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<Product>(
-                    value: ctrl.product,
-                    isExpanded: true,
-                    dropdownColor: dropdownBg,
-                    icon: Icon(Icons.unfold_more, color: isDark ? Colors.white54 : Colors.black54, size: 18),
-                    style: TextStyle(color: text, fontWeight: FontWeight.w700),
-                    items: catalog
-                        .map((p) => DropdownMenuItem(value: p, child: Text(p.name)))
-                        .toList(),
-                    onChanged: (v) {
-                      // handled by parent; simplest: mutate controller and rebuild via ancestor setState
-                      ctrl.product = v;
-                      (context as Element).markNeedsBuild();
-                    },
-                  ),
-                ),
+              child: _Dropdown<Product>(
+                value: ctrl.product,
+                items: catalog,
+                label: (p) => p.name,
+                onChanged: (v) {
+                  ctrl.product = v;
+                  (context as Element).markNeedsBuild();
+                },
+                isDark: isDark,
+                decoration: dec('', isDark: isDark),
               ),
             ),
             horizontalSpace(12),

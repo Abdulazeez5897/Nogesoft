@@ -343,7 +343,7 @@ class _Label extends StatelessWidget {
   }
 }
 
-class _Dropdown<T> extends StatelessWidget {
+class _Dropdown<T extends Object> extends StatefulWidget {
   final T? value;
   final List<T> items;
   final String Function(T) label;
@@ -361,27 +361,103 @@ class _Dropdown<T> extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final text = isDark ? Colors.white : const Color(0xFF0B1220);
-    final dropdownBg = Theme.of(context).cardColor;
+  State<_Dropdown<T>> createState() => _DropdownState<T>();
+}
 
-    return InputDecorator(
-      decoration: decoration,
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<T>(
-          value: value,
-          isExpanded: true,
-          isDense: true,
-          dropdownColor: dropdownBg,
-          icon: Icon(Icons.unfold_more, color: isDark ? Colors.white54 : Colors.black54),
-          style: TextStyle(color: text, fontWeight: FontWeight.w700),
-          items: items
-              .map((e) => DropdownMenuItem<T>(value: e, child: Text(label(e))))
-              .toList(),
-          onChanged: onChanged,
-        ),
-      ),
-    );
+class _DropdownState<T extends Object> extends State<_Dropdown<T>> {
+  late TextEditingController _controller;
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.value != null ? widget.label(widget.value!) : '');
+    
+    // Select all text on focus for easy replacement
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        _controller.selection = TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
+      }
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant _Dropdown<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value) {
+      final newText = widget.value != null ? widget.label(widget.value!) : '';
+      if (_controller.text != newText) {
+        _controller.text = newText;
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final textStyle = TextStyle(
+        color: widget.isDark ? Colors.white : const Color(0xFF0B1220), 
+        fontWeight: FontWeight.w700);
+
+    return LayoutBuilder(builder: (context, constraints) {
+      return RawAutocomplete<T>(
+        textEditingController: _controller,
+        focusNode: _focusNode,
+        optionsBuilder: (TextEditingValue textEditingValue) {
+          if (textEditingValue.text.isEmpty) {
+            return widget.items;
+          }
+          return widget.items.where((T option) {
+            return widget.label(option).toLowerCase().contains(textEditingValue.text.toLowerCase());
+          });
+        },
+        displayStringForOption: widget.label,
+        onSelected: widget.onChanged,
+        fieldViewBuilder: (BuildContext context, TextEditingController fieldTextEditingController,
+            FocusNode fieldFocusNode, VoidCallback onFieldSubmitted) {
+          return TextField(
+            controller: fieldTextEditingController,
+            focusNode: fieldFocusNode,
+            style: textStyle,
+            decoration: widget.decoration.copyWith(
+              suffixIcon: Icon(Icons.arrow_drop_down,
+                  color: widget.isDark ? Colors.white54 : Colors.black54),
+            ),
+          );
+        },
+        optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<T> onSelected, Iterable<T> options) {
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Material(
+              elevation: 4.0,
+              color: Theme.of(context).cardColor,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              child: Container(
+                width: constraints.maxWidth,
+                constraints: const BoxConstraints(maxHeight: 200),
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: options.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final T option = options.elementAt(index);
+                    return ListTile(
+                      title: Text(widget.label(option), style: textStyle),
+                      onTap: () => onSelected(option),
+                    );
+                  },
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    });
   }
 }
 

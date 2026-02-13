@@ -75,23 +75,7 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
   }
 // ... (lines 57-202 omitted, staying same)
 
-  InputDecoration _fieldDecoration(String hint) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: const TextStyle(color: Colors.white38),
-      filled: true,
-      fillColor: Colors.transparent,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Colors.transparent),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(color: Color(0xFF2F6BFF), width: 2),
-      ),
-    );
-  }
+
 
   void _next() {
     if (_name.text.trim().isEmpty || _address.text.trim().isEmpty || _phone.text.trim().isEmpty) {
@@ -119,11 +103,15 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final isStep1 = _step == 1;
+    final primaryText = isDark ? Colors.white : const Color(0xFF0B1220);
+    final secondaryText = isDark ? Colors.white70 : Colors.black54;
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-      backgroundColor: const Color(0xFF0E1626),
+      backgroundColor: theme.scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 520),
@@ -134,11 +122,11 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
             children: [
               Row(
                 children: [
-                   const Expanded(
+                   Expanded(
                     child: Text(
                       'New Customer',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: primaryText,
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
                       ),
@@ -146,19 +134,21 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
                   ),
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close, color: Colors.white70),
+                    icon: Icon(Icons.close, color: secondaryText),
                   ),
                 ],
               ),
 
               verticalSpace(8),
-              _StepHeader(step: _step),
+              _StepHeader(step: _step, isDark: isDark),
               verticalSpace(14),
 
               Flexible(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  child: isStep1 ? _buildCustomerStep() : _buildPaymentStep(),
+                  child: isStep1 
+                    ? _buildCustomerStep(isDark, primaryText) 
+                    : _buildPaymentStep(isDark, primaryText, secondaryText),
                 ),
               ),
             ],
@@ -168,33 +158,53 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
     );
   }
 
-  Widget _buildCustomerStep() {
+  InputDecoration _fieldDecoration(String hint, bool isDark) {
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: TextStyle(color: isDark ? Colors.white38 : Colors.black38),
+      filled: true,
+      fillColor: Colors.transparent,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12, width: 1.2),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: const BorderSide(color: Color(0xFF2F6BFF), width: 2),
+      ),
+    );
+  }
+
+
+  Widget _buildCustomerStep(bool isDark, Color primaryText) {
     return _FormCard(
+      isDark: isDark,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const _Label('Name'),
+          _Label('Name', isDark: isDark),
           TextField(
             controller: _name,
-            style: const TextStyle(color: Colors.white),
-            decoration: _fieldDecoration(''),
+            style: TextStyle(color: primaryText),
+            decoration: _fieldDecoration('', isDark),
           ),
           verticalSpace(14),
 
-          const _Label('Address'),
+          _Label('Address', isDark: isDark),
           TextField(
             controller: _address,
-            style: const TextStyle(color: Colors.white),
-            decoration: _fieldDecoration(''),
+            style: TextStyle(color: primaryText),
+            decoration: _fieldDecoration('', isDark),
           ),
           verticalSpace(14),
 
-          const _Label('Phone'),
+          _Label('Phone', isDark: isDark),
           TextField(
             controller: _phone,
             keyboardType: TextInputType.phone,
-            style: const TextStyle(color: Colors.white),
-            decoration: _fieldDecoration(''),
+            style: TextStyle(color: primaryText),
+            decoration: _fieldDecoration('', isDark),
           ),
           verticalSpace(16),
 
@@ -225,13 +235,13 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
     );
   }
 
-  Widget _buildPaymentStep() {
+  Widget _buildPaymentStep(bool isDark, Color primaryText, Color secondaryText) {
     final discount = int.tryParse(_discount.text.trim()) ?? 0;
-    // In video, subtotal/final total are shown but not derived from real cart.
     const subtotal = 0;
-    const finalTotal = 0; // match video: stays 0 while discount shows -2,000 etc.
+    const finalTotal = 0;
 
     return _FormCard(
+      isDark: isDark,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -240,10 +250,10 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
               const Spacer(),
               GestureDetector(
                 onTap: _save,
-                child: const Text(
+                child: Text(
                   'Skip Payment',
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: secondaryText,
                     decoration: TextDecoration.underline,
                     fontWeight: FontWeight.w700,
                   ),
@@ -253,57 +263,64 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
           ),
           verticalSpace(10),
 
-          const _Label('Select Products'),
+          _Label('Select Products', isDark: isDark),
           _DropdownField(
             value: _selectedProduct,
             items: const ['Choose product', 'Amarya Foam', 'Vital Foam'],
             onChanged: (v) => setState(() => _selectedProduct = v),
+            isDark: isDark,
+            textColor: primaryText,
+            iconColor: secondaryText,
           ),
           verticalSpace(14),
 
-          const _Label('Discount'),
+          _Label('Discount', isDark: isDark),
           TextField(
             controller: _discount,
             keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.white),
-            decoration: _fieldDecoration('0'),
+            style: TextStyle(color: primaryText),
+            decoration: _fieldDecoration('0', isDark),
           ),
           verticalSpace(14),
 
-          const _Label('Amount Paid'),
+          _Label('Amount Paid', isDark: isDark),
           TextField(
             controller: _amountPaid,
             keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.white),
-            decoration: _fieldDecoration(''),
+            style: TextStyle(color: primaryText),
+            decoration: _fieldDecoration('', isDark),
           ),
           verticalSpace(14),
 
-          const _Label('Payment Type'),
+          _Label('Payment Type', isDark: isDark),
           _DropdownField(
             value: _paymentType,
             items: const ['Select type', 'Cash', 'Transfer', 'POS'],
             onChanged: (v) => setState(() => _paymentType = v),
+            isDark: isDark,
+            textColor: primaryText,
+            iconColor: secondaryText,
           ),
           verticalSpace(14),
 
-          const _Label('Description'),
+          _Label('Description', isDark: isDark),
           TextField(
             controller: _description,
             maxLines: 3,
-            style: const TextStyle(color: Colors.white),
-            decoration: _fieldDecoration(''),
+            style: TextStyle(color: primaryText),
+            decoration: _fieldDecoration('', isDark),
           ),
 
           verticalSpace(16),
 
-          const _SummaryLine(label: 'Subtotal:', value: '$subtotal'),
+          _SummaryLine(label: 'Subtotal:', value: '$subtotal', isDark: isDark),
           _SummaryLine(
             label: 'Discount:',
             value: '-${_formatMoney(discount)}',
             valueColor: const Color(0xFFE04B5A),
+            isDark: isDark,
           ),
-          const _SummaryLine(label: 'Final Total:', value: '$finalTotal'),
+          _SummaryLine(label: 'Final Total:', value: '$finalTotal', isDark: isDark),
 
           verticalSpace(16),
 
@@ -354,13 +371,18 @@ class _NewCustomerDialogState extends State<NewCustomerDialog> {
 
 class _StepHeader extends StatelessWidget {
   final int step;
-  const _StepHeader({required this.step});
+  final bool isDark;
+  
+  const _StepHeader({required this.step, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
+    // Fill color for inactive steps
+    final inactiveFill = isDark ? const Color(0xFF141E31) : Colors.grey.shade300;
+    
     final t = (step == 1) ? 0.0 : 1.0;
-    final leftFill = Color.lerp(const Color(0xFF141E31), const Color(0xFF141E31), t)!;
-    final rightFill = Color.lerp(const Color(0xFF141E31), const Color(0xFF141E31), t)!;
+    final leftFill = Color.lerp(inactiveFill, inactiveFill, t)!;
+    final rightFill = Color.lerp(inactiveFill, inactiveFill, t)!;
 
     final leftActive = step == 1;
     final rightActive = step == 2;
@@ -372,12 +394,13 @@ class _StepHeader extends StatelessWidget {
           label: 'Customer',
           active: leftActive,
           fill: leftFill,
+          isDark: isDark,
         ),
         Expanded(
           child: Container(
             height: 2,
             margin: const EdgeInsets.symmetric(horizontal: 8),
-            color: Colors.white12,
+            color: isDark ? Colors.white12 : Colors.black12,
           ),
         ),
         _StepPill(
@@ -385,6 +408,7 @@ class _StepHeader extends StatelessWidget {
           label: 'Payment',
           active: rightActive,
           fill: rightFill,
+          isDark: isDark,
         ),
       ],
     );
@@ -396,18 +420,30 @@ class _StepPill extends StatelessWidget {
   final String label;
   final bool active;
   final Color fill;
+  final bool isDark;
 
   const _StepPill({
     required this.number,
     required this.label,
     required this.active,
     required this.fill,
+    required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bg = active ? Colors.white24 : fill;
-    final text = active ? Colors.white : Colors.white70;
+    // Active background: light opaque white in dark mode, dark blue in light mode? 
+    // Actually simplicity:
+    // Dark Mode: Active=White24, Inactive=DarkBlue
+    // Light Mode: Active=Black12, Inactive=Grey300
+    
+    final bg = active 
+        ? (isDark ? Colors.white24 : Colors.black12) 
+        : fill;
+        
+    final text = active 
+        ? (isDark ? Colors.white : Colors.black)
+        : (isDark ? Colors.white70 : Colors.black54);
 
     return Row(
       children: [
@@ -422,7 +458,7 @@ class _StepPill extends StatelessWidget {
           child: Text(
             number,
             style: TextStyle(
-              color: active ? Colors.white : Colors.white70,
+              color: text,
               fontWeight: FontWeight.w900,
             ),
           ),
@@ -442,7 +478,9 @@ class _StepPill extends StatelessWidget {
 
 class _FormCard extends StatelessWidget {
   final Widget child;
-  const _FormCard({required this.child});
+  final bool isDark;
+  
+  const _FormCard({required this.child, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -450,13 +488,13 @@ class _FormCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: const Color(0xFF101A2B),
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(14),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.black26,
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 14,
-            offset: Offset(0, 10),
+            offset: const Offset(0, 10),
           ),
         ],
       ),
@@ -467,7 +505,9 @@ class _FormCard extends StatelessWidget {
 
 class _Label extends StatelessWidget {
   final String text;
-  const _Label(this.text);
+  final bool isDark;
+  
+  const _Label(this.text, {required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -475,8 +515,8 @@ class _Label extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8),
       child: Text(
         text,
-        style: const TextStyle(
-          color: Colors.white70,
+        style: TextStyle(
+          color: isDark ? Colors.white70 : Colors.black54,
           fontSize: 14,
           fontWeight: FontWeight.w700,
         ),
@@ -489,11 +529,17 @@ class _DropdownField extends StatelessWidget {
   final String value;
   final List<String> items;
   final ValueChanged<String> onChanged;
+  final bool isDark;
+  final Color textColor;
+  final Color iconColor;
 
   const _DropdownField({
     required this.value,
     required this.items,
     required this.onChanged,
+    required this.isDark,
+    required this.textColor,
+    required this.iconColor,
   });
 
   @override
@@ -503,14 +549,15 @@ class _DropdownField extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Colors.transparent,
+        border: Border.all(color: isDark ? Colors.white24 : Colors.black12, width: 1.2),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
           isExpanded: true,
-          dropdownColor: const Color(0xFF0E1626),
-          icon: const Icon(Icons.unfold_more, color: Colors.white54),
-          style: const TextStyle(color: Colors.white, fontSize: 16),
+          dropdownColor: Theme.of(context).cardColor,
+          icon: Icon(Icons.unfold_more, color: iconColor),
+          style: TextStyle(color: textColor, fontSize: 16),
           items: items
               .map((e) => DropdownMenuItem(value: e, child: Text(e)))
               .toList(),
@@ -528,11 +575,13 @@ class _SummaryLine extends StatelessWidget {
   final String label;
   final String value;
   final Color? valueColor;
+  final bool isDark;
 
   const _SummaryLine({
     required this.label,
     required this.value,
     this.valueColor,
+    required this.isDark,
   });
 
   @override
@@ -543,13 +592,13 @@ class _SummaryLine extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w700),
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontWeight: FontWeight.w700),
           ),
           horizontalSpace(6),
           Text(
             value,
             style: TextStyle(
-              color: valueColor ?? Colors.white70,
+              color: valueColor ?? (isDark ? Colors.white70 : Colors.black87),
               fontWeight: FontWeight.w800,
             ),
           ),

@@ -11,7 +11,8 @@ class CustomerDetailsSheet extends StatelessWidget {
   static Future<void> show(BuildContext context, Customer customer) {
     return showModalBottomSheet<void>(
       context: context,
-      backgroundColor: const Color(0xFF0E1626),
+      isScrollControlled: true,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
       ),
@@ -21,6 +22,11 @@ class CustomerDetailsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final primaryText = theme.textTheme.titleLarge?.color ?? (isDark ? Colors.white : const Color(0xFF0B1220));
+    final secondaryText = isDark ? Colors.white70 : Colors.black54;
+
     return SafeArea(
       top: false,
       child: Padding(
@@ -31,10 +37,10 @@ class CustomerDetailsSheet extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Text(
+                Text(
                   'Customer Details',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: primaryText,
                     fontSize: 22,
                     fontWeight: FontWeight.w900,
                   ),
@@ -42,7 +48,7 @@ class CustomerDetailsSheet extends StatelessWidget {
                 const Spacer(),
                 IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close, color: Colors.white70),
+                  icon: Icon(Icons.close, color: secondaryText),
                 )
               ],
             ),
@@ -50,8 +56,8 @@ class CustomerDetailsSheet extends StatelessWidget {
 
             Text(
               customer.name,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: primaryText,
                 fontSize: 18,
                 fontWeight: FontWeight.w800,
               ),
@@ -59,8 +65,8 @@ class CustomerDetailsSheet extends StatelessWidget {
             verticalSpace(4),
             Text(
               customer.phone,
-              style: const TextStyle(
-                color: Colors.white70,
+              style: TextStyle(
+                color: secondaryText,
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -69,7 +75,7 @@ class CustomerDetailsSheet extends StatelessWidget {
 
             RichText(
               text: TextSpan(
-                style: const TextStyle(color: Colors.white70, fontSize: 15),
+                style: TextStyle(color: secondaryText, fontSize: 15, fontFamily: 'Outfit'), // Ensure font family matches app
                 children: [
                   const TextSpan(
                     text: 'Address: ',
@@ -85,10 +91,10 @@ class CustomerDetailsSheet extends StatelessWidget {
               onTap: () {
                 // Video shows link only; no navigation shown.
               },
-              child: const Text(
+              child: Text(
                 'Payments',
                 style: TextStyle(
-                  color: Colors.white70,
+                  color: secondaryText,
                   decoration: TextDecoration.underline,
                   fontWeight: FontWeight.w700,
                 ),
@@ -103,15 +109,16 @@ class CustomerDetailsSheet extends StatelessWidget {
                 onPressed: () => Navigator.of(context).pop(),
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
-                  backgroundColor: const Color(0xFF141E31),
-                  foregroundColor: Colors.white70,
+                  backgroundColor: theme.cardColor,
+                  foregroundColor: secondaryText,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
+                    side: isDark ? BorderSide.none : const BorderSide(color: Colors.black12),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Close',
-                  style: TextStyle(fontWeight: FontWeight.w800),
+                  style: TextStyle(fontWeight: FontWeight.w800, color: secondaryText),
                 ),
               ),
             ),

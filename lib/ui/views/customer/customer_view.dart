@@ -237,8 +237,8 @@ class _SegItem extends StatelessWidget {
     // In dark mode: selected = orange, unselected = white70
     
     final textColor = selected 
-        ? (isDark ? const Color(0xFFFFC24A) : Colors.black) 
-        : (isDark ? Colors.white70 : Colors.black45);
+        ? (isDark ? const Color(0xFFFFC24A) : const Color(0xFF38B24A)) 
+        : (isDark ? Colors.white70 : const Color(0xFF0B1220).withOpacity(0.6));
 
     return Expanded(
       child: GestureDetector(

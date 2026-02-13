@@ -15,16 +15,19 @@ class CustomerTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF101A2B),
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(14),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Colors.black26,
-            blurRadius: 14,
-            offset: Offset(0, 10),
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -32,15 +35,15 @@ class CustomerTable extends StatelessWidget {
         children: [
           const _HeaderRow(),
           verticalSpace(6),
-          const Divider(color: Colors.white10, height: 1),
+          Divider(color: isDark ? Colors.white10 : Colors.black12, height: 1),
 
           if (customers.isEmpty) ...[
             verticalSpace(28),
-            const Center(
+            Center(
               child: Text(
                 'No customers found',
                 style: TextStyle(
-                  color: Colors.white60,
+                  color: isDark ? Colors.white60 : Colors.black54,
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
                 ),
@@ -64,14 +67,18 @@ class _HeaderRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final textColor = isDark ? Colors.white70 : Colors.black54;
+
+    return Row(
       children: [
         Expanded(
           flex: 5,
           child: Text(
             'Name',
             style: TextStyle(
-              color: Colors.white70,
+              color: textColor,
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -81,7 +88,7 @@ class _HeaderRow extends StatelessWidget {
           child: Text(
             'Phone',
             style: TextStyle(
-              color: Colors.white70,
+              color: textColor,
               fontWeight: FontWeight.w800,
             ),
           ),
@@ -93,7 +100,7 @@ class _HeaderRow extends StatelessWidget {
             child: Text(
               'Action',
               style: TextStyle(
-                color: Colors.white70,
+                color: textColor,
                 fontWeight: FontWeight.w800,
               ),
             ),
@@ -112,9 +119,14 @@ class _CustomerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final primaryColor = theme.textTheme.bodyMedium?.color;
+    final secondaryColor = isDark ? Colors.white70 : Colors.black54;
+
     return Column(
       children: [
-        const Divider(color: Colors.white10, height: 1),
+        Divider(color: isDark ? Colors.white10 : Colors.black12, height: 1),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Row(
@@ -123,8 +135,8 @@ class _CustomerRow extends StatelessWidget {
                 flex: 5,
                 child: Text(
                   customer.name,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: primaryColor,
                     fontWeight: FontWeight.w700,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -134,8 +146,8 @@ class _CustomerRow extends StatelessWidget {
                 flex: 4,
                 child: Text(
                   customer.phone,
-                  style: const TextStyle(
-                    color: Colors.white70,
+                  style: TextStyle(
+                    color: secondaryColor,
                     fontWeight: FontWeight.w700,
                   ),
                   overflow: TextOverflow.ellipsis,
@@ -147,10 +159,10 @@ class _CustomerRow extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
                     onTap: onView,
-                    child: const Text(
+                    child: Text(
                       'View',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: secondaryColor,
                         decoration: TextDecoration.underline,
                         fontWeight: FontWeight.w800,
                       ),

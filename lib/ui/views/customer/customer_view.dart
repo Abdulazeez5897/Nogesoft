@@ -268,25 +268,33 @@ class _SearchField extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    return Container(
-      height: 46,
-      padding: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        borderRadius: BorderRadius.circular(12),
-        border: isDark ? null : Border.all(color: Colors.black12),
-      ),
-      child: Center(
-        child: TextField(
-          onChanged: onChanged,
-          style: TextStyle(color: theme.textTheme.bodyMedium?.color),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: 'Search by name or phone...',
-            hintStyle: TextStyle(
-                color: isDark ? Colors.white38 : Colors.black38, 
-                fontWeight: FontWeight.w700
-            ),
+    return SizedBox(
+      height: 44,
+      child: TextField(
+        onChanged: onChanged,
+        textAlignVertical: TextAlignVertical.center,
+        style: TextStyle(
+          color: theme.textTheme.bodyMedium?.color,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
+        decoration: InputDecoration(
+          isDense: true,
+          prefixIcon: Icon(Icons.search, color: isDark ? Colors.white54 : Colors.black45, size: 20),
+          hintText: 'Search by name or phone...',
+          hintStyle: TextStyle(
+            color: isDark ? Colors.white38 : Colors.black38,
+            fontWeight: FontWeight.w700,
+            fontSize: 13,
+          ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12, width: 1.6),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: Color(0xFF38B24A), width: 1.6),
           ),
         ),
       ),

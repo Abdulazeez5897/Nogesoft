@@ -182,7 +182,7 @@ class _SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 46,
+      height: 44,
       child: TextField(
         onChanged: onChanged,
         textAlignVertical: TextAlignVertical.center,
@@ -191,14 +191,14 @@ class _SearchField extends StatelessWidget {
           isDense: true,
           hintText: hint,
           hintStyle: const TextStyle(color: Colors.white38, fontWeight: FontWeight.w700),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 14),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12),
+            borderSide: BorderSide(color: isDark ? Colors.white24 : Colors.black12, width: 1.6),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Color(0xFF38B24A), width: 1.5),
+            borderSide: const BorderSide(color: Color(0xFF38B24A), width: 1.6),
           ),
         ),
       ),

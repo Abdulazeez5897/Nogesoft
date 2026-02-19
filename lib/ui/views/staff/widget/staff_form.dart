@@ -1,4 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:nogesoft/ui/common/ui_helpers.dart';
 import 'package:nogesoft/ui/common/app_colors.dart';
@@ -14,6 +17,7 @@ class StaffFormResult {
   final StaffStatus status;
   final bool isAdmin;
   final String? fileName;
+  final File? imageFile;
 
   const StaffFormResult({
     required this.name,
@@ -23,6 +27,7 @@ class StaffFormResult {
     required this.status,
     required this.isAdmin,
     this.fileName,
+    this.imageFile,
   });
 }
 
@@ -92,6 +97,8 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
   StaffStatus _status = StaffStatus.active;
 
   String? _fileName;
+  File? _selectedImage;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -112,6 +119,131 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
     super.dispose();
   }
 
+  Future _pickImage(ImageSource source) async {
+    try {
+      bool granted = await _handlePermission(source);
+      if (!granted) return;
+
+      final XFile? pickedFile = await _picker.pickImage(
+        source: source,
+        imageQuality: 80,
+      );
+
+      if (pickedFile != null) {
+        setState(() {
+          _selectedImage = File(pickedFile.path);
+          _fileName = pickedFile.name;
+        });
+      }
+    } catch (e, stackTrace) {
+      debugPrint('Error picking image: $e');
+      debugPrint(stackTrace.toString());
+      _showErrorDialog('Error accessing image: $e');
+    }
+  }
+
+  Future<bool> _handlePermission(ImageSource source) async {
+    if (source == ImageSource.camera) {
+      final status = await Permission.camera.request();
+      if (status.isGranted) {
+        return true;
+      }
+    } else {
+      if (Platform.isAndroid) {
+        final storageStatus = await Permission.storage.request();
+        if (storageStatus.isGranted) {
+          return true;
+        }
+        final photosStatus = await Permission.photos.request();
+        if (photosStatus.isGranted) {
+          return true;
+        }
+        try {
+          final mediaLibraryStatus = await Permission.mediaLibrary.request();
+          if (mediaLibraryStatus.isGranted) {
+            return true;
+          }
+        } catch (e) {
+          debugPrint('Media library permission not available: $e');
+        }
+      } else if (Platform.isIOS) {
+        final status = await Permission.photos.request();
+        if (status.isGranted) {
+          return true;
+        }
+      }
+    }
+    _showPermissionDialog();
+    return false;
+  }
+
+  void _showPermissionDialog() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Permission Required"),
+        content: const Text("Enable camera/gallery permission in settings."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              openAppSettings();
+              Navigator.pop(context);
+            },
+            child: const Text("Open Settings"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Error"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showImageSourceOptions() {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => SafeArea(
+        child: Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: const Text("Take Photo"),
+              onTap: () {
+                Navigator.pop(context);
+                _pickImage(ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo_library),
+              title: const Text("Choose from Gallery"),
+              onTap: () {
+                Navigator.pop(context);
+                _pickImage(ImageSource.gallery);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
 
   Future<void> _submit() async {
     final name = _name.text.trim();
@@ -129,6 +261,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
         status: _status,
         isAdmin: _isAdmin,
         fileName: _fileName,
+        imageFile: _selectedImage,
       ),
     );
 
@@ -254,7 +387,7 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
                           height: 36,
                           child: OutlinedButton(
                             onPressed: () {
-                              setState(() => _fileName = 'IMG_0318.jpeg');
+                              _showImageSourceOptions();
                             },
                             style: OutlinedButton.styleFrom(
                               side: BorderSide(color: isDark ? Colors.white24 : Colors.grey.withOpacity(0.5)),

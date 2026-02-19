@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:stacked/stacked.dart';
 
 
@@ -49,6 +50,7 @@ class StaffViewModel extends BaseViewModel {
     required StaffStatus status,
     required bool isAdmin,
     String? pickedFileName,
+    File? imageFile,
   }) async {
     setBusyForObject(saveBusyKey, true);
 

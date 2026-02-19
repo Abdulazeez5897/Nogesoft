@@ -70,6 +70,7 @@ class StaffView extends StackedView<StaffViewModel> {
           status: result.status,
           isAdmin: result.isAdmin,
           pickedFileName: result.fileName,
+          imageFile: result.imageFile,
         );
       },
     );

@@ -151,180 +151,182 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        widget.title,
-                        style: TextStyle(
-                          color: textColor,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                verticalSpace(12),
-    
-                TextFieldWidget(
-                  controller: _name,
-                  hint: 'Name',
-                  textInputAction: TextInputAction.next,
-                ),
-                verticalSpace(10),
-    
-                TextFieldWidget(
-                  controller: _email,
-                  hint: 'Email',
-                  inputType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                ),
-                verticalSpace(10),
-    
-                TextFieldWidget(
-                  controller: _password,
-                  hint: 'Password',
-                  textInputAction: TextInputAction.done,
-                  suffix: IconButton(
-                    onPressed: () => setState(() => _obscure = !_obscure),
-                    icon: Icon(
-                      _obscure ? Icons.visibility : Icons.visibility_off,
-                      color: isDark ? Colors.white54 : Colors.grey,
-                    ),
-                  ),
-                  obscureText: _obscure,
-                ),
-                verticalSpace(10),
-    
-                _DropdownRow(
-                  value: _role,
-                  labelBuilder: (r) => r.label,
-                  items: StaffRole.values,
-                  onChanged: (v) => setState(() => _role = v),
-                  isDark: isDark,
-                  textColor: textColor,
-                  borderColor: borderColor,
-                  dropdownColor: isDark ? const Color(0xFF0E1626) : kcWhiteColor,
-                ),
-                verticalSpace(10),
-    
-                _DropdownRow(
-                  value: _status,
-                  labelBuilder: (s) => s.label,
-                  items: StaffStatus.values,
-                  onChanged: (v) => setState(() => _status = v),
-                  isDark: isDark,
-                  textColor: textColor,
-                  borderColor: borderColor,
-                   dropdownColor: isDark ? const Color(0xFF0E1626) : kcWhiteColor,
-                ),
-    
-                verticalSpace(10),
-    
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _isAdmin,
-                      onChanged: (v) => setState(() => _isAdmin = v ?? false),
-                      side: BorderSide(color: isDark ? Colors.white54 : Colors.grey),
-                      activeColor: const Color(0xFF38B24A),
-                    ),
-                    Text(
-                      'Is Admin',
-                      style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontWeight: FontWeight.w700),
-                    ),
-                  ],
-                ),
-    
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: borderColor),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
                     children: [
-                      SizedBox(
-                        height: 36,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            setState(() => _fileName = 'IMG_0318.jpeg');
-                          },
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: isDark ? Colors.white24 : Colors.grey.withOpacity(0.5)),
-                            foregroundColor: isDark ? Colors.white70 : Colors.black54,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          ),
-                          child: const Text('Choose File'),
-                        ),
-                      ),
-                      horizontalSpace(10),
                       Expanded(
                         child: Text(
-                          _fileName ?? 'no file selected',
-                          style: TextStyle(color: isDark ? Colors.white60 : Colors.black45, fontWeight: FontWeight.w700),
-                          overflow: TextOverflow.ellipsis,
+                          widget.title,
+                          style: TextStyle(
+                            color: textColor,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-    
-                verticalSpace(14),
-    
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      height: 44,
-                      child: ElevatedButton(
-                        onPressed: widget.isSaving ? null : () => Navigator.of(context).pop(),
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: isDark ? const Color(0xFF141E31) : Colors.grey[200],
-                          foregroundColor: isDark ? Colors.white70 : Colors.black87,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                        ),
-                        child: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.w800)),
+                  verticalSpace(12),
+      
+                  TextFieldWidget(
+                    controller: _name,
+                    hint: 'Name',
+                    textInputAction: TextInputAction.next,
+                  ),
+                  verticalSpace(10),
+      
+                  TextFieldWidget(
+                    controller: _email,
+                    hint: 'Email',
+                    inputType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  verticalSpace(10),
+      
+                  TextFieldWidget(
+                    controller: _password,
+                    hint: 'Password',
+                    textInputAction: TextInputAction.done,
+                    suffix: IconButton(
+                      onPressed: () => setState(() => _obscure = !_obscure),
+                      icon: Icon(
+                        _obscure ? Icons.visibility : Icons.visibility_off,
+                        color: isDark ? Colors.white54 : Colors.grey,
                       ),
                     ),
-                    horizontalSpace(12),
-                    SizedBox(
-                      height: 44,
-                      child: ElevatedButton(
-                        onPressed: widget.isSaving ? null : _submit,
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: const Color(0xFF38B24A),
-                          foregroundColor: Colors.white,
-                          disabledBackgroundColor: const Color(0xFF2D7E39),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                        ),
-                        child: widget.isSaving
-                            ? const Row(
-                          children: [
-                            SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    obscureText: _obscure,
+                  ),
+                  verticalSpace(10),
+      
+                  _DropdownRow(
+                    value: _role,
+                    labelBuilder: (r) => r.label,
+                    items: StaffRole.values,
+                    onChanged: (v) => setState(() => _role = v),
+                    isDark: isDark,
+                    textColor: textColor,
+                    borderColor: borderColor,
+                    dropdownColor: isDark ? const Color(0xFF0E1626) : kcWhiteColor,
+                  ),
+                  verticalSpace(10),
+      
+                  _DropdownRow(
+                    value: _status,
+                    labelBuilder: (s) => s.label,
+                    items: StaffStatus.values,
+                    onChanged: (v) => setState(() => _status = v),
+                    isDark: isDark,
+                    textColor: textColor,
+                    borderColor: borderColor,
+                     dropdownColor: isDark ? const Color(0xFF0E1626) : kcWhiteColor,
+                  ),
+      
+                  verticalSpace(10),
+      
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: _isAdmin,
+                        onChanged: (v) => setState(() => _isAdmin = v ?? false),
+                        side: BorderSide(color: isDark ? Colors.white54 : Colors.grey),
+                        activeColor: const Color(0xFF38B24A),
+                      ),
+                      Text(
+                        'Is Admin',
+                        style: TextStyle(color: isDark ? Colors.white70 : Colors.black54, fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+      
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: borderColor),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          height: 36,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              setState(() => _fileName = 'IMG_0318.jpeg');
+                            },
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(color: isDark ? Colors.white24 : Colors.grey.withOpacity(0.5)),
+                              foregroundColor: isDark ? Colors.white70 : Colors.black54,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             ),
-                            SizedBox(width: 10),
-                            Text('Saving...', style: TextStyle(fontWeight: FontWeight.w900)),
-                          ],
-                        )
-                            : const Text('Save', style: TextStyle(fontWeight: FontWeight.w900)),
-                      ),
+                            child: const Text('Choose File'),
+                          ),
+                        ),
+                        horizontalSpace(10),
+                        Expanded(
+                          child: Text(
+                            _fileName ?? 'no file selected',
+                            style: TextStyle(color: isDark ? Colors.white60 : Colors.black45, fontWeight: FontWeight.w700),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+      
+                  verticalSpace(14),
+      
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        height: 44,
+                        child: ElevatedButton(
+                          onPressed: widget.isSaving ? null : () => Navigator.of(context).pop(),
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: isDark ? const Color(0xFF141E31) : Colors.grey[200],
+                            foregroundColor: isDark ? Colors.white70 : Colors.black87,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                          ),
+                          child: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.w800)),
+                        ),
+                      ),
+                      horizontalSpace(12),
+                      SizedBox(
+                        height: 44,
+                        child: ElevatedButton(
+                          onPressed: widget.isSaving ? null : _submit,
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor: const Color(0xFF38B24A),
+                            foregroundColor: Colors.white,
+                            disabledBackgroundColor: const Color(0xFF2D7E39),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                          ),
+                          child: widget.isSaving
+                              ? const Row(
+                            children: [
+                              SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              ),
+                              SizedBox(width: 10),
+                              Text('Saving...', style: TextStyle(fontWeight: FontWeight.w900)),
+                            ],
+                          )
+                              : const Text('Save', style: TextStyle(fontWeight: FontWeight.w900)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         );

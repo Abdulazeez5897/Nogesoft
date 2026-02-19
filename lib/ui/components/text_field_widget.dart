@@ -54,15 +54,27 @@ class TextFieldWidget extends StatelessWidget {
             uiMode.value == AppUiModes.light ? kcWhiteColor : kcBlackColor,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: kcBlackColor.withOpacity(0.22)),
+          borderSide: BorderSide(
+            color: uiMode.value == AppUiModes.light
+                ? kcBlackColor.withOpacity(0.22)
+                : kcWhiteColor.withOpacity(0.22),
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: kcBlackColor.withOpacity(0.22)),
+          borderSide: BorderSide(
+            color: uiMode.value == AppUiModes.light
+                ? kcBlackColor.withOpacity(0.22)
+                : kcWhiteColor.withOpacity(0.22),
+          ),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: kcBlackColor.withOpacity(0.22)),
+          borderSide: BorderSide(
+            color: uiMode.value == AppUiModes.light
+                ? kcBlackColor.withOpacity(0.22)
+                : kcWhiteColor.withOpacity(0.22),
+          ),
         ),
         labelText: hint,
         labelStyle: TextStyle(

@@ -217,22 +217,71 @@ class _StaffFormDialogState extends State<StaffFormDialog> {
   }
 
   void _showImageSourceOptions() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF0E1626) : kcWhiteColor;
+    final textColor = isDark ? kcWhiteColor : kcBlackColor;
+
     showModalBottomSheet(
       context: context,
-      builder: (_) => SafeArea(
-        child: Wrap(
+      backgroundColor: Colors.transparent,
+      builder: (_) => Container(
+        padding: const EdgeInsets.only(top: 12, bottom: 24),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              width: 48,
+              height: 5,
+              margin: const EdgeInsets.only(bottom: 24),
+              decoration: BoxDecoration(
+                color: isDark ? Colors.white24 : Colors.black12,
+                borderRadius: BorderRadius.circular(2.5),
+              ),
+            ),
+            Text(
+              'Choose Profile Picture',
+              style: TextStyle(
+                color: textColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            verticalSpace(16),
             ListTile(
-              leading: const Icon(Icons.camera_alt),
-              title: const Text("Take Photo"),
+              leading: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2F6BFF).withOpacity(0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.camera_alt, color: Color(0xFF2F6BFF)),
+              ),
+              title: Text(
+                "Take Photo", 
+                style: TextStyle(color: textColor, fontWeight: FontWeight.w700),
+              ),
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.camera);
               },
             ),
             ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: const Text("Choose from Gallery"),
+              leading: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF38B24A).withOpacity(0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.photo_library, color: Color(0xFF38B24A)),
+              ),
+              title: Text(
+                "Choose from Gallery", 
+                style: TextStyle(color: textColor, fontWeight: FontWeight.w700),
+              ),
               onTap: () {
                 Navigator.pop(context);
                 _pickImage(ImageSource.gallery);

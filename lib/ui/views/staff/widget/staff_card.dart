@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../model/staff_member.dart';
@@ -47,7 +48,7 @@ class StaffCard extends StatelessWidget {
             labelColor: textMuted,
             child: Row(
               children: [
-                _Avatar(name: member.name),
+                _Avatar(name: member.name, avatarUrl: member.avatarAssetOrUrl),
                 horizontalSpace(10),
                 Expanded(
                   child: Text(
@@ -203,7 +204,8 @@ class _RowKV extends StatelessWidget {
 
 class _Avatar extends StatelessWidget {
   final String name;
-  const _Avatar({required this.name});
+  final String? avatarUrl;
+  const _Avatar({required this.name, this.avatarUrl});
 
   String _initials() {
     final parts = name.trim().split(RegExp(r'\s+')).where((e) => e.isNotEmpty).toList();
@@ -216,6 +218,13 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (avatarUrl != null && avatarUrl!.isNotEmpty) {
+      return CircleAvatar(
+        radius: 16,
+        backgroundImage: FileImage(File(avatarUrl!)),
+      );
+    }
+
     return CircleAvatar(
       radius: 16,
       backgroundColor: const Color(0xFF2F6BFF).withOpacity(0.25),

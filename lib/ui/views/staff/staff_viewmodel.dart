@@ -63,6 +63,7 @@ class StaffViewModel extends BaseViewModel {
       role: role,
       status: status,
       isAdmin: isAdmin,
+      avatarAssetOrUrl: imageFile?.path,
     );
 
     _staff.insert(0, item);

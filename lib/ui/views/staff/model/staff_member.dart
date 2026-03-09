@@ -42,6 +42,36 @@ class StaffMember {
       avatarAssetOrUrl: avatarAssetOrUrl ?? this.avatarAssetOrUrl,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'role': role.label,
+      'status': status.label,
+      'isAdmin': isAdmin,
+      'avatarAssetOrUrl': avatarAssetOrUrl,
+    };
+  }
+
+  factory StaffMember.fromJson(Map<String, dynamic> json) {
+    return StaffMember(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      email: json['email'] as String,
+      role: StaffRole.values.firstWhere(
+        (e) => e.label == json['role'],
+        orElse: () => StaffRole.staff,
+      ),
+      status: StaffStatus.values.firstWhere(
+        (e) => e.label == json['status'],
+        orElse: () => StaffStatus.active,
+      ),
+      isAdmin: json['isAdmin'] as bool? ?? false,
+      avatarAssetOrUrl: json['avatarAssetOrUrl'] as String?,
+    );
+  }
 }
 
 extension StaffRoleX on StaffRole {

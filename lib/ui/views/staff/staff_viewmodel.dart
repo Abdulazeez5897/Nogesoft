@@ -1,13 +1,15 @@
 import 'dart:io';
 import 'package:stacked/stacked.dart';
 
-
+import '../../../app/app.locator.dart';
+import '../../../core/utils/local_storage.dart';
 import 'model/staff_member.dart';
 
 
 class StaffViewModel extends BaseViewModel {
   static const Object saveBusyKey = 'saveStaff';
 
+  final _localStorage = locator<LocalStorage>();
 
   List<StaffMember> _staff = [];
   List<StaffMember> get staff => List.unmodifiable(_staff);
@@ -16,8 +18,15 @@ class StaffViewModel extends BaseViewModel {
 
   Future<void> init() async {
     setBusy(true);
-    // _staff = await _repository.getStaffMembers();
-    await Future.delayed(const Duration(milliseconds: 500));
+    
+    try {
+      final savedData = await _localStorage.fetch('staffList');
+      if (savedData != null && savedData is List) {
+        _staff = savedData.map((e) => StaffMember.fromJson(Map<String, dynamic>.from(e))).toList();
+      }
+    } catch (e) {
+      // ignore parsing or storage errors on init
+    }
     
     if (_staff.isEmpty) {
       _staff = [
@@ -38,8 +47,14 @@ class StaffViewModel extends BaseViewModel {
           isAdmin: true,
         ),
       ];
+      await _saveToStorage();
     }
     setBusy(false);
+  }
+
+  Future<void> _saveToStorage() async {
+    final data = _staff.map((e) => e.toJson()).toList();
+    await _localStorage.save('staffList', data);
   }
 
   Future<void> addStaff({
@@ -67,7 +82,7 @@ class StaffViewModel extends BaseViewModel {
     );
 
     _staff.insert(0, item);
-    // await _repository.addStaff(item);
+    await _saveToStorage();
     
     setBusyForObject(saveBusyKey, false);
     notifyListeners();
@@ -79,14 +94,15 @@ class StaffViewModel extends BaseViewModel {
     final idx = _staff.indexWhere((s) => s.id == updated.id);
     if (idx != -1) {
       _staff[idx] = updated;
+      await _saveToStorage();
       notifyListeners();
     }
     setBusyForObject(saveBusyKey, false);
   }
 
-  void deleteStaff(String id) {
+  Future<void> deleteStaff(String id) async {
     _staff.removeWhere((s) => s.id == id);
-    // await _repository.deleteStaff(id);
+    await _saveToStorage();
     notifyListeners();
   }
 }

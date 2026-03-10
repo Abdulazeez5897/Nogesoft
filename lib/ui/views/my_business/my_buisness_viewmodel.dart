@@ -1,34 +1,63 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../app/app.locator.dart';
+import '../../../core/utils/local_storage.dart';
 import 'model/business_model.dart';
 
 
 class MyBusinessViewModel extends BaseViewModel {
   static const Object saveBusyKey = 'saveBusiness';
 
+  final _localStorage = locator<LocalStorage>();
+  final ImagePicker _picker = ImagePicker();
+
   BusinessProfile? _business;
+  File? _selectedLogo;
 
   BusinessProfile? get business => _business;
   bool get isSaving => busy(saveBusyKey);
 
   Future<void> initialise() async {
     setBusy(true);
-    await Future<void>.delayed(const Duration(milliseconds: 250));
 
-    // Matches the video values.
-    _business = const BusinessProfile(
-      id: 'biz_1',
-      companyHeader: 'XYZ LTD',
-      distributorName: '',
-      authorizedTag: '',
-      email: 'codespring557@gmail.com',
-      phone: '08087722595',
-      headOfficeAddress: 'Army Estate Kubwa Abuja',
-      branches: [],
-    );
+    try {
+      final savedData = await _localStorage.fetch('businessProfile');
+      if (savedData != null && savedData is Map) {
+        _business = BusinessProfile.fromJson(Map<String, dynamic>.from(savedData));
+        if (_business?.logoUrl != null) {
+          _selectedLogo = File(_business!.logoUrl!);
+        }
+      }
+    } catch (e) {
+      // ignore parsing or storage errors on init
+    }
+
+    if (_business == null) {
+      // Matches the video values.
+      _business = const BusinessProfile(
+        id: 'biz_1',
+        companyHeader: 'XYZ LTD',
+        distributorName: '',
+        authorizedTag: '',
+        email: 'codespring557@gmail.com',
+        phone: '08087722595',
+        headOfficeAddress: 'Army Estate Kubwa Abuja',
+        branches: [],
+      );
+      await _saveToStorage();
+    }
 
     setBusy(false);
     notifyListeners();
+  }
+
+  Future<void> _saveToStorage() async {
+    if (_business != null) {
+      await _localStorage.save('businessProfile', _business!.toJson());
+    }
   }
 
   void addBranch() {
@@ -42,6 +71,7 @@ class MyBusinessViewModel extends BaseViewModel {
     );
 
     _business = b.copyWith(branches: [...b.branches, newBranch]);
+    _saveToStorage(); // Fire and forget
     notifyListeners();
   }
 
@@ -52,6 +82,7 @@ class MyBusinessViewModel extends BaseViewModel {
     _business = b.copyWith(
       branches: b.branches.where((e) => e.id != branchId).toList(growable: false),
     );
+    _saveToStorage();
     notifyListeners();
   }
 
@@ -69,6 +100,7 @@ class MyBusinessViewModel extends BaseViewModel {
     }).toList(growable: false);
 
     _business = b.copyWith(branches: updated);
+    _saveToStorage();
     notifyListeners();
   }
 
@@ -94,15 +126,58 @@ class MyBusinessViewModel extends BaseViewModel {
       email: email.trim(),
       phone: phone.trim(),
       headOfficeAddress: headOfficeAddress.trim(),
+      logoUrl: _selectedLogo?.path,
       branches: branches,
     );
+
+    await _saveToStorage();
 
     setBusyForObject(saveBusyKey, false);
     notifyListeners();
   }
 
-  // Avatar picker UI exists in video; we keep a hook.
-  void pickLogoMock() {
-    // no-op for now; wire to image_picker later if you want
+  Future<void> pickLogo(ImageSource source) async {
+    try {
+      bool granted = await _handlePermission(source);
+      if (!granted) return;
+
+      final XFile? pickedFile = await _picker.pickImage(
+        source: source,
+        imageQuality: 80,
+      );
+
+      if (pickedFile != null) {
+        _selectedLogo = File(pickedFile.path);
+        notifyListeners();
+      }
+    } catch (e) {
+      // Handle error
+    }
   }
+
+  Future<bool> _handlePermission(ImageSource source) async {
+    if (source == ImageSource.camera) {
+      final status = await Permission.camera.request();
+      if (status.isGranted) return true;
+    } else {
+      if (Platform.isAndroid) {
+        final storageStatus = await Permission.storage.request();
+        if (storageStatus.isGranted) return true;
+        final photosStatus = await Permission.photos.request();
+        if (photosStatus.isGranted) return true;
+        try {
+          final mediaLibraryStatus = await Permission.mediaLibrary.request();
+          if (mediaLibraryStatus.isGranted) return true;
+        } catch (_) {}
+      } else if (Platform.isIOS) {
+        final status = await Permission.photos.request();
+        if (status.isGranted) return true;
+      }
+    }
+    return false;
+  }
+}
+
+extension MyBusinessViewModelExtension on MyBusinessViewModel {
+  File? get selectedLogo => _selectedLogo;
 }

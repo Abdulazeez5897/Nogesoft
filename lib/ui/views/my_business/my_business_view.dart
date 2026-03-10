@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 
 import 'package:nogesoft/ui/common/ui_helpers.dart';
@@ -152,21 +154,83 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
     }
   }
 
-  Future<void> _handlePickLogo() async {
-    // Mocking file pick + size validation
-    // In real app: final XFile? file = await _picker.pickImage(...)
-    // if (await file.length() > 2 * 1024 * 1024) _showError('File is too large (Max 2MB)');
-    
-    // Simulating success for now, but error modal logic is ready:
-    /*
-    _showError('File is too large. Maximum size is 2MB.');
-    return;
-    */
-    
-    widget.viewModel.pickLogoMock();
+  void _showImageSourceOptions(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF0E1626) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => Container(
+        padding: const EdgeInsets.only(top: 12, bottom: 24),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 48,
+              height: 5,
+              margin: const EdgeInsets.only(bottom: 24),
+              decoration: BoxDecoration(
+                color: isDark ? Colors.white24 : Colors.black12,
+                borderRadius: BorderRadius.circular(2.5),
+              ),
+            ),
+            Text(
+              'Choose Company Logo',
+              style: TextStyle(
+                color: textColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            verticalSpace(16),
+            ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2F6BFF).withOpacity(0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.camera_alt, color: Color(0xFF2F6BFF)),
+              ),
+              title: Text(
+                "Take Photo", 
+                style: TextStyle(color: textColor, fontWeight: FontWeight.w700),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                widget.viewModel.pickLogo(ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF38B24A).withOpacity(0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.photo_library, color: Color(0xFF38B24A)),
+              ),
+              title: Text(
+                "Choose from Gallery", 
+                style: TextStyle(color: textColor, fontWeight: FontWeight.w700),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                widget.viewModel.pickLogo(ImageSource.gallery);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +294,8 @@ class _MyBusinessBodyState extends State<_MyBusinessBody> {
                   return br.copyWith(name: name, address: addr);
                 }).toList(growable: false),
               ),
-              onPickLogo: _handlePickLogo,
+              onPickLogo: () => _showImageSourceOptions(context),
+              selectedLogo: vm.selectedLogo,
             ),
           ),
         ),
@@ -255,6 +320,7 @@ class _BusinessFormCard extends StatelessWidget {
   final VoidCallback onAddBranch;
   final ValueChanged<String> onRemoveBranch;
   final VoidCallback onPickLogo;
+  final File? selectedLogo;
 
   final bool isSaving;
   final Future<void> Function() onSave;
@@ -272,6 +338,7 @@ class _BusinessFormCard extends StatelessWidget {
     required this.onAddBranch,
     required this.onRemoveBranch,
     required this.onPickLogo,
+    required this.selectedLogo,
     required this.isSaving,
     required this.onSave,
   });
@@ -308,7 +375,7 @@ class _BusinessFormCard extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          color: isDark ? Colors.white70 : Colors.black54, 
+          color: isDark ? Colors.white70 : Colors.black87, 
           fontWeight: FontWeight.w800
         ),
       ),
@@ -328,18 +395,23 @@ class _BusinessFormCard extends StatelessWidget {
           Center(
             child: GestureDetector(
               onTap: isSaving ? null : onPickLogo,
-              child: CircleAvatar(
-                radius: 46,
-                backgroundColor: const Color(0xFF2F6BFF).withOpacity(0.18),
-                child: const Icon(Icons.store, color: Colors.white, size: 40),
-              ),
+              child: selectedLogo != null
+                  ? CircleAvatar(
+                      radius: 46,
+                      backgroundImage: FileImage(selectedLogo!),
+                    )
+                  : CircleAvatar(
+                      radius: 46,
+                      backgroundColor: const Color(0xFF2F6BFF).withOpacity(0.18),
+                      child: const Icon(Icons.store, color: Colors.white, size: 40),
+                    ),
             ),
           ),
           verticalSpace(10),
-          const Center(
+          Center(
             child: Text(
               'PNG / JPG • Max 2MB',
-              style: TextStyle(color: Colors.white54, fontWeight: FontWeight.w700),
+              style: TextStyle(color: isDark ? Colors.white54 : Colors.black45, fontWeight: FontWeight.w700),
             ),
           ),
 
@@ -348,7 +420,7 @@ class _BusinessFormCard extends StatelessWidget {
           label('Company Header (Main Company Name)'),
           TextField(
             controller: companyHeader,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             decoration: dec(''),
           ),
 
@@ -357,7 +429,7 @@ class _BusinessFormCard extends StatelessWidget {
           label('Distributor Name (Optional)'),
           TextField(
             controller: distributor,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             decoration: dec('e.g. Al-Amin Foams Trading Company'),
           ),
 
@@ -366,7 +438,7 @@ class _BusinessFormCard extends StatelessWidget {
           label('Authorized Tag (Optional)'),
           TextField(
             controller: authorizedTag,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             decoration: dec('e.g. Authorized Key Distributor'),
           ),
 
@@ -375,7 +447,7 @@ class _BusinessFormCard extends StatelessWidget {
           label('Email'),
           TextField(
             controller: email,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             keyboardType: TextInputType.emailAddress,
             decoration: dec(''),
           ),
@@ -385,16 +457,16 @@ class _BusinessFormCard extends StatelessWidget {
           label('Phone'),
           TextField(
             controller: phone,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             keyboardType: TextInputType.phone,
             decoration: dec(''),
           ),
 
           verticalSpace(14),
 
-          const Text(
+          Text(
             'Business Addresses',
-            style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w900, fontSize: 16),
+            style: TextStyle(color: isDark ? Colors.white70 : Colors.black87, fontWeight: FontWeight.w900, fontSize: 16),
           ),
           verticalSpace(10),
 
@@ -409,12 +481,12 @@ class _BusinessFormCard extends StatelessWidget {
 
           InkWell(
             onTap: isSaving ? null : onAddBranch,
-            child: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 6),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
               child: Text(
                 '+ Add Branch',
                 style: TextStyle(
-                  color: Colors.white70,
+                  color: isDark ? Colors.white70 : Colors.black54,
                   fontWeight: FontWeight.w800,
                   decoration: TextDecoration.underline,
                 ),
@@ -518,7 +590,9 @@ class _AddressBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final border = Colors.white.withOpacity(0.22);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final border = isDark ? Colors.white.withOpacity(0.22) : Colors.black12;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
@@ -531,11 +605,11 @@ class _AddressBlock extends StatelessWidget {
           TextField(
             controller: titleController,
             readOnly: titleReadOnly,
-            style: const TextStyle(color: Colors.white70, fontWeight: FontWeight.w800),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color?.withOpacity(0.8) ?? Colors.black87, fontWeight: FontWeight.w800),
             decoration: dec(titleHint ?? '').copyWith(
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Colors.white.withOpacity(0.18)),
+                borderSide: BorderSide(color: border),
               ),
             ),
           ),
@@ -543,7 +617,7 @@ class _AddressBlock extends StatelessWidget {
           TextField(
             controller: addressController,
             maxLines: 2,
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+            style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             decoration: dec(addressHint ?? ''),
           ),
         ],

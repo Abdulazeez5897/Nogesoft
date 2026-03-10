@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nogesoft/ui/views/profile/profile_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 
@@ -102,7 +104,8 @@ class _ProfileViewBodyState extends State<_ProfileViewBody> {
               onToggleObscure: () => setState(() => _obscure = !_obscure),
               pickedFileName: widget.viewModel.pickedFileName,
               hasThumbnail: widget.viewModel.hasPickedThumbnail,
-              onChooseFile: widget.viewModel.pickMockFile,
+              selectedImage: widget.viewModel.selectedImage,
+              onChooseFile: widget.viewModel.pickImage,
               isSaving: widget.viewModel.isSaving,
               onSave: () => widget.viewModel.saveChanges(
                 name: _name.text,
@@ -128,7 +131,8 @@ class _ProfileCard extends StatelessWidget {
 
   final String? pickedFileName;
   final bool hasThumbnail;
-  final VoidCallback onChooseFile;
+  final File? selectedImage;
+  final void Function(ImageSource) onChooseFile;
 
   final bool isSaving;
   final Future<bool> Function() onSave;
@@ -141,6 +145,7 @@ class _ProfileCard extends StatelessWidget {
     required this.onToggleObscure,
     required this.pickedFileName,
     required this.hasThumbnail,
+    required this.selectedImage,
     required this.onChooseFile,
     required this.isSaving,
     required this.onSave,
@@ -175,6 +180,84 @@ class _ProfileCard extends StatelessWidget {
               'Your changes have been saved successfully.',
               textAlign: TextAlign.center,
               style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showImageSourceOptions(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final bgColor = isDark ? const Color(0xFF0E1626) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => Container(
+        padding: const EdgeInsets.only(top: 12, bottom: 24),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 48,
+              height: 5,
+              margin: const EdgeInsets.only(bottom: 24),
+              decoration: BoxDecoration(
+                color: isDark ? Colors.white24 : Colors.black12,
+                borderRadius: BorderRadius.circular(2.5),
+              ),
+            ),
+            Text(
+              'Choose Profile Picture',
+              style: TextStyle(
+                color: textColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            verticalSpace(16),
+            ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2F6BFF).withOpacity(0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.camera_alt, color: Color(0xFF2F6BFF)),
+              ),
+              title: Text(
+                "Take Photo", 
+                style: TextStyle(color: textColor, fontWeight: FontWeight.w700),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                onChooseFile(ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF38B24A).withOpacity(0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.photo_library, color: Color(0xFF38B24A)),
+              ),
+              title: Text(
+                "Choose from Gallery", 
+                style: TextStyle(color: textColor, fontWeight: FontWeight.w700),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                onChooseFile(ImageSource.gallery);
+              },
             ),
           ],
         ),
@@ -228,11 +311,17 @@ class _ProfileCard extends StatelessWidget {
           verticalSpace(4),
 
           // Avatar
-          CircleAvatar(
-            radius: 42,
-            backgroundColor: const Color(0xFF2F6BFF).withOpacity(0.20),
-            child: const Icon(Icons.person, color: Colors.white, size: 46),
-          ),
+          if (selectedImage != null)
+            CircleAvatar(
+              radius: 42,
+              backgroundImage: FileImage(selectedImage!),
+            )
+          else
+            CircleAvatar(
+              radius: 42,
+              backgroundColor: const Color(0xFF2F6BFF).withOpacity(0.20),
+              child: const Icon(Icons.person, color: Colors.white, size: 46),
+            ),
 
           verticalSpace(14),
 
@@ -249,7 +338,7 @@ class _ProfileCard extends StatelessWidget {
                 SizedBox(
                   height: 36,
                   child: OutlinedButton(
-                    onPressed: isSaving ? null : onChooseFile,
+                    onPressed: isSaving ? null : () => _showImageSourceOptions(context),
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(color: border),
                       foregroundColor: const Color(0xFF2F6BFF),
@@ -299,7 +388,7 @@ class _ProfileCard extends StatelessWidget {
           TextField(
             controller: nameController,
             style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
-            decoration: dec(''),
+            decoration: dec('Full Name'),
           ),
 
           verticalSpace(12),
@@ -308,7 +397,7 @@ class _ProfileCard extends StatelessWidget {
             controller: emailController,
             style: TextStyle(color: theme.textTheme.bodyMedium?.color, fontWeight: FontWeight.w700),
             keyboardType: TextInputType.emailAddress,
-            decoration: dec(''),
+            decoration: dec('Email Address'),
           ),
 
           verticalSpace(12),
